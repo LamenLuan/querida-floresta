@@ -202,7 +202,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 109767234}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314504743}
+        m_MethodName: activateBackgroundCover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &109767234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,7 +882,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 448217407}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314504743}
+        m_MethodName: activateBackgroundCover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &448217407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,7 +1229,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 907857078}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314504743}
+        m_MethodName: activateBackgroundCover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &907857078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,7 +1421,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1052823643}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314504743}
+        m_MethodName: activateBackgroundCover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1052823643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2145,7 +2189,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1898942961}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314504743}
+        m_MethodName: activateBackgroundCover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1898942961
 MonoBehaviour:
   m_ObjectHideFlags: 0

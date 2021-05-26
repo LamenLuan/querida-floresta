@@ -22,16 +22,27 @@ public class Scene3Controller : MonoBehaviour
         foreach(Button btn in buttons) btn.onClick.RemoveAllListeners();
     }
 
+    private void makeHit(Button button)
+    {
+        hitAudio.Play();
+        canvasS3Controller.setOutline(button, true);
+    }
+
+    private void makeMiss(Button button)
+    {
+        missAudio.Play();
+        canvasS3Controller.setOutline(button, false);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         Action changeToQuestionThree = () => {
-            canvasS3Controller.activateBackgroundCover();
             canvasS3Controller.Invoke("changeToQuestionThree", 2f);
 
             word1Btn.onClick.AddListener( () => {
                 hitAudio.Play();
-                canvasS3Controller.activateBackgroundCover();
+
                 canvasS3Controller.Invoke("levelIsOver", 2f);
                 Invoke("destroyHitMissAudios", 2f);
             });
@@ -42,34 +53,33 @@ public class Scene3Controller : MonoBehaviour
         };
 
         Action changeToQuestionTwo = () => {
-            canvasS3Controller.activateBackgroundCover();
             removeListenerFromButtons(); 
             canvasS3Controller.Invoke("changeToQuestionTwo", 2f);
 
             option1Btn.onClick.AddListener( () => {
-                missAudio.Play();
+                makeMiss(option1Btn);
                 tries[1]++;
             });
             option2Btn.onClick.AddListener( () => {
-                hitAudio.Play();
+                makeHit(option2Btn);
                 changeToQuestionThree();
             });
             option3Btn.onClick.AddListener( () => {
-                missAudio.Play();
+                makeMiss(option3Btn);
                 tries[1]++;
             });
         };
 
         option1Btn.onClick.AddListener( () => {
-            missAudio.Play();
+            makeMiss(option1Btn);
             tries[0]++;
         });
         option2Btn.onClick.AddListener( () => {
-            missAudio.Play();
+            makeMiss(option2Btn);
             tries[0]++;
         });
         option3Btn.onClick.AddListener( () => {
-            hitAudio.Play();
+            makeHit(option3Btn);
             changeToQuestionTwo();
         });
     }
