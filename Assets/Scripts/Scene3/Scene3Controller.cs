@@ -10,6 +10,7 @@ public class Scene3Controller : MonoBehaviour
     word1Btn, word2Btn;
     [SerializeField] private AudioSource hitAudio, missAudio;
 
+    // Invoked by a button listener in main()
     private void destroyHitMissAudios()
     {
         Destroy(hitAudio.gameObject);
@@ -42,7 +43,6 @@ public class Scene3Controller : MonoBehaviour
 
             word1Btn.onClick.AddListener( () => {
                 hitAudio.Play();
-
                 canvasS3Controller.Invoke("levelIsOver", 2f);
                 Invoke("destroyHitMissAudios", 2f);
             });
