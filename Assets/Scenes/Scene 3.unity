@@ -153,7 +153,7 @@ RectTransform:
   m_Children:
   - {fileID: 1797815264}
   m_Father: {fileID: 314504742}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.32124728, y: 0.37100002}
   m_AnchorMax: {x: 0.7665652, y: 0.52349085}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 262365055}
   - component: {fileID: 262365054}
   m_Layer: 0
-  m_Name: mixkit-modern-technology-select-3124
+  m_Name: ClickAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -461,13 +461,14 @@ RectTransform:
   - {fileID: 353171675}
   - {fileID: 396854863}
   - {fileID: 1236630427}
-  - {fileID: 1381090027}
-  - {fileID: 1163654597}
   - {fileID: 448217405}
   - {fileID: 907857076}
   - {fileID: 1898942959}
   - {fileID: 109767232}
   - {fileID: 1052823641}
+  - {fileID: 468164839}
+  - {fileID: 1381090027}
+  - {fileID: 1163654597}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -493,6 +494,7 @@ MonoBehaviour:
   icon3BtnObj: {fileID: 1898942958}
   word1Obj: {fileID: 109767231}
   word2Obj: {fileID: 1052823640}
+  backgroundCoverObj: {fileID: 468164838}
   btn1Sprite: {fileID: 21300000, guid: 7c2132ba8a1b5df42a25850fd92afc80, type: 3}
   btn2Sprite: {fileID: 21300000, guid: c5a9ec74a1eee8742bb162dfce791cd5, type: 3}
   btn3Sprite: {fileID: 21300000, guid: c70887d0e10bf444dac6060ca6f469cf, type: 3}
@@ -820,7 +822,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 314504742}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19900002, y: 0.07300001}
   m_AnchorMax: {x: 0.40955174, y: 0.45200002}
@@ -922,6 +924,80 @@ MonoBehaviour:
   m_EffectColor: {r: 0.312, g: 0.208, b: 0, a: 1}
   m_EffectDistance: {x: 5.79, y: 5.79}
   m_UseGraphicAlpha: 1
+--- !u!1 &468164838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 468164839}
+  - component: {fileID: 468164841}
+  - component: {fileID: 468164840}
+  m_Layer: 5
+  m_Name: ImgBackgroundCover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &468164839
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468164838}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.263402, y: 1.263402, z: 1.263402}
+  m_Children: []
+  m_Father: {fileID: 314504742}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -192.25, y: -107.99997}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &468164840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468164838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &468164841
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468164838}
+  m_CullTransparentMesh: 0
 --- !u!1 &753641730
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +1009,7 @@ GameObject:
   - component: {fileID: 753641731}
   - component: {fileID: 753641732}
   m_Layer: 0
-  m_Name: mixkit-losing-piano-2024
+  m_Name: MissAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1082,7 +1158,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 314504742}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.47714943, y: 0.07300001}
   m_AnchorMax: {x: 0.6882873, y: 0.45200002}
@@ -1263,7 +1339,7 @@ RectTransform:
   m_Children:
   - {fileID: 1951578810}
   m_Father: {fileID: 314504742}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.32124728, y: 0.125}
   m_AnchorMax: {x: 0.7665652, y: 0.27600002}
@@ -1382,7 +1458,7 @@ RectTransform:
   m_Children:
   - {fileID: 1257642493}
   m_Father: {fileID: 314504742}
-  m_RootOrder: 4
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.81611663, y: 0.8972354}
   m_AnchorMax: {x: 0.99574715, y: 0.99386495}
@@ -1684,7 +1760,7 @@ RectTransform:
   m_Children:
   - {fileID: 326517535}
   m_Father: {fileID: 314504742}
-  m_RootOrder: 3
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0034482758, y: 0.89928037}
   m_AnchorMax: {x: 0.18270114, y: 0.99386495}
@@ -1793,7 +1869,7 @@ GameObject:
   - component: {fileID: 1418194653}
   - component: {fileID: 1418194654}
   m_Layer: 0
-  m_Name: mixkit-video-game-treasure-2066
+  m_Name: HitAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2020,7 +2096,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 314504742}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.7387012, y: 0.07300001}
   m_AnchorMax: {x: 0.95400006, y: 0.45200002}

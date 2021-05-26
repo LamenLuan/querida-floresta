@@ -4,11 +4,17 @@ using UnityEngine.UI;
 
 public class Scene3Controller : MonoBehaviour
 {
-    private byte[] tries = { 0, 0, 0 };
+    private byte[] tries = {0, 0, 0};
     [SerializeField] private CanvasS3Controller canvasS3Controller;
-    [SerializeField] private Button option1Btn, option2Btn, option3Btn, word1Btn,
-    word2Btn;
+    [SerializeField] private Button option1Btn, option2Btn, option3Btn,
+    word1Btn, word2Btn;
     [SerializeField] private AudioSource hitAudio, missAudio;
+
+    private void destroyHitMissAudios()
+    {
+        Destroy(hitAudio.gameObject);
+        Destroy(missAudio.gameObject);
+    }
 
     private void removeListenerFromButtons()
     {
@@ -20,15 +26,14 @@ public class Scene3Controller : MonoBehaviour
     void Start()
     {
         Action changeToQuestionThree = () => {
-            removeListenerFromButtons();
-
+            canvasS3Controller.activateBackgroundCover();
             canvasS3Controller.Invoke("changeToQuestionThree", 2f);
 
             word1Btn.onClick.AddListener( () => {
                 hitAudio.Play();
-                word1Btn.onClick.RemoveAllListeners();
-                word2Btn.onClick.RemoveAllListeners();
+                canvasS3Controller.activateBackgroundCover();
                 canvasS3Controller.Invoke("levelIsOver", 2f);
+                Invoke("destroyHitMissAudios", 2f);
             });
             word2Btn.onClick.AddListener( () => {
                 missAudio.Play();
@@ -37,8 +42,8 @@ public class Scene3Controller : MonoBehaviour
         };
 
         Action changeToQuestionTwo = () => {
+            canvasS3Controller.activateBackgroundCover();
             removeListenerFromButtons(); 
-
             canvasS3Controller.Invoke("changeToQuestionTwo", 2f);
 
             option1Btn.onClick.AddListener( () => {
