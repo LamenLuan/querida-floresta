@@ -4,8 +4,11 @@ using System;
 public class Scene1Controller : MonoBehaviour
 {
     [SerializeField] private float timeGap;
-    [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, steamEffectsObj;
+    [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
+    steamEffectsObj;
     [SerializeField] private CanvasNarratorButtonsCotroller canvasNBCotroller;
+    [SerializeField] private AudioSource cloudAudio;
+    [SerializeField] private  AudioController audioController;
     private bool gameOn;
     private int cloudCounter, cloudNumber, levelCounter;
     private float timeCounter, newHeight;
@@ -17,6 +20,7 @@ public class Scene1Controller : MonoBehaviour
     public void startGame()
     {
         gameOn = true;
+        cloudAudio.Play();
     }
 
     // Called by Button (btQuit)
@@ -25,6 +29,7 @@ public class Scene1Controller : MonoBehaviour
         Application.Quit();
     }
 
+    // Called by Button (btHelp)
     public void showHelp()
     {
         
@@ -44,14 +49,18 @@ public class Scene1Controller : MonoBehaviour
     {
         if(gameOn)
         {
+            // Player clicked on the right moment
             if(cloudCounter == cloudNumber)
             {
+                audioController.hitSound();
                 rainObj = Instantiate(rainObjPrefabObj);
                 steamEffectsObj.SetActive(false);
                 if(levelCounter < 2) canvasNBCotroller.showNextLevelButton();
             }
             else
             {
+                audioController.missSound();
+                cloudAudio.Stop();
                 canvasNBCotroller.changeToTryAgainInterface();
             }
             gameOn = false;
@@ -163,11 +172,13 @@ public class Scene1Controller : MonoBehaviour
                 }
                 else if(cloudCounter > cloudNumber)
                 {
+                    audioController.missSound();
                     canvasNBCotroller.changeToTryAgainInterface();
                     gameOn = false;
                 }
 
                 timeCounter = 0f;
+                if(cloudCounter < cloudNumber) cloudAudio.Play();
             }
         }
     }

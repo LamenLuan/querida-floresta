@@ -685,6 +685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickedAudio: {fileID: 1051059068}
+  hitAudio: {fileID: 0}
+  missAudio: {fileID: 0}
 --- !u!4 &485707245
 Transform:
   m_ObjectHideFlags: 0
@@ -1924,7 +1926,7 @@ GameObject:
   - component: {fileID: 1051059069}
   - component: {fileID: 1051059068}
   m_Layer: 0
-  m_Name: mixkit-modern-technology-select-3124
+  m_Name: ClickAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

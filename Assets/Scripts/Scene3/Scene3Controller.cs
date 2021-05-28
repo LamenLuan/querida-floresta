@@ -6,16 +6,9 @@ public class Scene3Controller : MonoBehaviour
 {
     private byte[] tries = {0, 0, 0};
     [SerializeField] private CanvasS3Controller canvasS3Controller;
+    [SerializeField] private AudioController audioController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn;
-    [SerializeField] private AudioSource hitAudio, missAudio;
-
-    // Invoked by a button listener in main()
-    private void destroyHitMissAudios()
-    {
-        Destroy(hitAudio.gameObject);
-        Destroy(missAudio.gameObject);
-    }
 
     private void removeListenerFromButtons()
     {
@@ -25,13 +18,13 @@ public class Scene3Controller : MonoBehaviour
 
     private void makeHit(Button button)
     {
-        hitAudio.Play();
+        audioController.hitSound();
         canvasS3Controller.setOutline(button, true);
     }
 
     private void makeMiss(Button button)
     {
-        missAudio.Play();
+        audioController.missSound();
         canvasS3Controller.setOutline(button, false);
     }
 
@@ -42,12 +35,12 @@ public class Scene3Controller : MonoBehaviour
             canvasS3Controller.Invoke("changeToQuestionThree", 2f);
 
             word1Btn.onClick.AddListener( () => {
-                hitAudio.Play();
+                audioController.hitSound();
                 canvasS3Controller.Invoke("levelIsOver", 2f);
-                Invoke("destroyHitMissAudios", 2f);
+                audioController.Invoke("destroyHitMissAudios", 2f);
             });
             word2Btn.onClick.AddListener( () => {
-                missAudio.Play();
+                audioController.missSound();
                 tries[2]++;
             });
         };
