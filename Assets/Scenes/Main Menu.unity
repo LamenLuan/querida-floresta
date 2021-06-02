@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3734871, y: 0.208139}
   m_AnchorMax: {x: 0.628624, y: 0.3398069}
-  m_AnchoredPosition: {x: -2.0999994, y: -24.099998}
+  m_AnchoredPosition: {x: -2.0999985, y: -24.100014}
   m_SizeDelta: {x: 45.268158, y: 16.67714}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &56848520
@@ -439,7 +439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3734871, y: 0.384}
   m_AnchorMax: {x: 0.628624, y: 0.519139}
-  m_AnchoredPosition: {x: -2.7000055, y: -7.600004}
+  m_AnchoredPosition: {x: -2.7000046, y: -7.600006}
   m_SizeDelta: {x: 43.972168, y: 14.583031}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308948568
@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 762169989}
   - component: {fileID: 762169990}
   m_Layer: 0
-  m_Name: mixkit-modern-technology-select-3124
+  m_Name: ButtonClickedAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,6 +746,7 @@ GameObject:
   - component: {fileID: 845659770}
   - component: {fileID: 845659769}
   - component: {fileID: 845659768}
+  - component: {fileID: 845659771}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -818,6 +819,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &845659771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845659767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d9d445ebe4873438e2aa2381987eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &918047184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,6 +1449,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickedAudio: {fileID: 762169990}
+  hitAudio: {fileID: 0}
+  missAudio: {fileID: 0}
+  musicAudio: {fileID: 0}
+  sceneCompletedAudio: {fileID: 0}
 --- !u!1 &1872868741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,6 +1537,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1828544111}
         m_MethodName: buttonClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 845659771}
+        m_MethodName: startGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
