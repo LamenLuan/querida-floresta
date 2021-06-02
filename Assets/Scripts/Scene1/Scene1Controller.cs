@@ -106,15 +106,10 @@ public class Scene1Controller : MonoBehaviour
         GameObject currentLevel =
             difficultiesObj.transform.GetChild(levelCounter).gameObject;
 
-        Action<GameObject> destroyClouds = (gameObject) => {
-            for (int i = gameObject.transform.childCount - 1; i >= 0; --i)
-            {
-                Destroy(currentLevel.transform.GetChild(i).gameObject);
-            }
-        };
-        
         // First destroying the clouds of current level
-        destroyClouds(currentLevel);
+        for (int i = currentLevel.transform.childCount - 1; i >= 0; --i)
+            Destroy(currentLevel.transform.GetChild(i).gameObject);
+
         // Then disabling it before going to the next
         currentLevel.SetActive(false);
 
