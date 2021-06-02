@@ -8,7 +8,7 @@ public class Scene1Controller : MonoBehaviour
     steamEffectsObj;
     [SerializeField] private CanvasNarratorButtonsCotroller canvasNBCotroller;
     [SerializeField] private AudioSource cloudAudio;
-    [SerializeField] private  AudioController audioController;
+    [SerializeField] private AudioController audioController;
     private bool gameOn;
     private int cloudCounter, cloudNumber, levelCounter;
     private float timeCounter, newHeight;
@@ -21,6 +21,7 @@ public class Scene1Controller : MonoBehaviour
     {
         gameOn = true;
         cloudAudio.Play();
+        audioController.setMusicVolume(0.01f);
     }
 
     // Called by Button (btQuit)
@@ -63,6 +64,7 @@ public class Scene1Controller : MonoBehaviour
                 cloudAudio.Stop();
                 canvasNBCotroller.changeToTryAgainInterface();
             }
+            audioController.setMusicVolume(0.1f);
             gameOn = false;
         }
     }

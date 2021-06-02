@@ -2,8 +2,13 @@
 
 public class AudioController : MonoBehaviour
 {
-    [SerializeField] private AudioSource buttonClickedAudio, hitAudio, missAudio;
+    [SerializeField] private AudioSource buttonClickedAudio, hitAudio,
+    missAudio, musicAudio;
 
+    public void setMusicVolume(float volume)
+    {
+        musicAudio.volume = volume;
+    }
 
     // Invoked in the other controllers
     public void destroyHitMissAudios()
