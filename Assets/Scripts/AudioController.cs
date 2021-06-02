@@ -3,7 +3,7 @@
 public class AudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource buttonClickedAudio, hitAudio,
-    missAudio, musicAudio;
+    missAudio, musicAudio, sceneCompletedAudio;
 
     public void setMusicVolume(float volume)
     {
@@ -31,5 +31,10 @@ public class AudioController : MonoBehaviour
     public void missSound()
     {
         missAudio.Play();
+    }
+
+    public void sceneCompletedSound()
+    {
+        sceneCompletedAudio.Play();
     }
 }

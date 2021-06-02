@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using UnityEngine.SceneManagement;
 
 public class Scene1Controller : MonoBehaviour
 {
@@ -45,6 +45,11 @@ public class Scene1Controller : MonoBehaviour
             difficultyObj.transform.GetChild(cloudCounter).GetComponent<SpriteRenderer>();
     }
 
+    private void loadScene2()
+    {
+        SceneManager.LoadScene("Scene 2");
+    }
+
     // Called by Button (ImgBackground)
     public void checkClickOnCenario()
     {
@@ -57,6 +62,12 @@ public class Scene1Controller : MonoBehaviour
                 rainObj = Instantiate(rainObjPrefabObj);
                 steamEffectsObj.SetActive(false);
                 if(levelCounter < 2) canvasNBCotroller.showNextLevelButton();
+                // Here the narrator will congratulate the player
+                else
+                {
+                    audioController.sceneCompletedSound();
+                    Invoke("loadScene2", 5f);
+                }
             }
             else
             {
