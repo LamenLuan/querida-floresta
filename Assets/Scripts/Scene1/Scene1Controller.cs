@@ -16,6 +16,11 @@ public class Scene1Controller : MonoBehaviour
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
 
+    private void loadScene2()
+    {
+        SceneManager.LoadScene("Scene 2");
+    }
+
     // Called by Button (btStart)
     public void startGame()
     {
@@ -25,9 +30,9 @@ public class Scene1Controller : MonoBehaviour
     }
 
     // Called by Button (btQuit)
-    public void quitGame()
+    public void quitScene()
     {
-        Application.Quit();
+        SceneManager.LoadScene("Main Menu");
     }
 
     // Called by Button (btHelp)
@@ -43,11 +48,6 @@ public class Scene1Controller : MonoBehaviour
 
         cloudRenderer =
             difficultyObj.transform.GetChild(cloudCounter).GetComponent<SpriteRenderer>();
-    }
-
-    private void loadScene2()
-    {
-        SceneManager.LoadScene("Scene 2");
     }
 
     // Called by Button (ImgBackground)
