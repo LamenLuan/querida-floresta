@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 using DigitalRuby.RainMaker;
 
@@ -12,6 +13,17 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private SpritesS2Controller spritesController;
     [SerializeField] private CanvasS2Controller canvasController;
     private RainScript2D rainScript;
+
+    // Called by Button (btQuit)
+    public void quitScene()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    private void loadScene3()
+    {
+        SceneManager.LoadScene("Scene 3");
+    }
 
     // Invoked by treesClicked() delegate in Start()
     private void startRaining()
@@ -40,6 +52,7 @@ public class Scene2Controller : MonoBehaviour
             Invoke("startRaining", 6f);
             spritesController.Invoke("turnSceneGreen", 11f);
             spritesController.Invoke("makeAnimalsHappy", 11f);
+            Invoke("loadScene3", 16f);
         };
 
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {

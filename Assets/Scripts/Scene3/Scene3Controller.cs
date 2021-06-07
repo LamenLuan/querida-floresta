@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Scene3Controller : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private AudioController audioController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn;
+
+    // Called by Button (btQuit)
+    public void quitScene()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 
     private void removeListenerFromButtons()
     {

@@ -688,6 +688,7 @@ MonoBehaviour:
   hitAudio: {fileID: 0}
   missAudio: {fileID: 0}
   musicAudio: {fileID: 1273671721}
+  sceneCompletedAudio: {fileID: 0}
 --- !u!4 &485707245
 Transform:
   m_ObjectHideFlags: 0
@@ -1374,6 +1375,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 485707244}
         m_MethodName: buttonClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 561014166}
+        m_MethodName: quitScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
