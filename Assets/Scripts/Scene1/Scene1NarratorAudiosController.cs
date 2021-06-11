@@ -7,21 +7,16 @@ public class Scene1NarratorAudiosController : MonoBehaviour
 
     private Animator narratorAnimator;
     
-    public void stophitRightTimeAudio()
+    public void stophitRightTimeAudio() // Invoked by playhitRightTimeAudio()
     {
         narratorAnimator.SetBool("isSpeaking", false);
     }
 
-    public void playhitRightTimeAudio()
+    public void playhitRightTimeAudio() // Invoked by Scene1Controller
     {
         narratorAnimator.SetBool("isSpeaking", true);
         hitRightTimeAudio.Play();
         Invoke("stophitRightTimeAudio", 4f);
-    }
-
-    public bool ishitRightTimeAudioPlaying()
-    {
-        return hitRightTimeAudio.isPlaying;
     }
 
     void Start() // Start is called before the first frame update
