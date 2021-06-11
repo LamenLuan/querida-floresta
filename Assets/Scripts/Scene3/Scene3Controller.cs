@@ -11,13 +11,18 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn;
 
-    // Called by Button (btQuit)
-    public void quitScene()
+    private void loadPlayersForest() // Invoked in Start()
+    {
+        AplicationModel.scenesCompleted++;
+        SceneManager.LoadScene("Players Forest");
+    }
+
+    public void quitScene() // Called by Button (btQuit)
     {
         SceneManager.LoadScene("Main Menu");
     }
 
-    private void removeListenerFromButtons()
+    private void removeListenerFromButtons() // Invoked in Start()
     {
         Button[] buttons = {option1Btn, option2Btn, option3Btn};
         foreach(Button btn in buttons) btn.onClick.RemoveAllListeners();
@@ -35,8 +40,7 @@ public class Scene3Controller : MonoBehaviour
         canvasS3Controller.setOutline(button, false);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Start() // Start is called before the first frame update
     {
         Action changeToQuestionThree = () => {
             canvasS3Controller.Invoke("changeToQuestionThree", 2f);
@@ -45,6 +49,7 @@ public class Scene3Controller : MonoBehaviour
                 audioController.hitSound();
                 canvasS3Controller.Invoke("levelIsOver", 2f);
                 audioController.Invoke("destroyHitMissAudios", 2f);
+                Invoke("loadPlayersForest", 5f);
             });
             word2Btn.onClick.AddListener( () => {
                 audioController.missSound();
@@ -82,11 +87,5 @@ public class Scene3Controller : MonoBehaviour
             makeHit(option3Btn);
             changeToQuestionTwo();
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

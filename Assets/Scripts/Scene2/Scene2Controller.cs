@@ -14,19 +14,18 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private CanvasS2Controller canvasController;
     private RainScript2D rainScript;
 
-    // Called by Button (btQuit)
-    public void quitScene()
+    public void quitScene() // Called by Button (btQuit)
     {
         SceneManager.LoadScene("Main Menu");
     }
 
-    private void loadScene3()
+    private void loadPlayersForest() // Invoked in Start()
     {
-        SceneManager.LoadScene("Scene 3");
+        AplicationModel.scenesCompleted++;
+        SceneManager.LoadScene("Players Forest");
     }
 
-    // Invoked by treesClicked() delegate in Start()
-    private void startRaining()
+    private void startRaining() // Invoked by in Start()
     {
         rainScript =
             ( Instantiate(rainPrefab) ).GetComponent<RainScript2D>();
@@ -40,8 +39,7 @@ public class Scene2Controller : MonoBehaviour
         canvasController.Invoke("changeToTryAgainInterface", time);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Start() // Start is called before the first frame update
     {
         // Using lamba here to remove the buttons's listeners when one of them
         // is clicked
@@ -52,7 +50,7 @@ public class Scene2Controller : MonoBehaviour
             Invoke("startRaining", 6f);
             spritesController.Invoke("turnSceneGreen", 11f);
             spritesController.Invoke("makeAnimalsHappy", 11f);
-            Invoke("loadScene3", 16f);
+            Invoke("loadPlayersForest", 16f);
         };
 
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {
@@ -78,11 +76,5 @@ public class Scene2Controller : MonoBehaviour
             buttonClicked(treesObject, treesButton);
             treesClicked();
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

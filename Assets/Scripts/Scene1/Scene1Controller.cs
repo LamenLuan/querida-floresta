@@ -16,27 +16,25 @@ public class Scene1Controller : MonoBehaviour
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
 
-    private void loadScene2()
+    private void loadPlayersForest() // Invoked in Start()
     {
-        SceneManager.LoadScene("Scene 2");
+        AplicationModel.scenesCompleted++;
+        SceneManager.LoadScene("Players Forest");
     }
 
-    // Called by Button (btStart)
-    public void startGame()
+    public void startGame() // Called by Button (btStart)
     {
         gameOn = true;
         cloudAudio.Play();
         audioController.setMusicVolume(0.01f);
     }
 
-    // Called by Button (btQuit)
-    public void quitScene()
+    public void quitScene() // Called by Button (btQuit)
     {
         SceneManager.LoadScene("Main Menu");
     }
 
-    // Called by Button (btHelp)
-    public void showHelp()
+    public void showHelp() // Called by Button (btHelp)
     {
         
     }
@@ -50,8 +48,7 @@ public class Scene1Controller : MonoBehaviour
             difficultyObj.transform.GetChild(cloudCounter).GetComponent<SpriteRenderer>();
     }
 
-    // Called by Button (ImgBackground)
-    public void checkClickOnCenario()
+    public void checkClickOnCenario() // Called by Button (ImgBackground)
     {
         if(gameOn)
         {
@@ -66,7 +63,7 @@ public class Scene1Controller : MonoBehaviour
                 else
                 {
                     audioController.sceneCompletedSound();
-                    Invoke("loadScene2", 5f);
+                    Invoke("loadPlayersForest", 5f);
                 }
             }
             else
@@ -97,8 +94,7 @@ public class Scene1Controller : MonoBehaviour
         difficultyObj.SetActive(false);
     }
 
-    // Called by button (btTryAgain)
-    public void resetLevel()
+    public void resetLevel() // Called by button (btTryAgain)
     {
         Destroy(this.difficultyObj);
         instantiateDifficulty();
@@ -111,8 +107,7 @@ public class Scene1Controller : MonoBehaviour
         moveToNextCloud();
     }
 
-    // Called by button (btNextLevel)
-    public void goNextLevel()
+    public void goNextLevel() // Called by button (btNextLevel)
     {
         GameObject currentLevel =
             difficultiesObj.transform.GetChild(levelCounter).gameObject;
@@ -131,8 +126,7 @@ public class Scene1Controller : MonoBehaviour
         canvasNBCotroller.updateLevelTxt(levelCounter);
     }
     
-    // Start is called before the first frame update
-    void Start()
+    void Start() // Start is called before the first frame update
     {
         instantiateDifficulty();
 
@@ -142,8 +136,7 @@ public class Scene1Controller : MonoBehaviour
         moveToNextCloud();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update() // Update is called once per frame
     {
         if(gameOn)
         {
