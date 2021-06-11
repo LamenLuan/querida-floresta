@@ -7,6 +7,9 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
+    guid: 210c74ede4c0ce2469a879c12f7b07c9
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
     guid: 208fe6940a4d51f478034db23dfd1ecb
   - enabled: 1
     path: Assets/Scenes/Scene 1.unity
@@ -17,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene 3.unity
     guid: 67b34b411546f2849b09bc718314bb80
+  - enabled: 1
+    path: Assets/Scenes/Players Forest.unity
+    guid: 6c738e72a1fd0794397a792e04e13c1e
   m_configObjects: {}
