@@ -7,6 +7,8 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
     [SerializeField] private CanvasNarratorButtonsCotroller canvasNBCotroller;
+    [SerializeField] private 
+    Scene1NarratorAudiosController narratorAudiosController;
     [SerializeField] private AudioSource cloudAudio;
     [SerializeField] private AudioController audioController;
     private bool gameOn;
@@ -58,7 +60,11 @@ public class Scene1Controller : MonoBehaviour
                 audioController.hitSound();
                 rainObj = Instantiate(rainObjPrefabObj);
                 steamEffectsObj.SetActive(false);
-                if(levelCounter < 2) canvasNBCotroller.showNextLevelButton();
+                if(levelCounter < 2)
+                {
+                    narratorAudiosController.Invoke("playhitRightTimeAudio", 1f);
+                    canvasNBCotroller.showNextLevelButton();
+                }
                 // Here the narrator will congratulate the player
                 else
                 {
