@@ -43,11 +43,36 @@ public class Scene1Controller : MonoBehaviour
 
     private void moveToNextCloud()
     {
-        cloudTransform = difficultyObj.transform.GetChild(cloudCounter).transform;
+        cloudTransform =
+            difficultyObj.transform.GetChild(cloudCounter).transform;
         newHeight = cloudTransform.position.y + 5f;
 
-        cloudRenderer =
-            difficultyObj.transform.GetChild(cloudCounter).GetComponent<SpriteRenderer>();
+        Transform tranformAux = difficultyObj.transform.GetChild(cloudCounter);
+        cloudRenderer = tranformAux.GetComponent<SpriteRenderer>();
+    }
+
+    private void playANarratorAudio(
+        string audioToInvoke, string canvasFunction, float audioLength)
+    {
+        narratorAudiosController.Invoke(audioToInvoke, 1f);
+        if(canvasFunction != null)
+            canvasNBCotroller.Invoke(canvasFunction, audioLength);
+    }
+
+    private void playMissClickAudio()
+    {
+        switch (levelCounter)
+        {
+            case 0: playANarratorAudio(
+                "playMissClick1Audio", "enableTryAgainButton", 9f
+            ); break;
+            case 1: playANarratorAudio(
+                "playMissClick2Audio", "enableTryAgainButton", 9f
+            ); break;
+            case 2: playANarratorAudio(
+                "playMissClick3Audio", "enableTryAgainButton", 9f
+            ); break;   
+        }
     }
 
     public void checkClickOnCenario() // Called by Button (ImgBackground)
@@ -62,8 +87,9 @@ public class Scene1Controller : MonoBehaviour
                 steamEffectsObj.SetActive(false);
                 if(levelCounter < 2)
                 {
-                    narratorAudiosController.Invoke("playhitRightTimeAudio", 1f);
-                    canvasNBCotroller.showNextLevelButton();
+                    playANarratorAudio(
+                        "playhitRightTimeAudio", "showNextLevelButton", 5f
+                    );
                 }
                 // Here the narrator will congratulate the player
                 else
@@ -72,11 +98,13 @@ public class Scene1Controller : MonoBehaviour
                     Invoke("loadPlayersForest", 5f);
                 }
             }
+            // Miss click
             else
             {
                 audioController.missSound();
                 cloudAudio.Stop();
                 canvasNBCotroller.changeToTryAgainInterface();
+                playMissClickAudio();
             }
             audioController.setMusicVolume(0.1f);
             gameOn = false;
@@ -113,6 +141,14 @@ public class Scene1Controller : MonoBehaviour
         moveToNextCloud();
     }
 
+    private void playIntroductionAudio()
+    {
+        if(levelCounter == 1)
+            playANarratorAudio("playIntroduction2Audio", "showButtons", 7f);
+        else if(levelCounter == 2)
+            playANarratorAudio("playIntroduction3Audio", "showButtons", 10f);
+    }
+
     public void goNextLevel() // Called by button (btNextLevel)
     {
         GameObject currentLevel =
@@ -129,7 +165,9 @@ public class Scene1Controller : MonoBehaviour
         timeGap -= 0.1f;
 
         resetLevel();
+        canvasNBCotroller.hideButtons();
         canvasNBCotroller.updateLevelTxt(levelCounter);
+        playIntroductionAudio();
     }
     
     void Start() // Start is called before the first frame update
@@ -140,6 +178,7 @@ public class Scene1Controller : MonoBehaviour
         levelCounter = 0;
 
         moveToNextCloud();
+        playANarratorAudio("playIntroduction1Audio", "showButtons", 10f);
     }
 
     void Update() // Update is called once per frame

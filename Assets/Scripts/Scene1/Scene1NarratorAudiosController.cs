@@ -3,24 +3,64 @@ using UnityEngine;
 
 public class Scene1NarratorAudiosController : MonoBehaviour
 {
-    [SerializeField] public AudioSource hitRightTimeAudio;
+    [SerializeField] public AudioSource introduction1Audio, introduction2Audio,
+    introduction3Audio, missClick1Audio, missClick2Audio, missClick3Audio,
+    hitRightTimeAudio;
 
     private Animator narratorAnimator;
     
-    public void stophitRightTimeAudio() // Invoked by playhitRightTimeAudio()
+    private void stopSpeakingAnimation() // Invoked by playAudio(...)
     {
         narratorAnimator.SetBool("isSpeaking", false);
     }
 
-    public void playhitRightTimeAudio() // Invoked by Scene1Controller
+    private void playAudio(AudioSource audio, float secondsToStop)
     {
-        narratorAnimator.SetBool("isSpeaking", true);
-        hitRightTimeAudio.Play();
-        Invoke("stophitRightTimeAudio", 4f);
+        try
+        {
+            narratorAnimator.SetBool("isSpeaking", true);
+        }
+        catch (System.NullReferenceException)
+        {
+            narratorAnimator = GetComponent<Animator>();
+            narratorAnimator.SetBool("isSpeaking", true);
+        }
+        audio.PlayDelayed(0.4f);
+        Invoke("stopSpeakingAnimation", secondsToStop);
     }
 
-    void Start() // Start is called before the first frame update
+    public void playIntroduction1Audio() // Invoked by Scene1Controller
     {
-        narratorAnimator = GetComponent<Animator>();
+        playAudio(introduction1Audio, 9f);
+    }
+
+    public void playIntroduction2Audio() // Invoked by Scene1Controller
+    {
+        playAudio(introduction2Audio, 6f);
+    }
+
+    public void playIntroduction3Audio() // Invoked by Scene1Controller
+    {
+        playAudio(introduction3Audio, 9f);
+    }
+
+    public void playhitRightTimeAudio() // Invoked by Scene1Controller
+    {
+        playAudio(hitRightTimeAudio, 4f);
+    }
+
+    public void playMissClick1Audio() // Invoked by Scene1Controller
+    {
+        playAudio(missClick1Audio, 8f);
+    }
+
+    public void playMissClick2Audio() // Invoked by Scene1Controller
+    {
+        playAudio(missClick2Audio, 8f);
+    }
+
+    public void playMissClick3Audio() // Invoked by Scene1Controller
+    {
+        playAudio(missClick3Audio, 8f);
     }
 }
