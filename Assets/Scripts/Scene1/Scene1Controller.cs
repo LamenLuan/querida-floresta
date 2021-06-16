@@ -7,8 +7,7 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
     [SerializeField] private CanvasNarratorButtonsCotroller canvasNBCotroller;
-    [SerializeField] private 
-    Scene1NarratorAudiosController narratorAudiosController;
+    [SerializeField] private Scene1NarratorController narratorController;
     [SerializeField] private AudioSource cloudAudio;
     [SerializeField] private AudioController audioController;
     private bool gameOn;
@@ -54,7 +53,7 @@ public class Scene1Controller : MonoBehaviour
     private void playANarratorAudio(
         string audioToInvoke, string canvasFunction, float audioLength)
     {
-        narratorAudiosController.Invoke(audioToInvoke, 1f);
+        narratorController.Invoke(audioToInvoke, 1f);
         if(canvasFunction != null)
             canvasNBCotroller.Invoke(canvasFunction, audioLength);
     }
@@ -88,7 +87,7 @@ public class Scene1Controller : MonoBehaviour
                 if(levelCounter < 2)
                 {
                     playANarratorAudio(
-                        "playhitRightTimeAudio", "showNextLevelButton", 5f
+                        "playRightClickAudio", "showNextLevelButton", 5f
                     );
                 }
                 // Here the narrator will congratulate the player
@@ -221,6 +220,9 @@ public class Scene1Controller : MonoBehaviour
                     audioController.missSound();
                     canvasNBCotroller.changeToTryAgainInterface();
                     gameOn = false;
+                    playANarratorAudio(
+                        "playNotClickedAudio", "enableTryAgainButton", 7f
+                    );
                 }
 
                 timeCounter = 0f;
