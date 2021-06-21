@@ -19,7 +19,7 @@ public class NarratorController : MonoBehaviour
             narratorAnimator = GetComponent<Animator>();
             narratorAnimator.SetBool("isSpeaking", true);
         }
-        audio.PlayDelayed(0.4f);
+        audio.Play();
         Invoke("stopSpeakingAnimation", secondsToStop);
     }
 }
