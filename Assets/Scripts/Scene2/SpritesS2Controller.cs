@@ -14,7 +14,7 @@ public class SpritesS2Controller : MonoBehaviour
         treesRootsObject.SetActive(true);
     }
 
-    public void turnSceneGreen()
+    public void turnSceneGreenAndAnimalsHappy()
     {
         groundRenderer.sprite = greenGroundSprite;
 
@@ -23,10 +23,7 @@ public class SpritesS2Controller : MonoBehaviour
 
         greenBush1Object.SetActive(true);
         greenBush2Object.SetActive(true);
-    }
 
-    public void makeAnimalsHappy()
-    {
         antaRenderer.sprite = happyAntaSprite;
         capibaraRenderer.sprite = happyCapibaraSprite;
         frogRenderer.sprite = happyFrogSprite;

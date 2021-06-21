@@ -71,31 +71,25 @@ public class Scene2Controller : MonoBehaviour
         Action treesClicked = () => {
 
             playANarratorAudio(
-                "playTrashSelectedAudio", "showTreesRoots", 8.49f,
+                "playTreesSelectedAudio", "showTreesRoots", 8.74f,
                 Tcontroller.SPRITE
             );
             playANarratorAudio(
-                "playTrashSelectedAudio", "startRaining", 8.49f,
-                Tcontroller.SELF, 8.49f
+                "playAboutRootsAudio", null, 9.89f,
+                Tcontroller.SELF, 8.74f
             );
             playANarratorAudio(
-                "playTrashSelectedAudio", "turnSceneGreen", 8.49f,
-                Tcontroller.SPRITE, 16.98f
+                "playAboutEvaporationAudio", "startRaining", 16.56f,
+                Tcontroller.SELF, 18.63f
             );
             playANarratorAudio(
-                "playTrashSelectedAudio", "makeAnimalsHappy", 8.49f,
-                Tcontroller.SPRITE, 25.47f
+                "playAboutRainAudio", "turnSceneGreenAndAnimalsHappy", 8.96f,
+                Tcontroller.SPRITE, 35.19f
             );
             playANarratorAudio(
-                "playTrashSelectedAudio", "loadPlayersForest", 8.49f,
-                Tcontroller.SELF, 33.96f
+                "playSceneCompletedAudio", "loadPlayersForest", 9f,
+                Tcontroller.SELF, 44.15f
             );
-
-            // spritesController.Invoke("showTreesRoots", 3f);
-            // Invoke("startRaining", 6f);
-            // spritesController.Invoke("turnSceneGreen", 11f);
-            // spritesController.Invoke("makeAnimalsHappy", 11f);
-            // Invoke("loadPlayersForest", 16f);
         };
 
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {

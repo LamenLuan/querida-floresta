@@ -1477,8 +1477,8 @@ MonoBehaviour:
   difficultiesObj: {fileID: 1251939071}
   rainObjPrefabObj: {fileID: 191326, guid: b046278bb9b6e104790392b566667ba5, type: 3}
   steamEffectsObj: {fileID: 735939939}
-  canvasNBCotroller: {fileID: 1602911333}
-  narratorAudiosController: {fileID: 1994644471}
+  canvasController: {fileID: 1602911333}
+  narratorController: {fileID: 1994644471}
   cloudAudio: {fileID: 643497459}
   audioController: {fileID: 925052699}
 --- !u!20 &519420031
