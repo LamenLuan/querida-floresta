@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
     
     public void loadScene1()
     {
+        AplicationModel.isFirstTimeScene2 = true;
         SceneManager.LoadScene("Scene 1");
     }
 }
