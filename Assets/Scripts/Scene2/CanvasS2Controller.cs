@@ -8,17 +8,28 @@ public class CanvasS2Controller : MonoBehaviour
     [SerializeField] private GameObject backgroundCoverObj, toucanObj,
     tryAgainToucanObj;
 
-    // Called by the scene controller
-    public void changeToTryAgainInterface()
+    public void hideBackgroundCover() // Invoked by Scene2Controller
+    {
+        backgroundCoverObj.SetActive(false);
+    }
+
+    public void showBackgroundCover() // Invoked by Scene2Controller
+    {
+        backgroundCoverObj.SetActive(true);
+    }
+
+    public void changeToTryAgainInterface() // Called by the scene controller
     {
         toucanObj.SetActive(false);
+        backgroundCoverObj.GetComponent<Image>().color =
+            new Vector4(0f, 0f, 0f, 0.5f);
+
         backgroundCoverObj.SetActive(true);
         tryAgainToucanObj.SetActive(true);
         tryAgainButton.gameObject.SetActive(true);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Start() // Start is called before the first frame update
     {
         tryAgainButton.onClick.AddListener(() => {
             SceneManager.LoadScene("Scene 2");
