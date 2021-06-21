@@ -6,7 +6,7 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private float timeGap;
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
-    [SerializeField] private CanvasNarratorButtonsCotroller canvasNBCotroller;
+    [SerializeField] private CanvasNarratorButtonsCotroller canvasController;
     [SerializeField] private Scene1NarratorController narratorController;
     [SerializeField] private AudioSource cloudAudio;
     [SerializeField] private AudioController audioController;
@@ -55,7 +55,7 @@ public class Scene1Controller : MonoBehaviour
     {
         narratorController.Invoke(audioToInvoke, 1f);
         if(canvasFunction != null)
-            canvasNBCotroller.Invoke(canvasFunction, audioLength);
+            canvasController.Invoke(canvasFunction, audioLength);
     }
 
     private void playMissClickAudio()
@@ -102,7 +102,7 @@ public class Scene1Controller : MonoBehaviour
             {
                 audioController.missSound();
                 cloudAudio.Stop();
-                canvasNBCotroller.changeToTryAgainInterface();
+                canvasController.changeToTryAgainInterface();
                 playMissClickAudio();
             }
             audioController.setMusicVolume(0.1f);
@@ -132,7 +132,7 @@ public class Scene1Controller : MonoBehaviour
         Destroy(this.difficultyObj);
         instantiateDifficulty();
 
-        canvasNBCotroller.resetInterface();
+        canvasController.resetInterface();
         steamEffectsObj.SetActive(true);
         Destroy(rainObj);
 
@@ -164,8 +164,8 @@ public class Scene1Controller : MonoBehaviour
         timeGap -= 0.1f;
 
         resetLevel();
-        canvasNBCotroller.hideButtons();
-        canvasNBCotroller.updateLevelTxt(levelCounter);
+        canvasController.hideButtons();
+        canvasController.updateLevelTxt(levelCounter);
         playIntroductionAudio();
     }
     
@@ -209,7 +209,7 @@ public class Scene1Controller : MonoBehaviour
             }
             else
             {
-                canvasNBCotroller.changeQuantityTxt(++cloudCounter);
+                canvasController.changeQuantityTxt(++cloudCounter);
 
                 if(cloudCounter < cloudNumber)
                 {
@@ -218,7 +218,7 @@ public class Scene1Controller : MonoBehaviour
                 else if(cloudCounter > cloudNumber)
                 {
                     audioController.missSound();
-                    canvasNBCotroller.changeToTryAgainInterface();
+                    canvasController.changeToTryAgainInterface();
                     gameOn = false;
                     playANarratorAudio(
                         "playNotClickedAudio", "enableTryAgainButton", 7f

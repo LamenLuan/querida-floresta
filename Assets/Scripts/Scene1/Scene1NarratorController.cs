@@ -6,7 +6,7 @@ public class Scene1NarratorController : NarratorController
     introduction3Audio, missClick1Audio, missClick2Audio, missClick3Audio,
     rightClickAudio, notClickedAudio;
     
-    /* ALL INVOKED BY Scene1Controller */
+    /* All invoked by Scene1Controller */
     
     public void playIntroduction1Audio()
     {
