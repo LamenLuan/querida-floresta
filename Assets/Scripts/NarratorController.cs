@@ -8,7 +8,7 @@ public class NarratorController : MonoBehaviour
         narratorAnimator.SetBool("isSpeaking", false);
     }
 
-    protected void playAudio(AudioSource audio, float secondsToStop)
+    protected void playAudio(AudioSource audio)
     {
         try
         {
@@ -19,7 +19,7 @@ public class NarratorController : MonoBehaviour
             narratorAnimator = GetComponent<Animator>();
             narratorAnimator.SetBool("isSpeaking", true);
         }
-        audio.Play();
-        Invoke("stopSpeakingAnimation", secondsToStop);
+        audio.PlayDelayed(0.6f);
+        Invoke("stopSpeakingAnimation", audio.clip.length);
     }
 }

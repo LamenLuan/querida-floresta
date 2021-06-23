@@ -10,41 +10,41 @@ public class Scene1NarratorController : NarratorController
     
     public void playIntroduction1Audio()
     {
-        playAudio(introduction1Audio, 9f);
+        playAudio(introduction1Audio);
     }
 
     public void playIntroduction2Audio()
     {
-        playAudio(introduction2Audio, 6f);
+        playAudio(introduction2Audio);
     }
 
     public void playIntroduction3Audio()
     {
-        playAudio(introduction3Audio, 9f);
+        playAudio(introduction3Audio);
     }
 
     public void playRightClickAudio()
     {
-        playAudio(rightClickAudio, 4f);
+        playAudio(rightClickAudio);
     }
 
     public void playMissClick1Audio()
     {
-        playAudio(missClick1Audio, 8f);
+        playAudio(missClick1Audio);
     }
 
     public void playMissClick2Audio()
     {
-        playAudio(missClick2Audio, 8f);
+        playAudio(missClick2Audio);
     }
 
     public void playMissClick3Audio()
     {
-        playAudio(missClick3Audio, 8f);
+        playAudio(missClick3Audio);
     }
 
     public void playNotClickedAudio()
     {
-        playAudio(notClickedAudio, 6f);
+        playAudio(notClickedAudio);
     }
 }

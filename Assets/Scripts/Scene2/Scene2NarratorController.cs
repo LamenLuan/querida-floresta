@@ -10,42 +10,42 @@ public class Scene2NarratorController : NarratorController
     /* All invoked by Scene2Controller */
     public void playIntroductionAudio()
     {
-        playAudio(introductionAudio, 26.66f);
+        playAudio(introductionAudio);
     }
 
     public void playTrashSelectedAudio()
     {
-        playAudio(trashSelectedAudio, 6.49f);
+        playAudio(trashSelectedAudio);
     }
 
     public void playCowSelectedAudio()
     {
-        playAudio(cowSelectedAudio, 5.76f);
+        playAudio(cowSelectedAudio);
     }
 
     public void playTreesSelectedAudio()
     {
-        playAudio(treesSelectedAudio, 6.74f);
+        playAudio(treesSelectedAudio);
     }
 
     public void playAboutRootsAudio()
     {
-        playAudio(aboutRootsAudio, 7.89f);
+        playAudio(aboutRootsAudio);
     }
 
     public void playAboutEvaporationAudio()
     {
-        playAudio(aboutEvaporationAudio, 14.56f);
+        playAudio(aboutEvaporationAudio);
     }
 
     public void playAboutRainAudio()
     {
-        playAudio(aboutRainAudio, 6.96f);
+        playAudio(aboutRainAudio);
     }
 
     public void playSceneCompletedAudio()
     {
         audioController.sceneCompletedSound();
-        playAudio(sceneCompletedAudio, 4f);
+        playAudio(sceneCompletedAudio);
     }
 }
