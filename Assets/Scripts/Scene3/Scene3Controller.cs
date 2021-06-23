@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Scene3Controller : MonoBehaviour
 {
-    private byte[] tries = {0, 0, 0};
-    [SerializeField] private CanvasS3Controller canvasS3Controller;
+    [SerializeField] private CanvasS3Controller canvasController;
     [SerializeField] private AudioController audioController;
+    [SerializeField] private NarratorS3Controller narratorController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn;
+    private byte[] tries;
+    private byte index;
 
     private void loadPlayersForest() // Invoked in Start()
     {
@@ -28,63 +30,68 @@ public class Scene3Controller : MonoBehaviour
         foreach(Button btn in buttons) btn.onClick.RemoveAllListeners();
     }
 
-    private void makeHit(Button button)
+    private void setRightAnswer(Button button)
     {
+        canvasController.setAnswerEffect(button, true);
         audioController.hitSound();
-        canvasS3Controller.setOutline(button, true);
+        narratorController.playRightAnswerAudio();
+        if(index < 3) index++;
     }
 
-    private void makeMiss(Button button)
+    private void setWrongAnswer(Button button)
     {
+        canvasController.setAnswerEffect(button, false);
         audioController.missSound();
-        canvasS3Controller.setOutline(button, false);
+        narratorController.playWrongAnswerAudio();
+        tries[index]++;
     }
 
     void Start() // Start is called before the first frame update
     {
+        tries = new Byte[3];
+        index = 0;
+
+        narratorController.playIntroductionAudio();
+
         Action changeToQuestionThree = () => {
-            canvasS3Controller.Invoke("changeToQuestionThree", 2f);
+            canvasController.Invoke("changeToQuestionThree", 2.5f);
 
             word1Btn.onClick.AddListener( () => {
-                audioController.hitSound();
-                canvasS3Controller.Invoke("levelIsOver", 2f);
-                audioController.Invoke("destroyHitMissAudios", 2f);
-                Invoke("loadPlayersForest", 5f);
+                setRightAnswer(word1Btn);
+                canvasController.Invoke("levelIsOver", 2.5f);
+                narratorController.playSceneCompletedAudio();
+                Invoke(
+                    "loadPlayersForest",
+                    narratorController.SceneCompletedAudio.clip.length + 3f
+                );
             });
-            word2Btn.onClick.AddListener( () => {
-                audioController.missSound();
-                tries[2]++;
-            });
+            word2Btn.onClick.AddListener( () => setWrongAnswer(word2Btn) );
         };
 
         Action changeToQuestionTwo = () => {
             removeListenerFromButtons(); 
-            canvasS3Controller.Invoke("changeToQuestionTwo", 2f);
+            canvasController.Invoke("changeToQuestionTwo", 2f);
 
-            option1Btn.onClick.AddListener( () => {
-                makeMiss(option1Btn);
-                tries[1]++;
-            });
+            option1Btn.onClick.AddListener( () => setWrongAnswer(option1Btn) );
             option2Btn.onClick.AddListener( () => {
-                makeHit(option2Btn);
+                setRightAnswer(option2Btn);
+                narratorController.Invoke(
+                    "playQuestion3Audio",
+                    narratorController.RightAnswerAudio.clip.length + 1f
+                );
                 changeToQuestionThree();
             });
-            option3Btn.onClick.AddListener( () => {
-                makeMiss(option3Btn);
-                tries[1]++;
-            });
+            option3Btn.onClick.AddListener( () => setWrongAnswer(option3Btn) );
         };
 
-        option1Btn.onClick.AddListener( () => {
-            makeMiss(option1Btn);
-            tries[0]++;
-        });
-        option2Btn.onClick.AddListener( () => {
-            makeMiss(option2Btn);
-            tries[0]++;
-        });
+        option1Btn.onClick.AddListener( () => setWrongAnswer(option1Btn) );
+        option2Btn.onClick.AddListener( () => setWrongAnswer(option2Btn) );
         option3Btn.onClick.AddListener( () => {
-            makeHit(option3Btn);
+            setRightAnswer(option3Btn);
+            narratorController.Invoke(
+                "playQuestion2Audio",
+                narratorController.RightAnswerAudio.clip.length + 1f
+            );
             changeToQuestionTwo();
         });
     }
