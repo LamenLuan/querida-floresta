@@ -6,7 +6,7 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private float timeGap;
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
-    [SerializeField] private CanvasNarratorButtonsCotroller canvasController;
+    [SerializeField] private CanvasS1Controller canvasController;
     [SerializeField] private Scene1NarratorController narratorController;
     [SerializeField] private AudioSource cloudAudio;
     [SerializeField] private AudioController audioController;

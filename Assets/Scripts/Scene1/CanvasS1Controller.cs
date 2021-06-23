@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasNarratorButtonsCotroller : MonoBehaviour
+public class CanvasS1Controller : MonoBehaviour
 {
     [SerializeField] private GameObject backgroundCoverObj, toucanObj,
     levelTxtObj, nextLevelBtnObj, quitBtnObj, helpBtnObj, startBtnObj,

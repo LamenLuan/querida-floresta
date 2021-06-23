@@ -4261,7 +4261,7 @@ GameObject:
   - component: {fileID: 1602911329}
   - component: {fileID: 1602911333}
   m_Layer: 5
-  m_Name: CanvasNarratorButtons
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
