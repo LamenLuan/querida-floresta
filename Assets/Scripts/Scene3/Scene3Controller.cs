@@ -59,10 +59,14 @@ public class Scene3Controller : MonoBehaviour
             word1Btn.onClick.AddListener( () => {
                 setRightAnswer(word1Btn);
                 canvasController.Invoke("levelIsOver", 2.5f);
-                narratorController.playSceneCompletedAudio();
+                narratorController.Invoke(
+                    "playSceneCompletedAudio",
+                    narratorController.RightAnswerAudio.clip.length + 1f
+                );
                 Invoke(
                     "loadPlayersForest",
-                    narratorController.SceneCompletedAudio.clip.length + 3f
+                    narratorController.SceneCompletedAudio.clip.length + 
+                    narratorController.RightAnswerAudio.clip.length + 3f
                 );
             });
             word2Btn.onClick.AddListener( () => setWrongAnswer(word2Btn) );
