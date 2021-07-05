@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Scene1Controller : MonoBehaviour
 {
-    [SerializeField] private float timeGap;
+    [SerializeField] private float timeGap, speedIncrement;
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
     [SerializeField] private CanvasS1Controller canvasController;
@@ -161,7 +161,7 @@ public class Scene1Controller : MonoBehaviour
         currentLevel.SetActive(false);
 
         levelCounter++;
-        timeGap -= 0.025f;
+        timeGap -= speedIncrement;
 
         resetLevel();
         canvasController.hideButtons();

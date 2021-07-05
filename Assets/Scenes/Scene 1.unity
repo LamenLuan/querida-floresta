@@ -1474,6 +1474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeGap: 1
+  speedIncrement: 0.025
   difficultiesObj: {fileID: 1251939071}
   rainObjPrefabObj: {fileID: 191326, guid: b046278bb9b6e104790392b566667ba5, type: 3}
   steamEffectsObj: {fileID: 735939939}
