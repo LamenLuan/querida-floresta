@@ -161,7 +161,7 @@ public class Scene1Controller : MonoBehaviour
         currentLevel.SetActive(false);
 
         levelCounter++;
-        timeGap -= 0.1f;
+        timeGap -= 0.025f;
 
         resetLevel();
         canvasController.hideButtons();
