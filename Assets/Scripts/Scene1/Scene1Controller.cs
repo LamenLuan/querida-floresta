@@ -87,7 +87,8 @@ public class Scene1Controller : MonoBehaviour
                 else
                 {
                     audioController.sceneCompletedSound();
-                    Invoke("loadPlayersForest", 5f);
+                    narratorController.Invoke("playCongratsAudio", 0.5f);
+                    Invoke("loadPlayersForest", 9f);
                 }
             }
             // Miss click

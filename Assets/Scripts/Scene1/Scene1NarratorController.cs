@@ -4,7 +4,7 @@ public class Scene1NarratorController : NarratorController
 {
     [SerializeField] public AudioSource introduction1Audio, introduction2Audio,
     introduction3Audio, missClick1Audio, missClick2Audio, missClick3Audio,
-    rightClickAudio, notClickedAudio, helpAudio;
+    rightClickAudio, notClickedAudio, helpAudio, congratsAudio;
     
     /* All invoked by Scene1Controller */
     
@@ -51,5 +51,10 @@ public class Scene1NarratorController : NarratorController
     public void playHelpAudio()
     {
         playAudio(helpAudio);
+    }
+
+    public void playCongratsAudio()
+    {
+        playAudio(congratsAudio);
     }
 }
