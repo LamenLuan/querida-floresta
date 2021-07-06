@@ -4,7 +4,7 @@ public class Scene2NarratorController : NarratorController
 {
     [SerializeField] private AudioSource introductionAudio, trashSelectedAudio, 
     cowSelectedAudio, treesSelectedAudio, aboutRootsAudio,
-    aboutEvaporationAudio, aboutRainAudio, sceneCompletedAudio;
+    aboutEvaporationAudio, aboutRainAudio, sceneCompletedAudio, helpAudio;
     [SerializeField] private AudioController audioController;
 
     /* All invoked by Scene2Controller */
@@ -47,5 +47,10 @@ public class Scene2NarratorController : NarratorController
     {
         audioController.sceneCompletedSound();
         playAudio(sceneCompletedAudio);
+    }
+
+    public void playHelpAudio()
+    {
+        playAudio(helpAudio);
     }
 }

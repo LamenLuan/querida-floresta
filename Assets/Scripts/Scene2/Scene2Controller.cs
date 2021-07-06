@@ -10,6 +10,7 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private Button cowButton, garbageButton, treesButton;
     [SerializeField] private GameObject rainPrefab, cowObject, garbageObject, 
         treesObject;
+    [SerializeField] private AudioController audioController;
     [SerializeField] private SpritesS2Controller spritesController;
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
@@ -18,6 +19,7 @@ public class Scene2Controller : MonoBehaviour
 
     public void quitScene() // Called by Button (btQuit)
     {
+        AplicationModel.isFirstTimeScene2 = true;
         SceneManager.LoadScene("Main Menu");
     }
 
@@ -25,6 +27,12 @@ public class Scene2Controller : MonoBehaviour
     {
         AplicationModel.scenesCompleted++;
         SceneManager.LoadScene("Players Forest");
+    }
+
+    public void showHelp()
+    {
+        playANarratorAudio("playHelpAudio", "leaveHelpInterface", 9f);
+        canvasController.changeToHelpInterface();
     }
 
     private void startRaining() // Invoked by in Start()
