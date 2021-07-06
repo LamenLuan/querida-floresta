@@ -37,7 +37,8 @@ public class Scene1Controller : MonoBehaviour
 
     public void showHelp() // Called by Button (btHelp)
     {
-        
+        playANarratorAudio("playHelpAudio", "resetInterface", 13f);
+        canvasController.changeToHelpInterface();
     }
 
     private void moveToNextCloud()
