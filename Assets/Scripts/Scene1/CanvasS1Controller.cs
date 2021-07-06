@@ -30,7 +30,24 @@ public class CanvasS1Controller : MonoBehaviour
 
     public void updateLevelTxt(int level)
     {
-        levelTxtObj.GetComponent<Text>().text = "Fase " + (level + 1).ToString();
+        Text levelTxt = levelTxtObj.GetComponent<Text>();
+
+        levelTxt.text = "Fase " + (level + 1).ToString();
+    }
+
+    private void changeToucanRect(
+        float left, float top, float right, float bottom, float minX,
+        float minY, float maxX, float maxY)
+    {
+        RectTransform rect = toucanObj.GetComponent<Image>().rectTransform;
+
+        RectTransformExtensions.SetLeft(rect, left);
+        RectTransformExtensions.SetTop(rect, top);
+        RectTransformExtensions.SetRight(rect, right);
+        RectTransformExtensions.SetBottom(rect, bottom);
+
+        rect.anchorMin = new Vector2(minX, minY);
+        rect.anchorMax = new Vector2(maxX, maxY);
     }
 
     public void resetInterface()
@@ -44,13 +61,10 @@ public class CanvasS1Controller : MonoBehaviour
         tryAgainBtnObj.SetActive(false);
         nextLevelBtnObj.SetActive(false);
         
-        RectTransform rect = toucanObj.GetComponent<Image>().rectTransform;
-        RectTransformExtensions.SetLeft(rect, -0.000289917f);
-        RectTransformExtensions.SetTop(rect, 0.08061218f);
-        RectTransformExtensions.SetRight(rect, 0.7796173f);
-        RectTransformExtensions.SetBottom(rect, -0.7994232f);
-        rect.anchorMin = new Vector2(0f, 0.319f);
-        rect.anchorMax = new Vector2(0.2241268f, 0.61f);
+        changeToucanRect(
+            -0.000289917f, 0.08061218f, 0.7796173f, -0.7994232f, 0f, 0.319f,
+            0.2241268f, 0.61f
+        );
 
         backgroundCoverObj.GetComponent<Image>().color =
             new Vector4(1f, 1f, 1f, 0f);            
@@ -88,13 +102,10 @@ public class CanvasS1Controller : MonoBehaviour
         backgroundCoverObj.GetComponent<Image>().color =
             new Vector4(0f, 0f, 0f, 0.55f);
 
-        RectTransform rect = toucanObj.GetComponent<Image>().rectTransform;
-        RectTransformExtensions.SetLeft(rect, 0.478302f);
-        RectTransformExtensions.SetTop(rect, 0.594101f);
-        RectTransformExtensions.SetRight(rect, 0.7182922f);
-        RectTransformExtensions.SetBottom(rect, 0.1781006f);
-        rect.anchorMin = new Vector2(0.3382536f, 0.355f);
-        rect.anchorMax = new Vector2(0.6632535f, 0.776826f);
+        changeToucanRect(
+            0.478302f, 0.594101f, 0.7182922f, 0.1781006f, 0.3382536f, 0.355f,
+            0.6632535f, 0.776826f
+        );
 
         backgroundCoverObj.SetActive(true);
         tryAgainBtnObj.SetActive(true);

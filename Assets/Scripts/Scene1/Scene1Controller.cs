@@ -60,18 +60,10 @@ public class Scene1Controller : MonoBehaviour
 
     private void playMissClickAudio()
     {
-        switch (levelCounter)
-        {
-            case 0: playANarratorAudio(
-                "playMissClick1Audio", "enableTryAgainButton", 9f
-            ); break;
-            case 1: playANarratorAudio(
-                "playMissClick2Audio", "enableTryAgainButton", 9f
-            ); break;
-            case 2: playANarratorAudio(
-                "playMissClick3Audio", "enableTryAgainButton", 9f
-            ); break;   
-        }
+        string missClickAudio =
+            "playMissClick" + (levelCounter + 1) + "Audio";
+
+        playANarratorAudio(missClickAudio, "enableTryAgainButton", 9f);
     }
 
     public void checkClickOnCenario() // Called by Button (ImgBackground)
