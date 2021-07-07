@@ -1,34 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayersForestController : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private CanvasPFController canvasController;
     [SerializeField] private AudioController audioController;
     [SerializeField] private NarratorPFController narratorController;
     private string functionToInvoke;
 
-    public void loadMainMenu() // Invoked in Start()
-    {
-        SceneManager.LoadScene("Main Menu");
-    }
-
-    public void loadScene2() // Invoked in Start()
-    {
-        SceneManager.LoadScene("Scene 2");
-    }
-
-    public void loadScene3() // Invoked in Start()
-    {
-        SceneManager.LoadScene("Scene 3");
-    }
-
     private void showReward()
     {
         canvasController.removeLockedEffect();
         audioController.sceneCompletedSound();
-        if(functionToInvoke != null) Invoke(functionToInvoke, 8f);
+        if(functionToInvoke != null) sceneLoader.Invoke(functionToInvoke, 8f);
     }
 
     private void addButtonInCanvas() // Invoked in Start()

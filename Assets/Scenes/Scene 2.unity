@@ -1101,10 +1101,10 @@ RectTransform:
   m_Father: {fileID: 952371156}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 84, y: 0.00048828}
-  m_SizeDelta: {x: 303.32172, y: 201.2666}
+  m_AnchorMin: {x: 0.41353798, y: 0.2668355}
+  m_AnchorMax: {x: 0.80700004, y: 0.73279315}
+  m_AnchoredPosition: {x: -1, y: 0.00048828125}
+  m_SizeDelta: {x: -0.6782837, y: -0.73339844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &387271802
 MonoBehaviour:
@@ -1578,6 +1578,7 @@ GameObject:
   - component: {fileID: 561014163}
   - component: {fileID: 561014164}
   - component: {fileID: 561014166}
+  - component: {fileID: 561014167}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1669,10 +1670,22 @@ MonoBehaviour:
   cowObject: {fileID: 990396153}
   garbageObject: {fileID: 1312717813}
   treesObject: {fileID: 1187759773}
-  audioController: {fileID: 0}
+  sceneLoader: {fileID: 561014167}
   spritesController: {fileID: 2090861787}
   canvasController: {fileID: 952371157}
   narratorController: {fileID: 856145178}
+--- !u!114 &561014167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561014162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9aeefb2665c78459549603bfad669d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &561442807
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,7 +1973,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 561014166}
-        m_MethodName: quitScene
+        m_MethodName: setFirstTimeInScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 561014167}
+        m_MethodName: loadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2448,7 +2472,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 7
   m_TargetDisplay: 0
 --- !u!224 &952371156
 RectTransform:

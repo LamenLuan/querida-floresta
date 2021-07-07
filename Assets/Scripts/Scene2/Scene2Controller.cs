@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 using DigitalRuby.RainMaker;
 
@@ -10,23 +9,16 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private Button cowButton, garbageButton, treesButton;
     [SerializeField] private GameObject rainPrefab, cowObject, garbageObject, 
         treesObject;
-    [SerializeField] private AudioController audioController;
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private SpritesS2Controller spritesController;
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
     private RainScript2D rainScript;
-    private enum Tcontroller { CANVAS, SPRITE, SELF }
+    private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
 
-    public void quitScene() // Called by Button (btQuit)
+    public void setFirstTimeInScene() // Called by Button (btQuit)
     {
         AplicationModel.isFirstTimeScene2 = true;
-        SceneManager.LoadScene("Main Menu");
-    }
-
-    private void loadPlayersForest() // Invoked in Start()
-    {
-        AplicationModel.scenesCompleted++;
-        SceneManager.LoadScene("Players Forest");
     }
 
     public void showHelp()
@@ -59,6 +51,8 @@ public class Scene2Controller : MonoBehaviour
                     canvasController.Invoke(sceneFunction, length); break;
                 case Tcontroller.SPRITE:
                     spritesController.Invoke(sceneFunction, length); break;
+                case Tcontroller.SCENE_LOADER:
+                    sceneLoader.Invoke(sceneFunction, length); break;
                 
                 default: Invoke(sceneFunction, length); break;
             }
@@ -78,6 +72,9 @@ public class Scene2Controller : MonoBehaviour
 
         Action treesClicked = () => {
 
+            AplicationModel.scenesCompleted++;
+            setFirstTimeInScene();
+            
             playANarratorAudio(
                 "playTreesSelectedAudio", "showTreesRoots", 8.74f,
                 Tcontroller.SPRITE
@@ -96,7 +93,7 @@ public class Scene2Controller : MonoBehaviour
             );
             playANarratorAudio(
                 "playSceneCompletedAudio", "loadPlayersForest", 9f,
-                Tcontroller.SELF, 44.15f
+                Tcontroller.SCENE_LOADER, 44.15f
             );
         };
 

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Scene1Controller : MonoBehaviour
 {
     [SerializeField] private float timeGap, speedIncrement;
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private CanvasS1Controller canvasController;
     [SerializeField] private Scene1NarratorController narratorController;
     [SerializeField] private AudioSource cloudAudio;
@@ -17,22 +17,11 @@ public class Scene1Controller : MonoBehaviour
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
 
-    private void loadPlayersForest() // Invoked in Start()
-    {
-        AplicationModel.scenesCompleted++;
-        SceneManager.LoadScene("Players Forest");
-    }
-
     public void startGame() // Called by Button (btStart)
     {
         gameOn = true;
         cloudAudio.Play();
         audioController.setMusicVolume(0.01f);
-    }
-
-    public void quitScene() // Called by Button (btQuit)
-    {
-        SceneManager.LoadScene("Main Menu");
     }
 
     public void showHelp() // Called by Button (btHelp)
@@ -86,9 +75,10 @@ public class Scene1Controller : MonoBehaviour
                 // Here the narrator will congratulate the player
                 else
                 {
+                    AplicationModel.scenesCompleted++;
                     audioController.sceneCompletedSound();
                     narratorController.Invoke("playCongratsAudio", 0.5f);
-                    Invoke("loadPlayersForest", 9f);
+                    sceneLoader.Invoke("loadPlayersForest", 9f);
                 }
             }
             // Miss click

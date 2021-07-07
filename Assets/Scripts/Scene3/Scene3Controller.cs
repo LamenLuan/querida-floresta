@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Scene3Controller : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private CanvasS3Controller canvasController;
     [SerializeField] private AudioController audioController;
     [SerializeField] private NarratorS3Controller narratorController;
@@ -12,17 +12,6 @@ public class Scene3Controller : MonoBehaviour
     word1Btn, word2Btn;
     private byte[] tries;
     private byte index;
-
-    private void loadPlayersForest() // Invoked in Start()
-    {
-        AplicationModel.scenesCompleted++;
-        SceneManager.LoadScene("Players Forest");
-    }
-
-    public void quitScene() // Called by Button (btQuit)
-    {
-        SceneManager.LoadScene("Main Menu");
-    }
 
     private void removeListenerFromButtons() // Invoked in Start()
     {
@@ -54,6 +43,7 @@ public class Scene3Controller : MonoBehaviour
         narratorController.playIntroductionAudio();
 
         Action changeToQuestionThree = () => {
+            AplicationModel.scenesCompleted++;
             canvasController.Invoke("changeToQuestionThree", 2.5f);
 
             word1Btn.onClick.AddListener( () => {
@@ -63,7 +53,7 @@ public class Scene3Controller : MonoBehaviour
                     "playSceneCompletedAudio",
                     narratorController.RightAnswerAudio.clip.length + 1f
                 );
-                Invoke(
+                sceneLoader.Invoke(
                     "loadPlayersForest",
                     narratorController.SceneCompletedAudio.clip.length + 
                     narratorController.RightAnswerAudio.clip.length + 3f

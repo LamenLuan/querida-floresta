@@ -1992,8 +1992,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1923032477}
-        m_MethodName: quitScene
+      - m_Target: {fileID: 1923032478}
+        m_MethodName: loadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2965,6 +2965,7 @@ GameObject:
   - component: {fileID: 1923032475}
   - component: {fileID: 1923032474}
   - component: {fileID: 1923032477}
+  - component: {fileID: 1923032478}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3049,6 +3050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46db73f1e0be7e448f27bb6c335557b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneLoader: {fileID: 1923032478}
   canvasController: {fileID: 314504743}
   audioController: {fileID: 990001252}
   narratorController: {fileID: 1236630431}
@@ -3057,6 +3059,18 @@ MonoBehaviour:
   option3Btn: {fileID: 1898942960}
   word1Btn: {fileID: 109767233}
   word2Btn: {fileID: 1052823642}
+--- !u!114 &1923032478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923032473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9aeefb2665c78459549603bfad669d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1927271103
 GameObject:
   m_ObjectHideFlags: 0
