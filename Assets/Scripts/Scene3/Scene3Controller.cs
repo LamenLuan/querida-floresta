@@ -9,13 +9,15 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private AudioController audioController;
     [SerializeField] private NarratorS3Controller narratorController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
-    word1Btn, word2Btn;
+    word1Btn, word2Btn, repeatQuestionBtn;
     private byte[] tries;
     private byte index;
 
     private void removeListenerFromButtons() // Invoked in Start()
     {
-        Button[] buttons = {option1Btn, option2Btn, option3Btn};
+        Button[] buttons =
+            {option1Btn, option2Btn, option3Btn, repeatQuestionBtn};
+
         foreach(Button btn in buttons) btn.onClick.RemoveAllListeners();
     }
 
@@ -40,9 +42,16 @@ public class Scene3Controller : MonoBehaviour
         tries = new Byte[3];
         index = 0;
 
+        repeatQuestionBtn.onClick.AddListener(
+            () => narratorController.playQuestion1Audio()
+        );
         narratorController.playIntroductionAudio();
 
         Action changeToQuestionThree = () => {
+            removeListenerFromButtons(); 
+            repeatQuestionBtn.onClick.AddListener(
+                () => narratorController.playQuestion3Audio()
+            );
             AplicationModel.scenesCompleted++;
             canvasController.Invoke("changeToQuestionThree", 2.5f);
 
@@ -64,6 +73,9 @@ public class Scene3Controller : MonoBehaviour
 
         Action changeToQuestionTwo = () => {
             removeListenerFromButtons(); 
+            repeatQuestionBtn.onClick.AddListener(
+                () => narratorController.playQuestion2Audio()
+            );
             canvasController.Invoke("changeToQuestionTwo", 2f);
 
             option1Btn.onClick.AddListener( () => setWrongAnswer(option1Btn) );

@@ -23,7 +23,7 @@ public class NarratorS3Controller : NarratorController
         playAudio(audio);
     }
 
-    private void playQuestion1Audio() // Invoked by playIntroductionAudio()
+    public void playQuestion1Audio() // Invoked by playIntroductionAudio()
     {
         playNarratorAudio(question1Audio);
     }

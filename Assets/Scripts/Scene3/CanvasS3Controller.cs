@@ -6,7 +6,7 @@ using System;
 public class CanvasS3Controller : MonoBehaviour
 {
     [SerializeField] private GameObject icon1BtnObj, icon2BtnObj, icon3BtnObj,
-    word1Obj, word2Obj, backgroundCoverObj, quitButtonObj;
+    word1Obj, word2Obj, backgroundCoverObj, quitButtonObj, repeatQuestionBtnObj;
     [SerializeField] private Sprite btn1Sprite, btn2Sprite, btn3Sprite;
 
     IEnumerator ResetEffect(Component component, bool isOutline)
@@ -14,11 +14,9 @@ public class CanvasS3Controller : MonoBehaviour
         yield return new WaitForSeconds(2f);
         
         if(isOutline)
-        {
-            ( (Outline) component ).effectColor =
-                new Color(0.312f, 0.208f, 0f);
-        }
-        else ( (Image) component ).color = new Color(1f, 1f, 1f);
+            ((Outline) component).effectColor = new Color(0.312f, 0.208f, 0f);
+        else
+            ((Image) component).color = new Color(1f, 1f, 1f);
     }
 
     public void setAnswerEffect(Button button, bool isRightAnswer)
@@ -66,9 +64,8 @@ public class CanvasS3Controller : MonoBehaviour
 
     public void changeToQuestionThree() // Invoked by Scene3Controller
     {
-        Destroy(icon1BtnObj);
-        Destroy(icon2BtnObj);
-        Destroy(icon3BtnObj);
+        GameObject[] objects = {icon1BtnObj, icon2BtnObj, icon3BtnObj};
+        foreach (var obj in objects) Destroy(obj);
 
         word1Obj.SetActive(true);
         word2Obj.SetActive(true);
@@ -76,8 +73,9 @@ public class CanvasS3Controller : MonoBehaviour
 
     public void levelIsOver() // Invoked by Scene3Controller
     {
-        Destroy(quitButtonObj);
-        Destroy(word1Obj);
-        Destroy(word2Obj);
+        GameObject[] objects = {
+            repeatQuestionBtnObj, quitButtonObj, word1Obj , word2Obj,
+        };
+        foreach (var obj in objects) Destroy(obj);
     }
 }
