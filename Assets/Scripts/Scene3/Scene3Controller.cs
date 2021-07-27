@@ -10,7 +10,7 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private NarratorS3Controller narratorController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn, repeatQuestionBtn;
-    private byte[] tries;
+    private byte[] misses;
     private byte index;
 
     private void removeListenerFromButtons() // Invoked in Start()
@@ -34,12 +34,21 @@ public class Scene3Controller : MonoBehaviour
         canvasController.setAnswerEffect(button, false);
         audioController.missSound();
         narratorController.playWrongAnswerAudio();
-        tries[index]++;
+        misses[index]++;
+    }
+
+    private void sendDataToReport()
+    {
+        ReportCreator.writeLine("Atividade 3");
+        for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
+            "Questao " + (i + 1) +  ": " + misses[i]
+        );
+        ReportCreator.writeLine("\n");
     }
 
     void Start() // Start is called before the first frame update
     {
-        tries = new Byte[3];
+        misses = new byte[3];
         index = 0;
 
         repeatQuestionBtn.onClick.AddListener(
@@ -56,6 +65,7 @@ public class Scene3Controller : MonoBehaviour
             canvasController.Invoke("changeToQuestionThree", 2.5f);
 
             word1Btn.onClick.AddListener( () => {
+                sendDataToReport();
                 setRightAnswer(word1Btn);
                 canvasController.Invoke("levelIsOver", 2.5f);
                 narratorController.Invoke(

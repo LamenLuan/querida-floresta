@@ -59,6 +59,22 @@ public class Scene2Controller : MonoBehaviour
         }
     }
 
+    public void sceneMiss(string audioToInvoke, float audioLength)
+    {
+        AplicationModel.scene2Misses++;
+        playANarratorAudio(
+            audioToInvoke, "changeToTryAgainInterface", audioLength
+        );
+    }
+
+    private void sendDataToReport()
+    {
+        ReportCreator.writeLine(
+            "Atividade 2: " + AplicationModel.scene2Misses + '\n'
+        );
+        AplicationModel.scene2Misses = 0;
+    }
+
     void Start() // Start is called before the first frame update
     {
         if(AplicationModel.isFirstTimeScene2)
@@ -73,6 +89,7 @@ public class Scene2Controller : MonoBehaviour
         Action treesClicked = () => {
 
             AplicationModel.scenesCompleted++;
+            sendDataToReport();
             setFirstTimeInScene();
             
             playANarratorAudio(
@@ -108,16 +125,12 @@ public class Scene2Controller : MonoBehaviour
 
         cowButton.onClick.AddListener( () => {
             buttonClicked(cowObject, cowButton);
-            playANarratorAudio(
-                "playCowSelectedAudio", "changeToTryAgainInterface", 7.76f
-            );
+            sceneMiss("playCowSelectedAudio", 7.76f);
         });
 
         garbageButton.onClick.AddListener( () => {
             buttonClicked(garbageObject, garbageButton);
-            playANarratorAudio(
-                "playTrashSelectedAudio", "changeToTryAgainInterface", 8.49f
-            );
+            sceneMiss("playTrashSelectedAudio", 8.49f);
         });
 
         treesButton.onClick.AddListener( () => {

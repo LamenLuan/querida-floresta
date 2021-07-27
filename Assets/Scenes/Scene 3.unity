@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 163267398}
   - component: {fileID: 163267399}
   m_Layer: 0
-  m_Name: correctAnswerAudio
+  m_Name: CorrectAnswerAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,7 +778,7 @@ GameObject:
   - component: {fileID: 374819172}
   - component: {fileID: 374819173}
   m_Layer: 0
-  m_Name: question3Audio
+  m_Name: Question3Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1863,7 +1863,7 @@ GameObject:
   - component: {fileID: 1134731876}
   - component: {fileID: 1134731877}
   m_Layer: 0
-  m_Name: question2Audio
+  m_Name: Question2Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2246,7 +2246,7 @@ GameObject:
   - component: {fileID: 1239326011}
   - component: {fileID: 1239326012}
   m_Layer: 0
-  m_Name: introductionAudio
+  m_Name: IntroductionAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2705,7 +2705,7 @@ GameObject:
   - component: {fileID: 1735591788}
   - component: {fileID: 1735591789}
   m_Layer: 0
-  m_Name: incorrectAnswerAudio
+  m_Name: IncorrectAnswerAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3163,7 +3163,7 @@ GameObject:
   - component: {fileID: 1927271104}
   - component: {fileID: 1927271105}
   m_Layer: 0
-  m_Name: sceneCompletedAudio
+  m_Name: SceneCompletedAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3393,7 +3393,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0057087913, y: 0.8972354}
   m_AnchorMax: {x: 0.21578678, y: 0.99386495}
-  m_AnchoredPosition: {x: -0.37634277, y: -0.73394775}
+  m_AnchoredPosition: {x: 537, y: -0.6833954}
   m_SizeDelta: {x: -1.0106044, y: 0.16917944}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1981349526
@@ -3498,7 +3498,7 @@ GameObject:
   - component: {fileID: 1986804825}
   - component: {fileID: 1986804826}
   m_Layer: 0
-  m_Name: question1Audio
+  m_Name: Question1Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

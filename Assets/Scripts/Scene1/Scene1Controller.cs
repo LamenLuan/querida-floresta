@@ -12,12 +12,14 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private AudioController audioController;
     private bool gameOn;
     private int cloudCounter, cloudNumber, levelCounter;
+    private byte[] misses;
     private float timeCounter, newHeight;
     private Transform cloudTransform;
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
 
-    public void startGame() // Called by Button (btStart)
+    // Called by Button (btStart) every level start
+    public void startGame() 
     {
         gameOn = true;
         cloudAudio.Play();
@@ -56,6 +58,16 @@ public class Scene1Controller : MonoBehaviour
         playANarratorAudio(missClickAudio, "enableTryAgainButton", 9f);
     }
 
+    private void sendDataToReport()
+    {
+        ReportCreator.resetReport();
+        ReportCreator.writeLine("Quantidade de erros:");
+        ReportCreator.writeLine("Atividade 1");
+        for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
+            "Questao " + (i + 1) +  ": " + misses[i]
+        );
+    }
+
     public void checkClickOnCenario() // Called by Button (ImgBackground)
     {
         if(gameOn)
@@ -75,6 +87,7 @@ public class Scene1Controller : MonoBehaviour
                 // Here the narrator will congratulate the player
                 else
                 {
+                    sendDataToReport();
                     AplicationModel.scenesCompleted++;
                     audioController.sceneCompletedSound();
                     narratorController.Invoke("playCongratsAudio", 0.5f);
@@ -84,6 +97,7 @@ public class Scene1Controller : MonoBehaviour
             // Miss click
             else
             {
+                misses[levelCounter]++;
                 audioController.missSound();
                 cloudAudio.Stop();
                 canvasController.changeToTryAgainInterface();
@@ -155,6 +169,7 @@ public class Scene1Controller : MonoBehaviour
     
     void Start() // Start is called before the first frame update
     {
+        misses = new byte[3];
         instantiateDifficulty();
 
         resetLevelData();
@@ -202,6 +217,7 @@ public class Scene1Controller : MonoBehaviour
                 else if(cloudCounter > cloudNumber)
                 {
                     audioController.missSound();
+                    misses[levelCounter]++;
                     canvasController.changeToTryAgainInterface();
                     gameOn = false;
                     playANarratorAudio(
