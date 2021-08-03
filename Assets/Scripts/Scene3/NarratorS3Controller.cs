@@ -37,10 +37,11 @@ public class NarratorS3Controller : NarratorController
         playNarratorAudio(question3Audio);
     }
 
-    public void playIntroductionAudio()
+    public float playIntroductionAudio()
     {
         playNarratorAudio(introductionAudio);
         Invoke("playQuestion1Audio", introductionAudio.clip.length + 1f);
+        return introductionAudio.clip.length + question1Audio.clip.length + 2f;
     }
 
     public void playRightAnswerAudio()

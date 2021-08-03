@@ -10,8 +10,10 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private NarratorS3Controller narratorController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn, repeatQuestionBtn;
-    private byte[] misses;
+
+    private float timeToClickAOption;
     private byte index;
+    private byte[] misses;
 
     private void removeListenerFromButtons() // Invoked in Start()
     {
@@ -43,7 +45,10 @@ public class Scene3Controller : MonoBehaviour
         for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
             "Questao " + (i + 1) +  ": " + misses[i]
         );
-        ReportCreator.writeLine("\n");
+        ReportCreator.writeLine(
+            "empo para selecionar uma opção: "
+            + timeToClickAOption.ToString("F2")
+        );
     }
 
     void Start() // Start is called before the first frame update
@@ -54,7 +59,8 @@ public class Scene3Controller : MonoBehaviour
         repeatQuestionBtn.onClick.AddListener(
             () => narratorController.playQuestion1Audio()
         );
-        narratorController.playIntroductionAudio();
+
+        timeToClickAOption = narratorController.playIntroductionAudio();
 
         Action changeToQuestionThree = () => {
             removeListenerFromButtons(); 
@@ -110,5 +116,12 @@ public class Scene3Controller : MonoBehaviour
             );
             changeToQuestionTwo();
         });
+        
+        Button[] buttons = {option1Btn, option2Btn, option3Btn};
+        foreach (var button in buttons) button.onClick.AddListener(
+            () => {
+                timeToClickAOption = Time.fixedTime - timeToClickAOption;
+            }
+        );
     }
 }

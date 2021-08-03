@@ -13,7 +13,8 @@ public class Scene1Controller : MonoBehaviour
     private bool gameOn;
     private int cloudCounter, cloudNumber, levelCounter;
     private byte[] misses;
-    private float timeCounter, newHeight;
+    private static float introAudioLength = 10.67f;
+    private float timeCounter, newHeight, timeToClickStart;
     private Transform cloudTransform;
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
@@ -24,6 +25,8 @@ public class Scene1Controller : MonoBehaviour
         gameOn = true;
         cloudAudio.Play();
         audioController.setMusicVolume(0.01f);
+        if(levelCounter == 0)
+            timeToClickStart = Time.fixedTime - introAudioLength;
     }
 
     public void showHelp() // Called by Button (btHelp)
@@ -61,10 +64,13 @@ public class Scene1Controller : MonoBehaviour
     private void sendDataToReport()
     {
         ReportCreator.resetReport();
-        ReportCreator.writeLine("Quantidade de erros:");
         ReportCreator.writeLine("Atividade 1");
         for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
-            "Questao " + (i + 1) +  ": " + misses[i]
+            "Quantidade de erros da questao " + (i + 1) +  ": " + misses[i]
+        );
+        ReportCreator.writeLine(
+            "Tempo para selecionar um objeto: " + 
+            timeToClickStart.ToString("F2")
         );
     }
 
@@ -176,7 +182,9 @@ public class Scene1Controller : MonoBehaviour
         levelCounter = 0;
 
         moveToNextCloud();
-        playANarratorAudio("playIntroduction1Audio", "showButtons", 10f);
+        playANarratorAudio(
+            "playIntroduction1Audio", "showButtons", introAudioLength
+        );
     }
 
     void Update() // Update is called once per frame

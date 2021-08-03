@@ -13,6 +13,9 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private SpritesS2Controller spritesController;
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
+
+    float timeToClickAButton;
+    private static float introAudioLength = 27.66f;
     private RainScript2D rainScript;
     private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
 
@@ -69,8 +72,12 @@ public class Scene2Controller : MonoBehaviour
 
     private void sendDataToReport()
     {
+        ReportCreator.writeLine("Atividade 2");
         ReportCreator.writeLine(
-            "Atividade 2: " + AplicationModel.scene2Misses + '\n'
+            "Quantidade de erros: " + AplicationModel.scene2Misses);
+        ReportCreator.writeLine(
+            "Tempo para selecionar um objeto: " + 
+            timeToClickAButton.ToString("F2")
         );
         AplicationModel.scene2Misses = 0;
     }
@@ -82,7 +89,7 @@ public class Scene2Controller : MonoBehaviour
             AplicationModel.isFirstTimeScene2 = false;
             canvasController.showBackgroundCover();
             playANarratorAudio(
-                "playIntroductionAudio", "hideBackgroundCover", 27.66f
+                "playIntroductionAudio", "hideBackgroundCover", introAudioLength
             );
         }
 
@@ -116,6 +123,8 @@ public class Scene2Controller : MonoBehaviour
 
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {
             Button[] buttons = {cowButton, treesButton, garbageButton};
+
+            timeToClickAButton = Time.fixedTime - introAudioLength;
 
             canvasController.showBackgroundCover();
             foreach (Button btn in buttons) btn.onClick.RemoveAllListeners();
