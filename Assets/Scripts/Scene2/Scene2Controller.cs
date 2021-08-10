@@ -13,9 +13,9 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private SpritesS2Controller spritesController;
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
-
-    float timeToClickAButton;
     private static float introAudioLength = 27.66f;
+    private double timePassed;
+    private DateTime timeStarted;
     private RainScript2D rainScript;
     private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
 
@@ -76,14 +76,16 @@ public class Scene2Controller : MonoBehaviour
         ReportCreator.writeLine(
             "Quantidade de erros: " + AplicationModel.scene2Misses);
         ReportCreator.writeLine(
-            "Tempo para selecionar um objeto: " + 
-            timeToClickAButton.ToString("F2")
+            "Tempo de resposta a atividade: " + timePassed.ToString("F2")
         );
         AplicationModel.scene2Misses = 0;
     }
 
     void Start() // Start is called before the first frame update
     {
+        timeStarted = DateTime.Now;
+        AplicationModel.sceneAcesses[1]++;
+
         if(AplicationModel.isFirstTimeScene2)
         {
             AplicationModel.isFirstTimeScene2 = false;
@@ -95,7 +97,9 @@ public class Scene2Controller : MonoBehaviour
 
         Action treesClicked = () => {
 
-            AplicationModel.scenesCompleted++;
+            if(!AplicationModel.gameCompleted)
+                AplicationModel.scenesCompleted++;
+
             sendDataToReport();
             setFirstTimeInScene();
             
@@ -116,7 +120,11 @@ public class Scene2Controller : MonoBehaviour
                 Tcontroller.SPRITE, 35.19f
             );
             playANarratorAudio(
-                "playSceneCompletedAudio", "loadPlayersForest", 9f,
+                "playSceneCompletedAudio",
+                (AplicationModel.gameCompleted)
+                    ? "loadSceneSelection"
+                    : "loadPlayersForest",
+                9f,
                 Tcontroller.SCENE_LOADER, 44.15f
             );
         };
@@ -124,7 +132,8 @@ public class Scene2Controller : MonoBehaviour
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {
             Button[] buttons = {cowButton, treesButton, garbageButton};
 
-            timeToClickAButton = Time.fixedTime - introAudioLength;
+            timePassed =
+                (DateTime.Now - timeStarted).Seconds - introAudioLength;
 
             canvasController.showBackgroundCover();
             foreach (Button btn in buttons) btn.onClick.RemoveAllListeners();

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class Scene1Controller : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class Scene1Controller : MonoBehaviour
     private int cloudCounter, cloudNumber, levelCounter;
     private byte[] misses;
     private static float introAudioLength = 10.67f;
-    private float timeCounter, newHeight, timeToClickStart;
+    private float timeCounter, newHeight;
+    private double timePassed;
+    private DateTime timeStarted, timeEnded;
     private Transform cloudTransform;
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
@@ -25,8 +28,12 @@ public class Scene1Controller : MonoBehaviour
         gameOn = true;
         cloudAudio.Play();
         audioController.setMusicVolume(0.01f);
-        if(levelCounter == 0)
-            timeToClickStart = Time.fixedTime - introAudioLength;
+        
+        if(levelCounter == 0 && misses[0] == 0) {
+            timeEnded = DateTime.Now;
+            timePassed =
+                (timeEnded - timeStarted).TotalSeconds - introAudioLength;
+        }  
     }
 
     public void showHelp() // Called by Button (btHelp)
@@ -69,8 +76,7 @@ public class Scene1Controller : MonoBehaviour
             "Quantidade de erros da questao " + (i + 1) +  ": " + misses[i]
         );
         ReportCreator.writeLine(
-            "Tempo para selecionar um objeto: " + 
-            timeToClickStart.ToString("F2")
+            "Tempo de resposta a atividade: " + timePassed.ToString("F2")
         );
     }
 
@@ -94,10 +100,16 @@ public class Scene1Controller : MonoBehaviour
                 else
                 {
                     sendDataToReport();
-                    AplicationModel.scenesCompleted++;
+                    if(!AplicationModel.gameCompleted)
+                        AplicationModel.scenesCompleted++;
                     audioController.sceneCompletedSound();
                     narratorController.Invoke("playCongratsAudio", 0.5f);
-                    sceneLoader.Invoke("loadPlayersForest", 9f);
+                    sceneLoader.Invoke(
+                        (AplicationModel.gameCompleted)
+                            ? "loadSceneSelection"
+                            : "loadPlayersForest",
+                        9f
+                    );
                 }
             }
             // Miss click
@@ -175,6 +187,8 @@ public class Scene1Controller : MonoBehaviour
     
     void Start() // Start is called before the first frame update
     {
+        timeStarted = DateTime.Now;
+        AplicationModel.sceneAcesses[0]++;
         misses = new byte[3];
         instantiateDifficulty();
 

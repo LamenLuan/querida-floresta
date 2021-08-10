@@ -10,10 +10,10 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private NarratorS3Controller narratorController;
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn, repeatQuestionBtn;
-
-    private float timeToClickAOption;
     private byte index;
     private byte[] misses;
+    private double timePassed;
+    private DateTime timeStarted;
 
     private void removeListenerFromButtons() // Invoked in Start()
     {
@@ -43,16 +43,17 @@ public class Scene3Controller : MonoBehaviour
     {
         ReportCreator.writeLine("Atividade 3");
         for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
-            "Questao " + (i + 1) +  ": " + misses[i]
+            "Quantidade de erros da questao " + (i + 1) +  ": " + misses[i]
         );
         ReportCreator.writeLine(
-            "empo para selecionar uma opção: "
-            + timeToClickAOption.ToString("F2")
+            "Tempo de resposta a atividade: " + timePassed.ToString("F2")
         );
     }
 
     void Start() // Start is called before the first frame update
     {
+        timeStarted = DateTime.Now;
+        AplicationModel.sceneAcesses[2]++;
         misses = new byte[3];
         index = 0;
 
@@ -60,17 +61,20 @@ public class Scene3Controller : MonoBehaviour
             () => narratorController.playQuestion1Audio()
         );
 
-        timeToClickAOption = narratorController.playIntroductionAudio();
+        timePassed = narratorController.playIntroductionAudio();
 
         Action changeToQuestionThree = () => {
             removeListenerFromButtons(); 
             repeatQuestionBtn.onClick.AddListener(
                 () => narratorController.playQuestion3Audio()
             );
-            AplicationModel.scenesCompleted++;
             canvasController.Invoke("changeToQuestionThree", 2.5f);
 
             word1Btn.onClick.AddListener( () => {
+                if(!AplicationModel.gameCompleted)
+                        AplicationModel.scenesCompleted++;
+                AplicationModel.gameCompleted = true;
+
                 sendDataToReport();
                 setRightAnswer(word1Btn);
                 canvasController.Invoke("levelIsOver", 2.5f);
@@ -79,7 +83,9 @@ public class Scene3Controller : MonoBehaviour
                     narratorController.RightAnswerAudio.clip.length + 1f
                 );
                 sceneLoader.Invoke(
-                    "loadPlayersForest",
+                    (AplicationModel.gameCompleted)
+                        ? "loadSceneSelection"
+                        : "loadPlayersForest",
                     narratorController.SceneCompletedAudio.clip.length + 
                     narratorController.RightAnswerAudio.clip.length + 3f
                 );
@@ -118,10 +124,14 @@ public class Scene3Controller : MonoBehaviour
         });
         
         Button[] buttons = {option1Btn, option2Btn, option3Btn};
-        foreach (var button in buttons) button.onClick.AddListener(
-            () => {
-                timeToClickAOption = Time.fixedTime - timeToClickAOption;
-            }
-        );
+
+        void calculateTimePassed() {
+            timePassed = (DateTime.Now - timeStarted).Seconds - timePassed;
+            foreach (var button in buttons)
+                button.onClick.RemoveListener(calculateTimePassed);
+        }
+
+        foreach (var button in buttons)
+            button.onClick.AddListener(calculateTimePassed);
     }
 }

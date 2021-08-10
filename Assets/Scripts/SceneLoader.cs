@@ -32,6 +32,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Credits");
     }
 
+    public void loadSceneSelection()
+    {
+        SceneManager.LoadScene("Scene Selection");
+    }
+
     public void quitGame()
     {
         Application.Quit();

@@ -38,6 +38,7 @@ public class PlayersForestController : MonoBehaviour
             {
                 case 1: functionToInvoke = "loadScene2"; break;
                 case 2: functionToInvoke = "loadScene3"; break;
+                case 3: functionToInvoke = "loadSceneSelection"; break;
             }
 
             canvasController.setLockedEffect();
