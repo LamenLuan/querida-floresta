@@ -71,11 +71,6 @@ public class Scene3Controller : MonoBehaviour
             canvasController.Invoke("changeToQuestionThree", 2.5f);
 
             word1Btn.onClick.AddListener( () => {
-                if(!AplicationModel.gameCompleted)
-                        AplicationModel.scenesCompleted++;
-                AplicationModel.gameCompleted = true;
-
-                sendDataToReport();
                 setRightAnswer(word1Btn);
                 canvasController.Invoke("levelIsOver", 2.5f);
                 narratorController.Invoke(
@@ -83,12 +78,16 @@ public class Scene3Controller : MonoBehaviour
                     narratorController.RightAnswerAudio.clip.length + 1f
                 );
                 sceneLoader.Invoke(
-                    (AplicationModel.gameCompleted)
+                    (AplicationModel.scenesCompleted[2])
                         ? "loadSceneSelection"
                         : "loadPlayersForest",
                     narratorController.SceneCompletedAudio.clip.length + 
                     narratorController.RightAnswerAudio.clip.length + 3f
                 );
+                if(!AplicationModel.scenesCompleted[2]) {
+                    sendDataToReport();
+                    AplicationModel.scenesCompleted[2] = true;
+                }
             });
             word2Btn.onClick.AddListener( () => setWrongAnswer(word2Btn) );
         };
@@ -127,11 +126,13 @@ public class Scene3Controller : MonoBehaviour
 
         void calculateTimePassed() {
             timePassed = (DateTime.Now - timeStarted).Seconds - timePassed;
+            print(timePassed);
             foreach (var button in buttons)
                 button.onClick.RemoveListener(calculateTimePassed);
         }
 
-        foreach (var button in buttons)
-            button.onClick.AddListener(calculateTimePassed);
+        if(!AplicationModel.scenesCompleted[2])
+            foreach (var button in buttons)
+                button.onClick.AddListener(calculateTimePassed);
     }
 }

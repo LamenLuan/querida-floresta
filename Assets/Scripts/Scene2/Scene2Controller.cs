@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
     private static float introAudioLength = 27.66f;
-    private double timePassed;
+    private static double timePassed;
     private DateTime timeStarted;
     private RainScript2D rainScript;
     private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
@@ -78,7 +78,6 @@ public class Scene2Controller : MonoBehaviour
         ReportCreator.writeLine(
             "Tempo de resposta a atividade: " + timePassed.ToString("F2")
         );
-        AplicationModel.scene2Misses = 0;
     }
 
     void Start() // Start is called before the first frame update
@@ -94,13 +93,9 @@ public class Scene2Controller : MonoBehaviour
                 "playIntroductionAudio", "hideBackgroundCover", introAudioLength
             );
         }
+        else introAudioLength = 0f;
 
         Action treesClicked = () => {
-
-            if(!AplicationModel.gameCompleted)
-                AplicationModel.scenesCompleted++;
-
-            sendDataToReport();
             setFirstTimeInScene();
             
             playANarratorAudio(
@@ -121,19 +116,26 @@ public class Scene2Controller : MonoBehaviour
             );
             playANarratorAudio(
                 "playSceneCompletedAudio",
-                (AplicationModel.gameCompleted)
+                (AplicationModel.scenesCompleted[1])
                     ? "loadSceneSelection"
                     : "loadPlayersForest",
                 9f,
                 Tcontroller.SCENE_LOADER, 44.15f
             );
+
+            if(!AplicationModel.scenesCompleted[1]) {
+                sendDataToReport();
+                AplicationModel.scenesCompleted[1] = true;
+            }
         };
 
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {
             Button[] buttons = {cowButton, treesButton, garbageButton};
 
-            timePassed =
-                (DateTime.Now - timeStarted).Seconds - introAudioLength;
+            if(!AplicationModel.scenesCompleted[1] && timePassed == 0.00000f) {
+                timePassed = (DateTime.Now - timeStarted).Seconds - 
+                    introAudioLength;
+            }
 
             canvasController.showBackgroundCover();
             foreach (Button btn in buttons) btn.onClick.RemoveAllListeners();

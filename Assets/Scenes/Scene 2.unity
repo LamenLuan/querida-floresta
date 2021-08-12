@@ -1577,8 +1577,8 @@ GameObject:
   - component: {fileID: 561014165}
   - component: {fileID: 561014163}
   - component: {fileID: 561014164}
-  - component: {fileID: 561014166}
   - component: {fileID: 561014167}
+  - component: {fileID: 561014166}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3710,7 +3710,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 561014166}
+      - m_Target: {fileID: 0}
         m_MethodName: showHelp
         m_Mode: 1
         m_Arguments:

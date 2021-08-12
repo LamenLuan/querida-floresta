@@ -8,10 +8,10 @@ public class SceneSelectionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Button[] btns = {scene1Btn, scene2Btn, scene3Btn};
-        byte scenesCompleted = AplicationModel.scenesCompleted;
-
-        for (int i = 0; scenesCompleted >= i && i < btns.Length; i++)
-            btns[i].interactable = true;
+        Button[] btns = {scene2Btn, scene3Btn};
+        
+        scene1Btn.interactable = true;
+        for (int i = 0; i < btns.Length; i++)
+            if(AplicationModel.scenesCompleted[i]) btns[i].interactable = true;
     }
 }

@@ -4,7 +4,7 @@ using System.IO;
 public class ReportCreator
 {
     private static string path =
-        Application.persistentDataPath + "/relatorio.txt";
+        Application.dataPath + "/estatisticas.txt";
 
     public static void resetReport()
     {

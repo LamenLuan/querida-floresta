@@ -98,18 +98,19 @@ public class Scene1Controller : MonoBehaviour
                 }
                 // Here the narrator will congratulate the player
                 else
-                {
-                    sendDataToReport();
-                    if(!AplicationModel.gameCompleted)
-                        AplicationModel.scenesCompleted++;
+                { 
                     audioController.sceneCompletedSound();
                     narratorController.Invoke("playCongratsAudio", 0.5f);
                     sceneLoader.Invoke(
-                        (AplicationModel.gameCompleted)
+                        (AplicationModel.scenesCompleted[0])
                             ? "loadSceneSelection"
                             : "loadPlayersForest",
                         9f
                     );
+                    if(!AplicationModel.scenesCompleted[0]) {
+                        sendDataToReport();
+                        AplicationModel.scenesCompleted[0] = true;
+                    }
                 }
             }
             // Miss click

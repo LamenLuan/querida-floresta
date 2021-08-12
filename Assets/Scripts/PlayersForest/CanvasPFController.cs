@@ -11,8 +11,8 @@ public class CanvasPFController : MonoBehaviour
     {
         GameObject[] rewards = {reward1Obj, reward2Obj, reward3Obj};
 
-        for (int i = 0; i < AplicationModel.scenesCompleted; i++)
-            rewards[i].SetActive(true);
+        for (int i = rewards.Length - 1; i >= 0; --i)
+            if(AplicationModel.scenesCompleted[i]) rewards[i].SetActive(true);
     }
 
     public void setLockedEffect()
@@ -56,12 +56,21 @@ public class CanvasPFController : MonoBehaviour
     {
         if(AplicationModel.isForestInTemporaryMode)
         {
-            switch (AplicationModel.scenesCompleted)
-            {
-                case 1: newReward = reward1Obj; break;
-                case 2: newReward = reward2Obj; break;
-                case 3: newReward = reward3Obj; break;
+            GameObject[] rewards = {reward1Obj, reward2Obj, reward3Obj};
+            int lastIndex = rewards.Length - 1;
+           
+            if(
+                !AplicationModel.scenesCompleted[lastIndex] &&
+                AplicationModel.scenesCompleted[0]
+            ) {
+                for (int i = 1; i < rewards.Length; i++) {
+                    if(!AplicationModel.scenesCompleted[i]) {
+                        newReward = rewards[i - 1];
+                        break;
+                    }
+                }
             }
+            else if(newReward == null) newReward = rewards[lastIndex];
         }
     }
 }

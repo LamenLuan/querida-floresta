@@ -28,18 +28,19 @@ public class PlayersForestController : MonoBehaviour
 
     void Start() // Start is called before the first frame update
     {
-        narratorController.Invoke("playUnlockAudio", 1f);
+        if(
+            AplicationModel.isForestInTemporaryMode &&
+            AplicationModel.scenesCompleted[0]
+        ) {
+            narratorController.Invoke("playUnlockAudio", 1f);
+            functionToInvoke = null;
 
-        functionToInvoke = null;
-
-        if(AplicationModel.isForestInTemporaryMode)
-        {
-            switch (AplicationModel.scenesCompleted)
-            {
-                case 1: functionToInvoke = "loadScene2"; break;
-                case 2: functionToInvoke = "loadScene3"; break;
-                case 3: functionToInvoke = "loadSceneSelection"; break;
-            }
+            if(AplicationModel.scenesCompleted[2])
+                functionToInvoke = "loadSceneSelection";
+            else if(AplicationModel.scenesCompleted[1])
+                functionToInvoke = "loadScene3";
+            else if(AplicationModel.scenesCompleted[0])
+                functionToInvoke = "loadScene2";
 
             canvasController.setLockedEffect();
             Invoke(

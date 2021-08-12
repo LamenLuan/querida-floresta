@@ -9,7 +9,7 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(AplicationModel.scenesCompleted == 0) {
+        if(!AplicationModel.scenesCompleted[0]) {
             startButton.onClick.AddListener(
                 () => sceneLoader.loadScene1()
             );
