@@ -21,13 +21,14 @@ public class Scene1Controller : MonoBehaviour
     private Transform cloudTransform;
     private SpriteRenderer cloudRenderer;
     private GameObject rainObj, difficultyObj;
+    private MusicPlayer musicPlayer;
 
     // Called by Button (btStart) every level start
     public void startGame() 
     {
         gameOn = true;
         cloudAudio.Play();
-        audioController.setMusicVolume(0.01f);
+        musicPlayer.setMusicVolume(0.01f);
         
         if(levelCounter == 0 && misses[0] == 0) {
             timeEnded = DateTime.Now;
@@ -122,7 +123,7 @@ public class Scene1Controller : MonoBehaviour
                 canvasController.changeToTryAgainInterface();
                 playMissClickAudio();
             }
-            audioController.setMusicVolume(0.1f);
+            musicPlayer.setMusicVolume(0.1f);
             gameOn = false;
         }
     }
@@ -192,6 +193,9 @@ public class Scene1Controller : MonoBehaviour
         AplicationModel.sceneAcesses[0]++;
         misses = new byte[3];
         instantiateDifficulty();
+        musicPlayer = GameObject.FindGameObjectWithTag(
+            "Music"
+        ).GetComponent<MusicPlayer>();
 
         resetLevelData();
         levelCounter = 0;
