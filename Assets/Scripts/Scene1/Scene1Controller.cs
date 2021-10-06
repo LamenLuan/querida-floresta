@@ -11,7 +11,7 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private Scene1NarratorController narratorController;
     [SerializeField] private AudioSource cloudAudio;
     [SerializeField] private AudioController audioController;
-    private bool gameOn;
+    private bool gameOn, lessClouds;
     private int cloudCounter, cloudNumber, levelCounter;
     private byte[] misses;
     private static float introAudioLength = 10.67f;
@@ -118,6 +118,9 @@ public class Scene1Controller : MonoBehaviour
             else
             {
                 misses[levelCounter]++;
+                if(
+                    misses[levelCounter] > 4 && !AplicationModel.lessClouds
+                ) setLessClouds();
                 audioController.missSound();
                 cloudAudio.Stop();
                 canvasController.changeToTryAgainInterface();
@@ -187,6 +190,30 @@ public class Scene1Controller : MonoBehaviour
         playIntroductionAudio();
     }
     
+    private void setLessClouds()
+    {
+        // For the second and third cloud group
+        for(int i = 1; i < 3; ++i)
+        {
+            // Selecting the group object
+            GameObject currentLevel =
+                difficultiesObj.transform.GetChild(i).gameObject;
+            // Calculating the last index of cloud array
+            int childQuant = currentLevel.transform.childCount - 1;
+            // Removing 2 cloud from group 2, 3 clouds from group 3
+            for (int j = 0; j < i + 1; ++j)
+            {
+                Destroy(
+                    currentLevel.transform.GetChild(childQuant - j).gameObject
+                );
+            }
+        }
+
+        cloudNumber = difficultyObj.transform.childCount;
+        AplicationModel.lessClouds = true;
+        narratorController.changeToLessCloudsAudios();
+    }
+
     void Start() // Start is called before the first frame update
     {
         timeStarted = DateTime.Now;

@@ -2,7 +2,7 @@
 
 public class Scene1NarratorController : NarratorController
 {
-    [SerializeField] public AudioSource introduction1Audio, introduction2Audio,
+    [SerializeField] private AudioSource introduction1Audio, introduction2Audio,
     introduction3Audio, missClick1Audio, missClick2Audio, missClick3Audio,
     rightClickAudio, notClickedAudio, helpAudio, congratsAudio;
     
@@ -56,5 +56,13 @@ public class Scene1NarratorController : NarratorController
     public void playCongratsAudio()
     {
         playAudio(congratsAudio);
+    }
+
+    public void changeToLessCloudsAudios()
+    {
+        missClick2Audio.clip = Resources.Load<AudioClip>("cliqueErradoFase2");
+        missClick3Audio.clip = Resources.Load<AudioClip>("cliqueErradoFase3");
+        introduction2Audio.clip = Resources.Load<AudioClip>("introducaoFase2");
+        introduction3Audio.clip = Resources.Load<AudioClip>("introducaoFase3");
     }
 }
