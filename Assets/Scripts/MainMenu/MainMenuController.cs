@@ -43,6 +43,6 @@ public class MainMenuController : MonoBehaviour
     public void hideButtonsPlaySpeech() { // Called by button (BtSpeech)
         buttonsObj.SetActive(false);
         narratorController.playSpeechAudio();
-        Invoke("showButtons", speechClip.length);
+        Invoke("showButtons", speechClip.length + 1);
     }
 }
