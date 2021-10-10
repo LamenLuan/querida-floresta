@@ -36,7 +36,7 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    private void showButtons() {
+    private void showButtons() { // Invoked by hideButtonsPlaySpeech()
         buttonsObj.SetActive(true);
     }
 
