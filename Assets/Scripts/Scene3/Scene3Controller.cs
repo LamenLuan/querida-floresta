@@ -126,7 +126,6 @@ public class Scene3Controller : MonoBehaviour
 
         void calculateTimePassed() {
             timePassed = (DateTime.Now - timeStarted).Seconds - timePassed;
-            print(timePassed);
             foreach (var button in buttons)
                 button.onClick.RemoveListener(calculateTimePassed);
         }
