@@ -13,10 +13,8 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private AudioController audioController;
     private bool gameOn, lessClouds;
     private int cloudCounter, cloudNumber, levelCounter;
-    private byte[] misses;
-    private static float introAudioLength = 10.67f;
+    private const float introAudioLength = 10.67f;
     private float timeCounter, newHeight;
-    private double timePassed;
     private DateTime timeStarted, timeEnded;
     private Transform cloudTransform;
     private SpriteRenderer cloudRenderer;
@@ -30,9 +28,9 @@ public class Scene1Controller : MonoBehaviour
         cloudAudio.Play();
         musicPlayer.setMusicVolume(0.01f);
         
-        if(levelCounter == 0 && misses[0] == 0) {
+        if(levelCounter == 0 && AplicationModel.Scene1Misses[0] == 0) {
             timeEnded = DateTime.Now;
-            timePassed =
+            AplicationModel.PlayerResponseTime[0] =
                 (timeEnded - timeStarted).TotalSeconds - introAudioLength;
         }  
     }
@@ -73,12 +71,8 @@ public class Scene1Controller : MonoBehaviour
     {
         ReportCreator.resetReport();
         ReportCreator.writeLine("Atividade 1");
-        for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
-            "Quantidade de erros da questao " + (i + 1) +  ": " + misses[i]
-        );
-        ReportCreator.writeLine(
-            "Tempo de resposta a atividade: " + timePassed.ToString("F2")
-        );
+        ReportCreator.writeMissesPerPhase(AplicationModel.Scene1Misses);
+        ReportCreator.writeResponseTime(AplicationModel.PlayerResponseTime[0]);
     }
 
     public void checkClickOnCenario() // Called by Button (ImgBackground)
@@ -117,9 +111,9 @@ public class Scene1Controller : MonoBehaviour
             // Miss click
             else
             {
-                misses[levelCounter]++;
                 if(
-                    misses[levelCounter] > 4 && !AplicationModel.lessClouds
+                    ++AplicationModel.Scene1Misses[levelCounter] > 4 &&
+                    !AplicationModel.lessClouds
                 ) setLessClouds();
                 audioController.missSound();
                 cloudAudio.Stop();
@@ -217,8 +211,7 @@ public class Scene1Controller : MonoBehaviour
     void Start() // Start is called before the first frame update
     {
         timeStarted = DateTime.Now;
-        AplicationModel.sceneAcesses[0]++;
-        misses = new byte[3];
+        AplicationModel.SceneAcesses[0]++;
         instantiateDifficulty();
         musicPlayer = GameObject.FindGameObjectWithTag(
             "Music"
@@ -271,7 +264,7 @@ public class Scene1Controller : MonoBehaviour
                 else if(cloudCounter > cloudNumber)
                 {
                     audioController.missSound();
-                    misses[levelCounter]++;
+                    AplicationModel.Scene1Misses[levelCounter]++;
                     canvasController.changeToTryAgainInterface();
                     gameOn = false;
                     playANarratorAudio(

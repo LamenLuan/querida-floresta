@@ -19,4 +19,18 @@ public class ReportCreator
         writer.Close();
     }
 
+    public static void writeResponseTime(double tempoResposta) {
+        ReportCreator.writeLine(
+            $"Tempo de resposta da atividade: {tempoResposta.ToString("F2")}"  
+        );
+    }
+
+    public static void writeMissesPerPhase(byte[] misses) {
+        for (int i = 0; i < misses.Length; i++)
+        {
+            ReportCreator.writeLine(
+                $"Quantidade de erros da questao {i + 1}: {misses[i]}"
+            );
+        }
+    }
 }

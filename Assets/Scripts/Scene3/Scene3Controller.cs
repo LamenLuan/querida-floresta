@@ -11,8 +11,6 @@ public class Scene3Controller : MonoBehaviour
     [SerializeField] private Button option1Btn, option2Btn, option3Btn,
     word1Btn, word2Btn, repeatQuestionBtn;
     private byte index;
-    private byte[] misses;
-    private double timePassed;
     private DateTime timeStarted;
 
     private void removeListenerFromButtons() // Invoked in Start()
@@ -36,32 +34,28 @@ public class Scene3Controller : MonoBehaviour
         canvasController.setAnswerEffect(button, false);
         audioController.missSound();
         narratorController.playWrongAnswerAudio();
-        misses[index]++;
+        AplicationModel.Scene3Misses[index]++;
     }
 
     private void sendDataToReport()
     {
-        ReportCreator.writeLine("Atividade 3");
-        for (int i = 0; i < 3; ++i) ReportCreator.writeLine(
-            "Quantidade de erros da questao " + (i + 1) +  ": " + misses[i]
-        );
-        ReportCreator.writeLine(
-            "Tempo de resposta a atividade: " + timePassed.ToString("F2")
-        );
+        ReportCreator.writeLine("\nAtividade 3");
+        ReportCreator.writeMissesPerPhase(AplicationModel.Scene3Misses);
+        ReportCreator.writeResponseTime(AplicationModel.PlayerResponseTime[2]);
     }
 
     void Start() // Start is called before the first frame update
     {
         timeStarted = DateTime.Now;
-        AplicationModel.sceneAcesses[2]++;
-        misses = new byte[3];
+        AplicationModel.SceneAcesses[2]++;
         index = 0;
 
         repeatQuestionBtn.onClick.AddListener(
             () => narratorController.playQuestion1Audio()
         );
 
-        timePassed = narratorController.playIntroductionAudio();
+        AplicationModel.PlayerResponseTime[2] =
+            narratorController.playIntroductionAudio();
 
         Action changeToQuestionThree = () => {
             removeListenerFromButtons(); 
@@ -125,7 +119,10 @@ public class Scene3Controller : MonoBehaviour
         Button[] buttons = {option1Btn, option2Btn, option3Btn};
 
         void calculateTimePassed() {
-            timePassed = (DateTime.Now - timeStarted).Seconds - timePassed;
+            AplicationModel.PlayerResponseTime[2] =
+                (DateTime.Now - timeStarted).Seconds -
+                AplicationModel.PlayerResponseTime[2];
+
             foreach (var button in buttons)
                 button.onClick.RemoveListener(calculateTimePassed);
         }

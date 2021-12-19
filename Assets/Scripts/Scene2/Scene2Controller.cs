@@ -14,7 +14,6 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
     private static float introAudioLength = 27.66f;
-    private static double timePassed;
     private DateTime timeStarted;
     private RainScript2D rainScript;
     private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
@@ -64,7 +63,7 @@ public class Scene2Controller : MonoBehaviour
 
     public void sceneMiss(string audioToInvoke, float audioLength)
     {
-        AplicationModel.scene2Misses++;
+        AplicationModel.Scene2Misses++;
         playANarratorAudio(
             audioToInvoke, "changeToTryAgainInterface", audioLength
         );
@@ -72,18 +71,17 @@ public class Scene2Controller : MonoBehaviour
 
     private void sendDataToReport()
     {
-        ReportCreator.writeLine("Atividade 2");
+        ReportCreator.writeLine("\nAtividade 2");
         ReportCreator.writeLine(
-            "Quantidade de erros: " + AplicationModel.scene2Misses);
-        ReportCreator.writeLine(
-            "Tempo de resposta a atividade: " + timePassed.ToString("F2")
+            $"Quantidade de erros da fase: {AplicationModel.Scene2Misses}"
         );
+        ReportCreator.writeResponseTime(AplicationModel.PlayerResponseTime[1]);
     }
 
     void Start() // Start is called before the first frame update
     {
         timeStarted = DateTime.Now;
-        AplicationModel.sceneAcesses[1]++;
+        AplicationModel.SceneAcesses[1]++;
 
         if(AplicationModel.isFirstTimeScene2)
         {
@@ -132,9 +130,12 @@ public class Scene2Controller : MonoBehaviour
         Action<GameObject, Button> buttonClicked = (gameObject, button) => {
             Button[] buttons = {cowButton, treesButton, garbageButton};
 
-            if(!AplicationModel.scenesCompleted[1] && timePassed == 0.00000f) {
-                timePassed = (DateTime.Now - timeStarted).Seconds - 
-                    introAudioLength;
+            if(
+                !AplicationModel.scenesCompleted[1] &&
+                AplicationModel.PlayerResponseTime[1] == 0.00000f
+            ) {
+                AplicationModel.PlayerResponseTime[1] =
+                    (DateTime.Now - timeStarted).Seconds - introAudioLength;
             }
 
             canvasController.showBackgroundCover();
