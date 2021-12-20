@@ -21,4 +21,9 @@
     public static double[] PlayerResponseTime { get; } = new double[3];
 
     private AplicationModel() {}
+
+    public static bool LastSceneCompleted()
+    {
+        return scenesCompleted[scenesCompleted.Length - 1];
+    }
 }

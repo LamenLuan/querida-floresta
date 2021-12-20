@@ -5,36 +5,41 @@ public class SceneLoader : MonoBehaviour
 {
     public void loadMainMenu()
     {
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene(0);
     }
 
     public void loadScene1()
     {
-        SceneManager.LoadScene("Scene 1");
+        SceneManager.LoadScene(1);
     }
     public void loadScene2()
     {
-        SceneManager.LoadScene("Scene 2");
+        SceneManager.LoadScene(2);
     }
 
     public void loadScene3()
     {
-        SceneManager.LoadScene("Scene 3");
+        SceneManager.LoadScene(3);
     }
 
     private void loadPlayersForest()
     {
-        SceneManager.LoadScene("Players Forest");
-    }
-
-    public void loadCredits()
-    {
-        SceneManager.LoadScene("Credits");
+        SceneManager.LoadScene(4);
     }
 
     public void loadSceneSelection()
     {
-        SceneManager.LoadScene("Scene Selection");
+        SceneManager.LoadScene(5);
+    }
+
+    public void loadCredits()
+    {
+        SceneManager.LoadScene(6);
+    }
+
+    public void loadReportScreen()
+    {
+        SceneManager.LoadScene(7);
     }
 
     public void quitGame()

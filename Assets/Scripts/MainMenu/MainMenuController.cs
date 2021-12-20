@@ -4,45 +4,45 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private SceneLoader sceneLoader;
-    [SerializeField] private Button startButton, speechButton;
+    [SerializeField] private Button startButton, speechButton, reportButton;
     [SerializeField] private GameObject buttonsObj;
     [SerializeField] private NarratorMMController narratorController;
     private AudioClip speechClip;
 
-    void Start() { // Start is called before the first frame update
-        speechClip = narratorController.SpeechAudio.clip;
-
-        if(!AplicationModel.isFirstTimeScene1) {
-            speechButton.gameObject.SetActive(true);
+    private void NewGameStarted()
+    {
+        if (AplicationModel.isFirstTimeScene1) {
+            HideButtonsPlaySpeech();
+            sceneLoader.Invoke("loadScene1", speechClip.length + 1);
+            AplicationModel.isFirstTimeScene1 = false;
         }
+        else sceneLoader.loadScene1();
+    }
+
+    void Start() // Start is called before the first frame update
+    { 
+        speechClip = narratorController.SpeechAudio.clip;
+        speechButton.gameObject.SetActive(!AplicationModel.isFirstTimeScene1);
+        reportButton.interactable = AplicationModel.LastSceneCompleted();
 
         if(!AplicationModel.scenesCompleted[0]) {
-            startButton.onClick.AddListener(
-                () => {
-                    if(AplicationModel.isFirstTimeScene1) {
-                        hideButtonsPlaySpeech();
-                        sceneLoader.Invoke("loadScene1", speechClip.length + 1);
-                        AplicationModel.isFirstTimeScene1 = false;
-                    }
-                    else sceneLoader.loadScene1();
-                }
-            );
+            startButton.onClick.AddListener(NewGameStarted);
         }
         else {
             startButton.GetComponentInChildren<Text>().text = "ATIVIDADES";
-            startButton.onClick.AddListener(
-                () => sceneLoader.loadSceneSelection()
-            );
+            startButton.onClick.AddListener(sceneLoader.loadSceneSelection);
         }
     }
 
-    private void showButtons() { // Invoked by hideButtonsPlaySpeech()
+    private void ShowButtons() // Invoked by hideButtonsPlaySpeech()
+    {
         buttonsObj.SetActive(true);
     }
 
-    public void hideButtonsPlaySpeech() { // Called by button (BtSpeech)
+    public void HideButtonsPlaySpeech() // Called by button (BtSpeech)
+    {
         buttonsObj.SetActive(false);
         narratorController.playSpeechAudio();
-        Invoke("showButtons", speechClip.length + 1);
+        Invoke("ShowButtons", speechClip.length + 1);
     }
 }
