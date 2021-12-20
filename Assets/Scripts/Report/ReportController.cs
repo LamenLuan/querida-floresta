@@ -22,7 +22,7 @@ public class ReportController : MonoBehaviour
 
     void Start() // Start is called before the first frame update
     {
-        // if( AplicationModel.LastSceneCompleted() ) {
+        if( AplicationModel.LastSceneCompleted() ) {
             reportTxt.text = 
                 "Atividade 1\n" +
                 ErrorQuantity("Fase", AplicationModel.Scene1Misses) +
@@ -35,6 +35,6 @@ public class ReportController : MonoBehaviour
                 "Atividade 3\n" +
                 ErrorQuantity("Questão", AplicationModel.Scene3Misses) +
                 ResponseTime(AplicationModel.PlayerResponseTime[2]);
-        // }
+        }
     }
 }
