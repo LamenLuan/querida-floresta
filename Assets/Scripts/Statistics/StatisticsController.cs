@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ReportController : MonoBehaviour
+public class StatisticsController : MonoBehaviour
 {
     [SerializeField] private Text[] reportTxt;
 
@@ -43,6 +43,7 @@ public class ReportController : MonoBehaviour
 
         for (int i = 0; i < reportTxt.Length; i++) {
             bool sceneCompleted = AplicationModel.scenesCompleted[i];
+            if(sceneCompleted) reportTxt[i].text = scenes[i];
             reportTxt[i].text = sceneCompleted ? scenes[i] : notCompleted;
         }
     }
