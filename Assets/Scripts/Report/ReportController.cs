@@ -3,7 +3,12 @@ using UnityEngine.UI;
 
 public class ReportController : MonoBehaviour
 {
-    [SerializeField] private Text reportTxt;
+    [SerializeField] private Text[] reportTxt;
+
+    private string ErrorQuantity(byte sceneMisses)
+    {
+        return $"\t\tQuantidade de erros: {AplicationModel.Scene2Misses}\n";
+    }
 
     private string ErrorQuantity(string noun, byte[] sceneMisses)
     {
@@ -17,24 +22,28 @@ public class ReportController : MonoBehaviour
 
     private string ResponseTime(double resTime)
     {
-        return $"\t\tTempo de resposta da atividade: {resTime.ToString("F2")}";
+        return $"\t\tTempo de início da atividade: {resTime.ToString("F2")}";
     }
 
     void Start() // Start is called before the first frame update
     {
-        if( AplicationModel.LastSceneCompleted() ) {
-            reportTxt.text = 
-                "Atividade 1\n" +
+        const string notCompleted = "Atividade ainda não completa";
+        
+        string[] scenes = {
+            "Atividade 1\n" +
                 ErrorQuantity("Fase", AplicationModel.Scene1Misses) +
-                ResponseTime(AplicationModel.PlayerResponseTime[0]) + "\n\n" +
-                
-                "Atividade 2\n" +
-                $"\t\tQuantidade de erros: {AplicationModel.Scene2Misses}\n" +
-                ResponseTime(AplicationModel.PlayerResponseTime[1]) + "\n\n" +
-
-                "Atividade 3\n" +
+                ResponseTime(AplicationModel.PlayerResponseTime[0]),
+            "Atividade 2\n" +
+                ErrorQuantity(AplicationModel.Scene2Misses),
+                ResponseTime(AplicationModel.PlayerResponseTime[1]),
+            "Atividade 3\n" +
                 ErrorQuantity("Questão", AplicationModel.Scene3Misses) +
-                ResponseTime(AplicationModel.PlayerResponseTime[2]);
+                ResponseTime(AplicationModel.PlayerResponseTime[2])
+        };
+
+        for (int i = 0; i < reportTxt.Length; i++) {
+            bool sceneCompleted = AplicationModel.scenesCompleted[i];
+            reportTxt[i].text = sceneCompleted ? scenes[i] : notCompleted;
         }
     }
 }

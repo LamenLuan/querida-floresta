@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private SceneLoader sceneLoader;
-    [SerializeField] private Button startButton, speechButton, reportButton;
+    [SerializeField] private Button startButton, speechButton, statisticsButton;
     [SerializeField] private GameObject buttonsObj;
     [SerializeField] private NarratorMMController narratorController;
     private AudioClip speechClip;
@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
     { 
         speechClip = narratorController.SpeechAudio.clip;
         speechButton.gameObject.SetActive(!AplicationModel.isFirstTimeScene1);
-        reportButton.interactable = AplicationModel.LastSceneCompleted();
+        statisticsButton.interactable = AplicationModel.scenesCompleted[0];
 
         if(!AplicationModel.scenesCompleted[0]) {
             startButton.onClick.AddListener(NewGameStarted);

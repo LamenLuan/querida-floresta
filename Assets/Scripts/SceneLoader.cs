@@ -37,7 +37,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(6);
     }
 
-    public void loadReportScreen()
+    public void loadStatisticsScreen()
     {
         SceneManager.LoadScene(7);
     }
