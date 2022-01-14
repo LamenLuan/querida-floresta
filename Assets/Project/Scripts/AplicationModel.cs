@@ -9,7 +9,7 @@
         }
     }
 
-    public static bool isForestInTemporaryMode = true, lessClouds = false;
+    public static bool isForestInTemporaryMode = true, lessClouds;
     public static bool isFirstTimeScene1 = true, isFirstTimeScene2 = true;
     public static bool[] scenesCompleted = new bool[3];
 
