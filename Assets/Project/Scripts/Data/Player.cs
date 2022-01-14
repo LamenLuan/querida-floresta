@@ -27,4 +27,9 @@ class Player // Singleton
     {
         return new List<object>() {Name};
     }
+
+    public void ClearData()
+    {
+        _instance = new Player();
+    }
 }

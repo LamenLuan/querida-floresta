@@ -8,8 +8,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button startButton, speechButton, statisticsButton;
     [SerializeField] private GameObject buttonsObj, noConnectionObj, webCamObj;
     [SerializeField] private NarratorMMController narratorController;
-    [SerializeField] private GoogleSheetsController sheetsController;
-    [SerializeField] private WebCamController webCamController;
     private AudioClip speechClip;
 
     private void NewGameStarted()
@@ -49,43 +47,9 @@ public class MainMenuController : MonoBehaviour
         Invoke("ShowButtons", speechClip.length + 1);
     }
 
-    public void ErrorMode(string msg)
+    public void QuitButtonAction()
     {
-        buttonsObj.SetActive(true);
-        for(int i = 0; i < buttonsObj.transform.childCount - 1; i++)
-            buttonsObj.transform.GetChild(i).gameObject.SetActive(false);
-        webCamController.StopCam();
-        webCamObj.SetActive(false);
-        
-        Text text = noConnectionObj.transform.GetComponentInChildren<Text>();
-        text.text = msg;
-
-        noConnectionObj.SetActive(true);
+        Player.Instance.ClearData();
+        sceneLoader.loadAuthMenu();
     }
-
-    public bool LoadPlayer(string id)
-    {
-        var data = sheetsController.FindEntry(id);
-        if (data == null) return false;
-        Player.Instance.LoadData(data);
-
-        return true;
-    }
-
-    public bool RegisterPlayer(string name)
-    {
-        Player.Instance.Name = name;
-        IList<object> data = Player.Instance.ToObjectList();
-        print( sheetsController.CreateEntry(data) );
-
-        return true;
-    }
-
-    public void SavePlayerData()
-    {
-        sheetsController.UpdateEntry(
-            Player.Instance.Id, Player.Instance.ToObjectList()
-        );
-    }
-
 }

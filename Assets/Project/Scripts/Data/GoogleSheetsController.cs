@@ -9,7 +9,7 @@ using System.IO;
 
 public class GoogleSheetsController : MonoBehaviour
 {
-    [SerializeField] private MainMenuController _mainMenuController;
+    [SerializeField] private AuthController authController;
     const string SHEET_ID = "1_HznfnrQQ2iUVnMVr-4rdwz8iDWR71Zfzk15rc9pDmE";
     const string FINAL_COL = "B";
     static SheetsService service;
@@ -33,23 +33,30 @@ public class GoogleSheetsController : MonoBehaviour
                 HttpClientInitializer = googleCredential,
                 ApplicationName = "Querida Floresta"
             });
+
+            TestConexion();
         }
         catch (System.IO.FileNotFoundException) {
-            _mainMenuController.ErrorMode("Arquivo faltante, reinstale o jogo");
-            return;
+            authController.ErrorMode("Arquivo faltante, reinstale o jogo");
+        }
+        catch (System.Net.Http.HttpRequestException) {
+            authController.ErrorMode("Erro de conexão com a rede");
+        }
+        catch (System.Exception) {
+            authController.ErrorMode("Um erro inesperado aconteceu");
         }
     }
 
-    private bool ValitadeId(string id)
+    private void TestConexion()
     {
-        try { if(int.Parse(id) < 1) return false; }
-        catch (FormatException) { return false; }
-        return true;
+        var range = $"data!A1:A1";
+        var request = service.Spreadsheets.Values.Get(SHEET_ID, range);
+        request.Execute();
     }
 
     public string[] FindEntry(string id)
     {
-        if( !ValitadeId(id) ) return null;
+        if( !authController.ValitadeId(id) ) return null;
 
         var range = $"data!A{id}:{FINAL_COL}{id}";
         var request = service.Spreadsheets.Values.Get(SHEET_ID, range);
@@ -88,7 +95,7 @@ public class GoogleSheetsController : MonoBehaviour
 
     public void UpdateEntry(string id, IList<object> data)
     {
-        if( !ValitadeId(id) ) return;
+        if( !authController.ValitadeId(id) ) return;
 
         var valueRange = new ValueRange();
         var range = $"data!B{id}:{FINAL_COL}{id}";
