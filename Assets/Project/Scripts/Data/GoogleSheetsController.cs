@@ -33,8 +33,6 @@ public class GoogleSheetsController : MonoBehaviour
                 HttpClientInitializer = googleCredential,
                 ApplicationName = "Querida Floresta"
             });
-
-            print(service.Spreadsheets.Values.Get(SHEET_ID, $"data!A:A"));
         }
         catch (System.IO.FileNotFoundException) {
             _mainMenuController.ErrorMode("Arquivo faltante, reinstale o jogo");

@@ -8,10 +8,9 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button startButton, speechButton, statisticsButton;
     [SerializeField] private GameObject buttonsObj, noConnectionObj, webCamObj;
     [SerializeField] private NarratorMMController narratorController;
-    [SerializeField] private RawImage webCamRawImg;
     [SerializeField] private GoogleSheetsController sheetsController;
+    [SerializeField] private WebCamController webCamController;
     private AudioClip speechClip;
-    static WebCamTexture webCamTexture;
 
     private void NewGameStarted()
     {
@@ -36,22 +35,6 @@ public class MainMenuController : MonoBehaviour
             startButton.GetComponentInChildren<Text>().text = "ATIVIDADES";
             startButton.onClick.AddListener(sceneLoader.loadSceneSelection);
         }
-
-        if( !WebCamStarted() ) {
-            ErrorMode(
-                "Webcam indisponível ou inacessável. Conecte o dispositivo e/ou"
-                + " de permissão ao jogo"
-            );
-        }
-    }
-
-    private bool WebCamStarted()
-    {
-        if(webCamTexture == null) webCamTexture = new WebCamTexture();
-        webCamRawImg.texture = webCamTexture;
-        webCamRawImg.material.mainTexture = webCamTexture;
-        if(!webCamTexture.isPlaying) webCamTexture.Play();
-        return webCamTexture.isPlaying;
     }
 
     private void ShowButtons() // Invoked by hideButtonsPlaySpeech()
@@ -71,7 +54,7 @@ public class MainMenuController : MonoBehaviour
         buttonsObj.SetActive(true);
         for(int i = 0; i < buttonsObj.transform.childCount - 1; i++)
             buttonsObj.transform.GetChild(i).gameObject.SetActive(false);
-        if(webCamTexture.isPlaying) webCamTexture.Stop();
+        webCamController.StopCam();
         webCamObj.SetActive(false);
         
         Text text = noConnectionObj.transform.GetComponentInChildren<Text>();

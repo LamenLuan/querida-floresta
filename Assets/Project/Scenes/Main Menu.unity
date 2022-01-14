@@ -1194,6 +1194,7 @@ GameObject:
   - component: {fileID: 845659771}
   - component: {fileID: 845659772}
   - component: {fileID: 845659773}
+  - component: {fileID: 845659774}
   - component: {fileID: 845659769}
   - component: {fileID: 845659768}
   m_Layer: 0
@@ -1300,7 +1301,8 @@ MonoBehaviour:
   noConnectionObj: {fileID: 1738569633}
   webCamObj: {fileID: 316666758}
   narratorController: {fileID: 938256322}
-  webCamRawImg: {fileID: 1347623878}
+  sheetsController: {fileID: 845659773}
+  webCamController: {fileID: 845659774}
 --- !u!114 &845659773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,6 +1316,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainMenuController: {fileID: 845659772}
+--- !u!114 &845659774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845659767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbffa518027b6154a8c16fbb01468bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 845659772}
+  webCamRawImg: {fileID: 1347623878}
 --- !u!1 &888001187
 GameObject:
   m_ObjectHideFlags: 0
