@@ -14,23 +14,6 @@ public class WebCamController : MonoBehaviour
     static WebCamTexture webCamTexture;
     private BarcodeReaderGeneric barcodeReader;
 
-    public void StartWebCam()
-    {
-        if (webCamTexture == null) webCamTexture = new WebCamTexture();
-        webCamRawImg.texture = webCamTexture;
-        webCamRawImg.material.mainTexture = webCamTexture;
-        if (!webCamTexture.isPlaying) webCamTexture.Play();
-        if (!webCamTexture.isPlaying) {
-            authController.ErrorMode(
-                "Webcam indisponível ou inacessável. Conecte o dispositivo"
-                + " e/ou de permissão ao jogo"
-            );
-            return;
-        }
-
-        barcodeReader = new BarcodeReaderGeneric { AutoRotate = false };
-    }
-
     private static byte[] Color32ArrayToByteArray(Color32[] colors)
     {
         if (colors == null || colors.Length == 0)
@@ -41,25 +24,21 @@ public class WebCamController : MonoBehaviour
         byte[] bytes = new byte[length];
 
         GCHandle handle = default(GCHandle);
-        try
-        {
+        try {
             handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
             IntPtr ptr = handle.AddrOfPinnedObject();
             Marshal.Copy(ptr, bytes, 0, length);
         }
-        finally
-        {
-            if (handle != default(GCHandle))
-                handle.Free();
+        finally {
+            if (handle != default(GCHandle)) handle.Free();
         }
-
+        
         return bytes;
     }
 
     void Update()
     {
-        if (barcodeReader != null)
-        {
+        if (barcodeReader != null) {
             Result result = barcodeReader.Decode(
                 Color32ArrayToByteArray(webCamTexture.GetPixels32()),
                 webCamTexture.width,
@@ -67,8 +46,7 @@ public class WebCamController : MonoBehaviour
                 RGBLuminanceSource.BitmapFormat.RGB32
             );
 
-            if (result != null)
-            {
+            if(result != null) {
                 if(authController.ValitadeId(result.Text)) {
                     StopCam();
                     authController.LoadPlayer(result.Text);
@@ -78,6 +56,23 @@ public class WebCamController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void StartWebCam()
+    {
+        if(webCamTexture == null) webCamTexture = new WebCamTexture();
+        webCamRawImg.texture = webCamTexture;
+        webCamRawImg.material.mainTexture = webCamTexture;
+        if(!webCamTexture.isPlaying) webCamTexture.Play();
+        if(!webCamTexture.isPlaying) {
+            authController.ErrorMode(
+                "Webcam indisponível ou inacessável. Conecte o dispositivo"
+                + " e/ou de permissão ao jogo"
+            );
+            return;
+        }
+
+        barcodeReader = new BarcodeReaderGeneric { AutoRotate = false };
     }
 
     IEnumerator AcessEffect()
@@ -94,7 +89,5 @@ public class WebCamController : MonoBehaviour
             barcodeReader = null;
             webCamTexture.Stop();
         }
-        
     }
-
 }
