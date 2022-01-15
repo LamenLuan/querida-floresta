@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +8,11 @@ using ZXing;
 public class WebCamController : MonoBehaviour
 {
     [SerializeField] private AuthController authController;
+    [SerializeField] private AudioController audioController;
     [SerializeField] private RawImage webCamRawImg;
+    [SerializeField] private Text qrCodeTxt;
     static WebCamTexture webCamTexture;
     private BarcodeReaderGeneric barcodeReader;
-
-    void Start() // Start is called before the first frame update
-    {
-        
-    }
 
     public void StartWebCam()
     {
@@ -74,9 +72,20 @@ public class WebCamController : MonoBehaviour
                 if(authController.ValitadeId(result.Text)) {
                     StopCam();
                     authController.LoadPlayer(result.Text);
+                    StartCoroutine( AcessEffect() );
+                    audioController.hitSound();
+                    qrCodeTxt.text = $"BEM VINDO {Player.Instance.Name}!!";
                 }
             }
         }
+    }
+
+    IEnumerator AcessEffect()
+    {
+        Color originalColor = qrCodeTxt.color;
+        qrCodeTxt.color = new Color(0f, 1f, 0f, 1f);
+        yield return new WaitForSeconds(1.0f);
+        qrCodeTxt.color = originalColor;
     }
 
     public void StopCam()
