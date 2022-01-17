@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AuthController : MonoBehaviour
@@ -9,28 +6,27 @@ public class AuthController : MonoBehaviour
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private GoogleSheetsController sheetsController;
     [SerializeField] private WebCamController webCamController;
-    [SerializeField] private GameObject loginButtonObj, registerButtonObj,
-        noConnectionObj, webCamObj;
+    [SerializeField] private GameObject buttonsObj, noConnectionObj, webCamObj;
     [SerializeField] private Text quitButtonTxt;
     private bool readQr;
 
-    public bool ValitadeId(string id)
+    void Start()
     {
-        try { if(int.Parse(id) < 1) return false; }
-        catch (FormatException) { return false; }
-        return true;
+        try {
+            sheetsController.StartSheets();
+        }
+        catch (System.Net.Http.HttpRequestException) {
+            ErrorMode("Erro de conexão com a rede");
+        }
+        catch (System.Exception) {
+            ErrorMode("Um erro inesperado aconteceu");
+        }
     }
-
-    private void DisableButtons()
-    {
-        loginButtonObj.SetActive(false);
-        registerButtonObj.SetActive(false);
-    }
-
+    
     public void ReadQrMode()
     {
         readQr = true;
-        DisableButtons();
+        buttonsObj.SetActive(false);
         webCamObj.SetActive(true);
         quitButtonTxt.text = "VOLTAR";
         webCamController.StartWebCam();
@@ -38,7 +34,7 @@ public class AuthController : MonoBehaviour
 
     public void ErrorMode(string msg)
     {
-        DisableButtons();
+        buttonsObj.SetActive(false);
         Text text = noConnectionObj.transform.GetComponentInChildren<Text>();
         text.text = msg;
         noConnectionObj.SetActive(true);
@@ -51,21 +47,6 @@ public class AuthController : MonoBehaviour
         Player.Instance.LoadData(data);
         
         sceneLoader.Invoke("loadMainMenu", 2.0f);
-    }
-
-    public bool RegisterPlayer(string name)
-    {
-        Player.Instance.Name = name;
-        IList<object> data = Player.Instance.ToObjectList();
-        print(sheetsController.CreateEntry(data));
-        return true;
-    }
-
-    public void SavePlayerData()
-    {
-        sheetsController.UpdateEntry(
-            Player.Instance.Id, Player.Instance.ToObjectList()
-        );
     }
 
     public void QuitButtonAction()

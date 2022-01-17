@@ -47,7 +47,7 @@ public class WebCamController : MonoBehaviour
             );
 
             if(result != null) {
-                if(authController.ValitadeId(result.Text)) {
+                if( GoogleSheetsController.ValitadeId(result.Text) ) {
                     StopCam();
                     authController.LoadPlayer(result.Text);
                     StartCoroutine( AcessEffect() );

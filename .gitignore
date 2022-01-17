@@ -99,3 +99,6 @@ estatisticas.txt
 Assets/estatisticas.txt.meta
 account_key.json
 credentials.json
+usuarios
+Credentials.cs
+Credentials.cs.meta
