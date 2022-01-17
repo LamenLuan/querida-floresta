@@ -64,7 +64,7 @@ public class GoogleSheetsController : MonoBehaviour
 
     public int FindUser(string user)
     {
-        var range = $"data!A:{FINAL_COL}";
+        var range = $"data!B:B";
         var request = service.Spreadsheets.Values.Get(Credentials.ID, range);
 
         var response = request.Execute();
@@ -72,7 +72,7 @@ public class GoogleSheetsController : MonoBehaviour
         if(rows == null) return -1;
 
         for(int i = 0; i < rows.Count; i++) {
-            if( rows[i][1].Equals(user) ) return i;
+            if( rows[i][0].Equals(user) ) return i;
         }
 
         return -1;
