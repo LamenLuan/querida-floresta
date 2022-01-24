@@ -64,7 +64,7 @@ public class RegisterController : MonoBehaviour
         }
 
         int id = sheetsController.FindUser(name) + 1;
-        if(id != 0) {
+        if(id == 0) {
             lastNameRegistred = name;
             IList<object> data = PrepareRegister(name);
             if( sheetsController.CreateEntry(data) ) {   
