@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button startButton, speechButton, statisticsButton;
     [SerializeField] private GameObject buttonsObj, noConnectionObj, webCamObj;
     [SerializeField] private NarratorMMController narratorController;
+    [SerializeField] private GoogleSheetsController sheetsController;
     private AudioClip speechClip;
 
     private void NewGameStarted()
@@ -23,9 +24,9 @@ public class MainMenuController : MonoBehaviour
     {
         speechClip = narratorController.SpeechAudio.clip;
         speechButton.gameObject.SetActive(!AplicationModel.isFirstTimeScene1);
-        statisticsButton.interactable = AplicationModel.scenesCompleted[0];
+        statisticsButton.interactable = Player.Instance.ScenesCompleted[0];
 
-        if(!AplicationModel.scenesCompleted[0]) {
+        if(!Player.Instance.ScenesCompleted[0]) {
             startButton.onClick.AddListener(NewGameStarted);
         }
         else {

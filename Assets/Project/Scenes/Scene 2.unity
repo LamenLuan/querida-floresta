@@ -1580,6 +1580,7 @@ GameObject:
   - component: {fileID: 561014164}
   - component: {fileID: 561014167}
   - component: {fileID: 561014166}
+  - component: {fileID: 561014168}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1672,6 +1673,7 @@ MonoBehaviour:
   garbageObject: {fileID: 1312717813}
   treesObject: {fileID: 1187759773}
   sceneLoader: {fileID: 561014167}
+  sheetsController: {fileID: 561014168}
   spritesController: {fileID: 2090861787}
   canvasController: {fileID: 952371157}
   narratorController: {fileID: 856145178}
@@ -1685,6 +1687,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc9aeefb2665c78459549603bfad669d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &561014168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561014162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c311ece858f9b745b0c1dba20adc711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &561442807

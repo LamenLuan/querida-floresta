@@ -42,7 +42,7 @@ public class StatisticsController : MonoBehaviour
         };
 
         for (int i = 0; i < reportTxt.Length; i++) {
-            bool sceneCompleted = AplicationModel.scenesCompleted[i];
+            bool sceneCompleted = Player.Instance.ScenesCompleted[i];
             if(sceneCompleted) reportTxt[i].text = scenes[i];
             reportTxt[i].text = sceneCompleted ? scenes[i] : notCompleted;
         }

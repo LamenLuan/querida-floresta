@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Scene3Controller : MonoBehaviour
 {
     [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private GoogleSheetsController sheetsController;
     [SerializeField] private CanvasS3Controller canvasController;
     [SerializeField] private AudioController audioController;
     [SerializeField] private NarratorS3Controller narratorController;
@@ -72,15 +74,16 @@ public class Scene3Controller : MonoBehaviour
                     narratorController.RightAnswerAudio.clip.length + 1f
                 );
                 sceneLoader.Invoke(
-                    (AplicationModel.scenesCompleted[2])
+                    (Player.Instance.ScenesCompleted[2])
                         ? "loadSceneSelection"
                         : "loadPlayersForest",
                     narratorController.SceneCompletedAudio.clip.length + 
                     narratorController.RightAnswerAudio.clip.length + 3f
                 );
-                if(!AplicationModel.scenesCompleted[2]) {
+                if(!Player.Instance.ScenesCompleted[2]) {
                     sendDataToReport();
-                    AplicationModel.scenesCompleted[2] = true;
+                    Player.Instance.ScenesCompleted[2] = true;
+                    new Thread(sheetsController.SavePlayerProgress).Start();
                 }
             });
             word2Btn.onClick.AddListener( () => setWrongAnswer(word2Btn) );
@@ -127,7 +130,7 @@ public class Scene3Controller : MonoBehaviour
                 button.onClick.RemoveListener(calculateTimePassed);
         }
 
-        if(!AplicationModel.scenesCompleted[2])
+        if(!Player.Instance.ScenesCompleted[2])
             foreach (var button in buttons)
                 button.onClick.AddListener(calculateTimePassed);
     }

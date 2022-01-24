@@ -45,7 +45,7 @@ public class AuthController : MonoBehaviour
         var data = sheetsController.FindEntry(id);
         if (data == null) return;
         Player.Instance.LoadData(data);
-        
+
         sceneLoader.Invoke("loadMainMenu", 2.0f);
     }
 

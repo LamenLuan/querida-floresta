@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DigitalRuby.RainMaker;
+using System.Threading;
 
 public class Scene2Controller : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Scene2Controller : MonoBehaviour
     [SerializeField] private GameObject rainPrefab, cowObject, garbageObject, 
         treesObject;
     [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private GoogleSheetsController sheetsController;
     [SerializeField] private SpritesS2Controller spritesController;
     [SerializeField] private CanvasS2Controller canvasController;
     [SerializeField] private Scene2NarratorController narratorController;
@@ -114,16 +116,17 @@ public class Scene2Controller : MonoBehaviour
             );
             playANarratorAudio(
                 "playSceneCompletedAudio",
-                (AplicationModel.scenesCompleted[1])
+                (Player.Instance.ScenesCompleted[1])
                     ? "loadSceneSelection"
                     : "loadPlayersForest",
                 9f,
                 Tcontroller.SCENE_LOADER, 44.15f
             );
 
-            if(!AplicationModel.scenesCompleted[1]) {
+            if(!Player.Instance.ScenesCompleted[1]) {
                 sendDataToReport();
-                AplicationModel.scenesCompleted[1] = true;
+                new Thread(sheetsController.SavePlayerProgress).Start();
+                Player.Instance.ScenesCompleted[1] = true;
             }
         };
 
@@ -131,7 +134,7 @@ public class Scene2Controller : MonoBehaviour
             Button[] buttons = {cowButton, treesButton, garbageButton};
 
             if(
-                !AplicationModel.scenesCompleted[1] &&
+                !Player.Instance.ScenesCompleted[1] &&
                 AplicationModel.PlayerResponseTime[1] == 0.00000f
             ) {
                 AplicationModel.PlayerResponseTime[1] =

@@ -12,7 +12,7 @@ public class CanvasPFController : MonoBehaviour
         GameObject[] rewards = {reward1Obj, reward2Obj, reward3Obj};
 
         for (int i = rewards.Length - 1; i >= 0; --i)
-            if(AplicationModel.scenesCompleted[i]) rewards[i].SetActive(true);
+            if(Player.Instance.ScenesCompleted[i]) rewards[i].SetActive(true);
     }
 
     public void setLockedEffect()
@@ -60,11 +60,11 @@ public class CanvasPFController : MonoBehaviour
             int lastIndex = rewards.Length - 1;
            
             if(
-                !AplicationModel.scenesCompleted[lastIndex] &&
-                AplicationModel.scenesCompleted[0]
+                !Player.Instance.ScenesCompleted[lastIndex] &&
+                Player.Instance.ScenesCompleted[0]
             ) {
                 for (int i = 1; i < rewards.Length; i++) {
-                    if(!AplicationModel.scenesCompleted[i]) {
+                    if(!Player.Instance.ScenesCompleted[i]) {
                         newReward = rewards[i - 1];
                         break;
                     }

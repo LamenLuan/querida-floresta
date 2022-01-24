@@ -12,6 +12,6 @@ public class SceneSelectionController : MonoBehaviour
         
         scene1Btn.interactable = true;
         for (int i = 0; i < btns.Length; i++)
-            if(AplicationModel.scenesCompleted[i]) btns[i].interactable = true;
+            if(Player.Instance.ScenesCompleted[i]) btns[i].interactable = true;
     }
 }

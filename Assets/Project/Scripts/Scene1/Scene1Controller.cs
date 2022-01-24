@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Threading;
 
 public class Scene1Controller : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class Scene1Controller : MonoBehaviour
     [SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, 
     steamEffectsObj;
     [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private GoogleSheetsController sheetsController;
     [SerializeField] private CanvasS1Controller canvasController;
     [SerializeField] private Scene1NarratorController narratorController;
     [SerializeField] private AudioSource cloudAudio;
@@ -97,14 +99,15 @@ public class Scene1Controller : MonoBehaviour
                     audioController.sceneCompletedSound();
                     narratorController.Invoke("playCongratsAudio", 0.5f);
                     sceneLoader.Invoke(
-                        (AplicationModel.scenesCompleted[0])
+                        (Player.Instance.ScenesCompleted[0])
                             ? "loadSceneSelection"
                             : "loadPlayersForest",
                         9f
                     );
-                    if(!AplicationModel.scenesCompleted[0]) {
+                    if(!Player.Instance.ScenesCompleted[0]) {
                         sendDataToReport();
-                        AplicationModel.scenesCompleted[0] = true;
+                        Player.Instance.ScenesCompleted[0] = true;
+                        new Thread(sheetsController.SavePlayerProgress).Start();
                     }
                 }
             }

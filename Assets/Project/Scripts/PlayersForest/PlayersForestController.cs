@@ -30,16 +30,16 @@ public class PlayersForestController : MonoBehaviour
     {
         if(
             AplicationModel.isForestInTemporaryMode &&
-            AplicationModel.scenesCompleted[0]
+            Player.Instance.ScenesCompleted[0]
         ) {
             narratorController.Invoke("playUnlockAudio", 1f);
             functionToInvoke = null;
 
-            if(AplicationModel.scenesCompleted[2])
+            if(Player.Instance.ScenesCompleted[2])
                 functionToInvoke = "loadSceneSelection";
-            else if(AplicationModel.scenesCompleted[1])
+            else if(Player.Instance.ScenesCompleted[1])
                 functionToInvoke = "loadScene3";
-            else if(AplicationModel.scenesCompleted[0])
+            else if(Player.Instance.ScenesCompleted[0])
                 functionToInvoke = "loadScene2";
 
             canvasController.setLockedEffect();

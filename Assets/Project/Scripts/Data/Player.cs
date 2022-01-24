@@ -14,6 +14,7 @@ class Player // Singleton
 
     public string Id { get; set; } 
     public string Name { get; set; }
+    public bool[] ScenesCompleted { get; } = new bool[3];
 
     private Player() { }
 
@@ -21,11 +22,16 @@ class Player // Singleton
     {
         Id = data[0];
         Name = data[1];
+        for(int i = 0; i < ScenesCompleted.Length; i++)
+            ScenesCompleted[i] = !data[i + 2].Equals("0");
     }
 
     public IList<object> ToObjectList()
     {
-        return new List<object>() {Name};
+        List<object> list = new List<object>(){Name};
+        foreach(bool scene in ScenesCompleted) list.Add(scene ? 1 : 0);
+
+        return list;
     }
 
     public void ClearData()

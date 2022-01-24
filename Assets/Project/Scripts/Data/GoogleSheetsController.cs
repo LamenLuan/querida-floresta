@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 public class GoogleSheetsController : MonoBehaviour
 {
-    const string FINAL_COL = "B";
+    const string FINAL_COL = "E";
     static SheetsService service;
 
     public void StartSheets()
@@ -21,7 +21,6 @@ public class GoogleSheetsController : MonoBehaviour
         googleCredential = GoogleCredential.FromJson(
             Credentials.CREDENTIALS
         ).CreateScoped(scopes);
-
 
         service = new SheetsService(new BaseClientService.Initializer() {
             HttpClientInitializer = googleCredential,
@@ -117,5 +116,11 @@ public class GoogleSheetsController : MonoBehaviour
             UpdateRequest.ValueInputOptionEnum.USERENTERED;
 
         update.Execute();
+    }
+
+    public void SavePlayerProgress()
+    {
+        int id = FindUser(Player.Instance.Name) + 1;
+        if(id != 0) UpdateEntry(id.ToString(), Player.Instance.ToObjectList());
     }
 }

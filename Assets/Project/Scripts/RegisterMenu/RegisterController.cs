@@ -45,6 +45,15 @@ public class RegisterController : MonoBehaviour
         placeHolderTxt.color = original;
     }
 
+    private List<object> PrepareRegister(string name)
+    {
+        List<object> data = new List<object>{
+            name, 0, 0, 0
+        };
+
+        return data;
+    }
+
     public void RegisterPlayer()
     {
         string name = inputTxt.text.ToLower();
@@ -54,11 +63,11 @@ public class RegisterController : MonoBehaviour
             return;
         }
 
-        if(sheetsController.FindUser(name) == -1) {
+        int id = sheetsController.FindUser(name) + 1;
+        if(id != 0) {
             lastNameRegistred = name;
-            IList<object> data = new List<object>{name};
-            if( sheetsController.CreateEntry(data) ) {
-                int id = sheetsController.FindUser(name) + 1;
+            IList<object> data = PrepareRegister(name);
+            if( sheetsController.CreateEntry(data) ) {   
                 qrCodeGenerator.GenerateQrCode( id.ToString() );
                 SetQrCodeMode();
             }
