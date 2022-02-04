@@ -67,9 +67,12 @@ public class RegisterController : MonoBehaviour
         if(id == 0) {
             lastNameRegistred = name;
             IList<object> data = PrepareRegister(name);
-            if( sheetsController.CreateEntry(data) ) {   
-                qrCodeGenerator.GenerateQrCode( id.ToString() );
-                SetQrCodeMode();
+            if( sheetsController.CreateEntry(data) ) {
+                try {
+                    qrCodeGenerator.GenerateQrCode( id.ToString() );
+                    SetQrCodeMode();
+                }
+                catch (System.Exception ex) { ErrorMode(ex.Message); }
             }
             print("Usuário cadastrado");
         }
