@@ -47,10 +47,7 @@ public class RegisterController : MonoBehaviour
 
     private List<object> PrepareRegister(string name)
     {
-        List<object> data = new List<object>{
-            name, 0, 0, 0
-        };
-
+        List<object> data = new List<object>{name, 0, 0, 0};
         return data;
     }
 
@@ -69,7 +66,8 @@ public class RegisterController : MonoBehaviour
             IList<object> data = PrepareRegister(name);
             if( sheetsController.CreateEntry(data) ) {
                 try {
-                    qrCodeGenerator.GenerateQrCode( id.ToString() );
+                    int playerId = sheetsController.FindUser(name) + 1;
+                    qrCodeGenerator.GenerateQrCode( playerId.ToString() );
                     SetQrCodeMode();
                 }
                 catch (System.Exception ex) { ErrorMode(ex.Message); }
@@ -84,9 +82,13 @@ public class RegisterController : MonoBehaviour
     IEnumerator FileSavedMsg()
     {
         string originalTxt = saveFileButtonTxt.text;
+        Color originalColor = saveFileButtonTxt.color;
+
         saveFileButtonTxt.text = "Arquivo salvo";
+        saveFileButtonTxt.color = new Color(0, 1, 0);
         yield return new WaitForSeconds(2f);
         saveFileButtonTxt.text = originalTxt;
+        saveFileButtonTxt.color = originalColor;
     }
 
     public void SaveQrCode()

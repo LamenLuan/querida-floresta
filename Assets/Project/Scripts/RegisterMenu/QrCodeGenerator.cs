@@ -1,34 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using ZXing;
+using QRCoder;
 
 public class QrCodeGenerator : MonoBehaviour
 {
-    private const int HEIGHT = 256;
-    private const int WIDTH = 256;
+    private const int SIZE = 256;
+    private const int PIXELS_PER_MODULE = 20;
+    private const QRCodeGenerator.ECCLevel ECC = QRCodeGenerator.ECCLevel.Q;
     [SerializeField] private RawImage qrCodeImg;
 
-    private BarcodeWriterPixelData GenerateBarcodeWriter()
+    private byte[] GenerateBarcodeWriter(string id)
     {
-        BarcodeWriterPixelData barcodeWriter = new BarcodeWriterPixelData();
-        barcodeWriter.Format = BarcodeFormat.QR_CODE;
-        barcodeWriter.Options.Width = WIDTH;
-        barcodeWriter.Options.Height = HEIGHT;
+        QRCodeGenerator qrGenerator = new QRCodeGenerator();
+        QRCodeData qrCodeData = qrGenerator.CreateQrCode(id, ECC);
+        PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
 
-        return barcodeWriter;
+        return qrCode.GetGraphic(PIXELS_PER_MODULE);
     }
 
     public void GenerateQrCode(string id)
     {
-        var barcodeWriter = GenerateBarcodeWriter();
-        var qrCode = barcodeWriter.Write(id);
-
         Texture2D texture2D = new Texture2D(
-            WIDTH, HEIGHT, TextureFormat.BGRA32, false, true
+            SIZE, SIZE, TextureFormat.BGRA32, false, true
         );
-        texture2D.LoadRawTextureData(qrCode.Pixels);
+        texture2D.LoadImage( GenerateBarcodeWriter(id) );
         texture2D.Apply();
-        
         qrCodeImg.texture = texture2D;
     }
 }
