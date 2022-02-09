@@ -10,12 +10,10 @@ public class NarratorController : MonoBehaviour
 
     protected void playAudio(AudioSource audio)
     {
-        try
-        {
+        try {
             narratorAnimator.SetBool("isSpeaking", true);
         }
-        catch (System.NullReferenceException)
-        {
+        catch(System.NullReferenceException) {
             narratorAnimator = GetComponent<Animator>();
             narratorAnimator.SetBool("isSpeaking", true);
         }

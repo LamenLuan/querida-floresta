@@ -39,9 +39,8 @@ public class GoogleSheetsController : MonoBehaviour
 
     public static bool ValitadeId(string id)
     {
-        try { if(int.Parse(id) < 1) return false; }
-        catch (FormatException) { return false; }
-        return true;
+        try { return int.Parse(id) < 1; }
+        catch(FormatException) { return false; }
     }
 
     public string[] FindEntry(string id)
@@ -94,7 +93,7 @@ public class GoogleSheetsController : MonoBehaviour
             AppendRequest.ValueInputOptionEnum.USERENTERED;
 
         try { append.Execute(); }
-        catch (System.Exception) { return false; }
+        catch(System.Exception) { return false; }
         
         return true;
     }

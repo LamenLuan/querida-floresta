@@ -22,10 +22,10 @@ public class RegisterController : MonoBehaviour
         try {
             sheetsController.StartSheets();
         }
-        catch (System.Net.Http.HttpRequestException) {
+        catch(System.Net.Http.HttpRequestException) {
             ErrorMode("Erro de conexão com a rede");
         }
-        catch (System.Exception) {
+        catch(System.Exception) {
             ErrorMode("Um erro inesperado aconteceu");
         }
     }
@@ -70,7 +70,7 @@ public class RegisterController : MonoBehaviour
                     qrCodeGenerator.GenerateQrCode( playerId.ToString() );
                     SetQrCodeMode();
                 }
-                catch (System.Exception ex) { ErrorMode(ex.Message); }
+                catch(System.Exception ex) { ErrorMode(ex.Message); }
             }
             print("Usuário cadastrado");
         }
