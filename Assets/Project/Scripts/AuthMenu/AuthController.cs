@@ -40,13 +40,14 @@ public class AuthController : MonoBehaviour
         noConnectionObj.SetActive(true);
     }
 
-    public void LoadPlayer(string id)
+    public bool LoadPlayer(string id)
     {
         var data = sheetsController.FindEntry(id);
-        if (data == null) return;
+        if (data == null) return false;
         Player.Instance.LoadData(data);
 
         sceneLoader.Invoke("loadMainMenu", 2.0f);
+        return true;
     }
 
     public void QuitButtonAction()

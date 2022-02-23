@@ -48,11 +48,12 @@ public class WebCamController : MonoBehaviour
 
             if(result != null) {
                 if( GoogleSheetsController.ValitadeId(result.Text) ) {
-                    StopCam();
-                    authController.LoadPlayer(result.Text);
-                    StartCoroutine( AcessEffect() );
-                    audioController.hitSound();
-                    qrCodeTxt.text = $"BEM VINDO {Player.Instance.Name}!!";
+                    if( authController.LoadPlayer(result.Text) ) {
+                        StopCam();
+                        StartCoroutine(AcessEffect());
+                        audioController.hitSound();
+                        qrCodeTxt.text = $"BEM VINDO {Player.Instance.Name}!!";
+                    }
                 }
             }
         }

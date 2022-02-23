@@ -39,7 +39,7 @@ public class GoogleSheetsController : MonoBehaviour
 
     public static bool ValitadeId(string id)
     {
-        try { return int.Parse(id) < 1; }
+        try { return int.Parse(id) > 0; }
         catch(FormatException) { return false; }
     }
 
