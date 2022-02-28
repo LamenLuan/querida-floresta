@@ -4,6 +4,7 @@ public class NarratorRegisterController : NarratorController
 {
     [SerializeField] private AudioSource typeUserAudio, userRegisteredAudio,
         alreadyRegisteredAudio;
+        
     public float TypeUserAudioLength
     {
         get { return typeUserAudio.clip.length; }
