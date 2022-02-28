@@ -35,6 +35,7 @@ public class AuthController : MonoBehaviour
     public void ErrorMode(string msg)
     {
         buttonsObj.SetActive(false);
+        webCamObj.SetActive(false);
         Text text = noConnectionObj.transform.GetComponentInChildren<Text>();
         text.text = msg;
         noConnectionObj.SetActive(true);
