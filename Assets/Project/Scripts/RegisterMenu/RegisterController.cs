@@ -8,13 +8,14 @@ public class RegisterController : MonoBehaviour
 {
     private const string QR_DIR = "usuarios";
     [SerializeField] private GoogleSheetsController sheetsController;
+    [SerializeField] private NarratorRegisterController narratorController;
     [SerializeField] private QrCodeGenerator qrCodeGenerator;
-    [SerializeField] private GameObject registerObj, qrCodeObj;
+    [SerializeField] private GameObject registerObj, qrCodeObj, btConcludeObj;
     [SerializeField] private AudioSource registerAudio;
     [SerializeField] private Text inputTxt, saveFileButtonTxt, errorTxt,
     placeHolderTxt;
     [SerializeField] private RawImage qrCodeImg;
-
+    private bool canRegister = true;
     private string lastNameRegistred;
 
     void Start()
@@ -30,19 +31,22 @@ public class RegisterController : MonoBehaviour
         }
     }
 
-    private void SetQrCodeMode()
+    IEnumerator SetQrCodeMode()
     {
         registerAudio.Play();
         registerObj.SetActive(false);
         qrCodeObj.SetActive(true);
+        yield return new WaitForSeconds(narratorController.UserRegAudioLength);
+        btConcludeObj.SetActive(true);
     }
 
     IEnumerator InsertNameEffect()
     {
         Color original = placeHolderTxt.color;
         placeHolderTxt.color = new Color(0.4f, 0f, 0f, 0.5f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(narratorController.TypeUserAudioLength);
         placeHolderTxt.color = original;
+        canRegister = true;
     }
 
     private List<object> PrepareRegister(string name)
@@ -51,32 +55,50 @@ public class RegisterController : MonoBehaviour
         return data;
     }
 
-    public void RegisterPlayer()
+    private void SetCanRegister()
+    {
+        canRegister = true;
+    }
+
+    private void RegisterPlayer()
     {
         string name = inputTxt.text.ToLower();
 
+        lastNameRegistred = name;
+        IList<object> data = PrepareRegister(name);
+        if ( sheetsController.CreateEntry(data) ) {
+            try {
+                int playerId = sheetsController.FindUser(name) + 1;
+                qrCodeGenerator.GenerateQrCode(playerId.ToString());
+                StartCoroutine( SetQrCodeMode() );
+            }
+            catch (System.Exception ex) { ErrorMode(ex.Message); }
+        }
+        narratorController.playUserRegisteredAudio();
+    }
+
+    private void WarnAlreadyRegistered()
+    {
+        canRegister = false;
+        narratorController.playAlreadyRegisteredAudio();
+        Invoke("SetCanRegister", narratorController.AlreadyRegAudioLength);
+    }
+
+    public void TryRegisterPlayer()
+    {
+        if(!canRegister) return;
+        string name = inputTxt.text.ToLower();
+
         if( name.Equals("") ) {
+            canRegister = false;
             StartCoroutine( InsertNameEffect() );
+            narratorController.playTypeUserAudio();
             return;
         }
 
         int id = sheetsController.FindUser(name) + 1;
-        if(id == 0) {
-            lastNameRegistred = name;
-            IList<object> data = PrepareRegister(name);
-            if( sheetsController.CreateEntry(data) ) {
-                try {
-                    int playerId = sheetsController.FindUser(name) + 1;
-                    qrCodeGenerator.GenerateQrCode( playerId.ToString() );
-                    SetQrCodeMode();
-                }
-                catch(System.Exception ex) { ErrorMode(ex.Message); }
-            }
-            print("Usuário cadastrado");
-        }
-        else {
-            print("Usuário já cadastrado");
-        }
+        if(id == 0) RegisterPlayer();
+        else WarnAlreadyRegistered();
     }
 
     IEnumerator FileSavedMsg()
