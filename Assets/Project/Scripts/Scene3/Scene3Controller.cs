@@ -151,9 +151,6 @@ public class Scene3Controller : MonoBehaviour
 	void Update()
 	{
 		if (!CompletedScene && InputExtensions.KeyboardDown())
-		{
 			PlayerData.NumOfKboardInputs[2]++;
-			print(PlayerData.NumOfKboardInputs[2]);
-		}
 	}
 }

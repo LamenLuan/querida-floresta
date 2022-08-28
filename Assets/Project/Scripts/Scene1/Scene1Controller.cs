@@ -240,10 +240,8 @@ public class Scene1Controller : MonoBehaviour
 	void Update() // Update is called once per frame
 	{
 		if (!CompletedScene && InputExtensions.KeyboardDown())
-		{
 			PlayerData.NumOfKboardInputs[0]++;
-			print(PlayerData.NumOfKboardInputs[0]);
-		}
+
 
 		if (gameOn)
 		{
