@@ -955,8 +955,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 519420033}
-        m_MethodName: loadMainMenu
+      - m_Target: {fileID: 519420030}
+        m_MethodName: quitScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1482,8 +1482,8 @@ MonoBehaviour:
   rainObjPrefabObj: {fileID: 191326, guid: b046278bb9b6e104790392b566667ba5, type: 3}
   steamEffectsObj: {fileID: 735939939}
   sceneLoader: {fileID: 519420033}
-  canvasController: {fileID: 1602911333}
   sheetsController: {fileID: 519420034}
+  canvasController: {fileID: 1602911333}
   narratorController: {fileID: 1994644471}
   cloudAudio: {fileID: 643497459}
   audioController: {fileID: 925052699}

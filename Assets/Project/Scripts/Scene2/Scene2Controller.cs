@@ -22,10 +22,15 @@ public class Scene2Controller : MonoBehaviour
 	private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
 	private ref bool CompletedScene => ref PlayerData.CompletedScene[1];
 
-	public void quitGame() // Called by Button (btQuit)
+	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.ResetScene2Data();
+		if (!CompletedScene)
+		{
+			PlayerData.ResetScene2Data();
+			PlayerData.NumOfQuits[1]++;
+		}
 		AplicationModel.isFirstTimeScene2 = true;
+		sceneLoader.loadMainMenu();
 	}
 
 	public void showHelp()

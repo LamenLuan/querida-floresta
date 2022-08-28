@@ -26,6 +26,12 @@ public class Scene3Controller : MonoBehaviour
 		foreach (Button btn in buttons) btn.onClick.RemoveAllListeners();
 	}
 
+	public void quitScene() // Called by Button (btQuit)
+	{
+		if (!CompletedScene) PlayerData.NumOfQuits[2]++;
+		sceneLoader.loadMainMenu();
+	}
+
 	private void setRightAnswer(Button button)
 	{
 		canvasController.setAnswerEffect(button, true);

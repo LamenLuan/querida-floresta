@@ -2073,8 +2073,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1923032478}
-        m_MethodName: loadMainMenu
+      - m_Target: {fileID: 1923032477}
+        m_MethodName: quitScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

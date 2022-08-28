@@ -41,6 +41,12 @@ public class Scene1Controller : MonoBehaviour
 		}
 	}
 
+	public void quitScene() // Called by Button (btQuit)
+	{
+		if (!CompletedScene) PlayerData.NumOfQuits[0]++;
+		sceneLoader.loadMainMenu();
+	}
+
 	public void showHelp() // Called by Button (btHelp)
 	{
 		if (!CompletedScene) PlayerData.NumOfTipsS1++;

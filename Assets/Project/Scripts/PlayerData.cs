@@ -4,10 +4,20 @@ public class PlayerData
 	public static bool[] CompletedScene = new bool[NumOfScenes];
 	public static short NumOfTipsS1, NumOfTipsS2;
 	public static int[] NumOfKboardInputs = new int[NumOfScenes];
+	public static int[] NumOfQuits = new int[NumOfScenes];
 
-	private static void ResetCommonSceneData(short scence)
+	private static void ResetGameData()
 	{
-		NumOfKboardInputs[scence] = 0;
+		for (int i = 0; i < NumOfScenes; i++)
+		{
+			CompletedScene[i] = false;
+			NumOfQuits[i] = 0;
+		}
+	}
+
+	private static void ResetCommonSceneData(short scenceIdx)
+	{
+		NumOfKboardInputs[scenceIdx] = 0;
 	}
 
 	public static void ResetScene1Data()
