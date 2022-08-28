@@ -2,6 +2,7 @@
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using static Extensions;
 
 public class Scene3Controller : MonoBehaviour
 {
@@ -73,6 +74,7 @@ public class Scene3Controller : MonoBehaviour
 
 			word1Btn.onClick.AddListener(() =>
 			{
+				CompletedScene = true;
 				setRightAnswer(word1Btn);
 				canvasController.Invoke("levelIsOver", 2.5f);
 				narratorController.Invoke(
@@ -144,5 +146,14 @@ public class Scene3Controller : MonoBehaviour
 		if (!Player.Instance.ScenesCompleted[2])
 			foreach (var button in buttons)
 				button.onClick.AddListener(calculateTimePassed);
+	}
+
+	void Update()
+	{
+		if (!CompletedScene && InputExtensions.KeyboardDown())
+		{
+			PlayerData.NumOfKboardInputs[2]++;
+			print(PlayerData.NumOfKboardInputs[2]);
+		}
 	}
 }

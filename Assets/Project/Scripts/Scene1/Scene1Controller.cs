@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Threading;
+using static Extensions;
 
 public class Scene1Controller : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class Scene1Controller : MonoBehaviour
 
 	public void showHelp() // Called by Button (btHelp)
 	{
-		if (!CompletedScene) PlayerData.NumOfTips[0]++;
+		if (!CompletedScene) PlayerData.NumOfTipsS1++;
 
 		playANarratorAudio("playHelpAudio", "resetInterface", 13f);
 		canvasController.changeToHelpInterface();
@@ -238,6 +239,12 @@ public class Scene1Controller : MonoBehaviour
 
 	void Update() // Update is called once per frame
 	{
+		if (!CompletedScene && InputExtensions.KeyboardDown())
+		{
+			PlayerData.NumOfKboardInputs[0]++;
+			print(PlayerData.NumOfKboardInputs[0]);
+		}
+
 		if (gameOn)
 		{
 			if (timeCounter < timeGap)

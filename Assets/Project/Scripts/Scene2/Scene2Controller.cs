@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 using DigitalRuby.RainMaker;
 using System.Threading;
+using static Extensions;
 
 public class Scene2Controller : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class Scene2Controller : MonoBehaviour
 
 	public void showHelp()
 	{
-		if (!CompletedScene) PlayerData.NumOfTips[1]++;
+		if (!CompletedScene) PlayerData.NumOfTipsS2++;
 		playANarratorAudio("playHelpAudio", "leaveHelpInterface", 9f);
 		canvasController.changeToHelpInterface();
 	}
@@ -172,5 +173,11 @@ public class Scene2Controller : MonoBehaviour
 			treesClicked();
 			CompletedScene = true;
 		});
+	}
+
+	void Update()
+	{
+		if (!CompletedScene && InputExtensions.KeyboardDown())
+			PlayerData.NumOfKboardInputs[1]++;
 	}
 }
