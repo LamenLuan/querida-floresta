@@ -5,6 +5,7 @@ public class PlayerData
 	public static short NumOfTipsS1, NumOfTipsS2;
 	public static int[] NumOfKboardInputs = new int[NumOfScenes];
 	public static int[] NumOfQuits = new int[NumOfScenes];
+	public static int[] NumOfClicks = new int[NumOfScenes];
 
 	private static void ResetGameData()
 	{
@@ -12,6 +13,7 @@ public class PlayerData
 		{
 			CompletedScene[i] = false;
 			NumOfQuits[i] = 0;
+			NumOfClicks[i] = 0;
 		}
 	}
 

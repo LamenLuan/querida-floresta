@@ -6,6 +6,7 @@ using static Extensions;
 
 public class Scene3Controller : MonoBehaviour
 {
+	private const short FASE_IDX = 2;
 	[SerializeField] private SceneLoader sceneLoader;
 	[SerializeField] private GoogleSheetsController sheetsController;
 	[SerializeField] private CanvasS3Controller canvasController;
@@ -16,7 +17,12 @@ public class Scene3Controller : MonoBehaviour
 	word1Btn, word2Btn, repeatQuestionBtn;
 	private byte index;
 	private DateTime timeStarted;
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[2];
+	private ref bool CompletedScene => ref PlayerData.CompletedScene[FASE_IDX];
+
+	public void mouseBtnClicked() // Called by all buttons
+	{
+		if (!CompletedScene) PlayerData.NumOfClicks[FASE_IDX]--;
+	}
 
 	private void removeListenerFromButtons() // Invoked in Start()
 	{
@@ -28,7 +34,7 @@ public class Scene3Controller : MonoBehaviour
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.NumOfQuits[2]++;
+		if (!CompletedScene) PlayerData.NumOfQuits[FASE_IDX]++;
 		sceneLoader.loadMainMenu();
 	}
 
@@ -156,7 +162,10 @@ public class Scene3Controller : MonoBehaviour
 
 	void Update()
 	{
-		if (!CompletedScene && InputExtensions.KeyboardDown())
-			PlayerData.NumOfKboardInputs[2]++;
+		if (!CompletedScene)
+		{
+			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[FASE_IDX]++;
+			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[FASE_IDX]++;
+		}
 	}
 }

@@ -5,10 +5,9 @@ using static Extensions;
 
 public class Scene1Controller : MonoBehaviour
 {
+	private const short FASE_IDX = 0;
 	[SerializeField] private float timeGap, speedIncrement;
-	[SerializeField]
-	private GameObject difficultiesObj, rainObjPrefabObj,
-	steamEffectsObj;
+	[SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, steamEffectsObj;
 	[SerializeField] private SceneLoader sceneLoader;
 	[SerializeField] private GoogleSheetsController sheetsController;
 	[SerializeField] private CanvasS1Controller canvasController;
@@ -24,7 +23,12 @@ public class Scene1Controller : MonoBehaviour
 	private SpriteRenderer cloudRenderer;
 	private GameObject rainObj, difficultyObj;
 	private MusicPlayer musicPlayer;
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[0];
+	private ref bool CompletedScene => ref PlayerData.CompletedScene[FASE_IDX];
+
+	public void mouseBtnClicked() // Called by all buttons
+	{
+		if (!CompletedScene) PlayerData.NumOfClicks[FASE_IDX]--;
+	}
 
 	// Called by Button (btStart) every level start
 	public void startGame()
@@ -43,7 +47,7 @@ public class Scene1Controller : MonoBehaviour
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.NumOfQuits[0]++;
+		if (!CompletedScene) PlayerData.NumOfQuits[FASE_IDX]++;
 		sceneLoader.loadMainMenu();
 	}
 
@@ -100,11 +104,7 @@ public class Scene1Controller : MonoBehaviour
 				rainObj = Instantiate(rainObjPrefabObj);
 				steamEffectsObj.SetActive(false);
 				if (levelCounter < 2)
-				{
-					playANarratorAudio(
-							"playRightClickAudio", "showNextLevelButton", 5f
-					);
-				}
+					playANarratorAudio("playRightClickAudio", "showNextLevelButton", 5f);
 				// Here the narrator will congratulate the player
 				else
 				{
@@ -113,8 +113,8 @@ public class Scene1Controller : MonoBehaviour
 					narratorController.Invoke("playCongratsAudio", 0.5f);
 					sceneLoader.Invoke(
 							(Player.Instance.ScenesCompleted[0])
-									? "loadSceneSelection"
-									: "loadPlayersForest",
+								? "loadSceneSelection"
+								: "loadPlayersForest",
 							9f
 					);
 					if (!Player.Instance.ScenesCompleted[0])
@@ -245,9 +245,11 @@ public class Scene1Controller : MonoBehaviour
 
 	void Update() // Update is called once per frame
 	{
-		if (!CompletedScene && InputExtensions.KeyboardDown())
-			PlayerData.NumOfKboardInputs[0]++;
-
+		if (!CompletedScene)
+		{
+			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[FASE_IDX]++;
+			if (!gameOn && Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[FASE_IDX]++;
+		}
 
 		if (gameOn)
 		{

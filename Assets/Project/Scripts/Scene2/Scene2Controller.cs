@@ -8,6 +8,7 @@ using static Extensions;
 
 public class Scene2Controller : MonoBehaviour
 {
+	private const short FASE_IDX = 1;
 	[SerializeField] private Button cowButton, garbageButton, treesButton;
 	[SerializeField] private GameObject rainPrefab, cowObject, garbageObject, treesObject;
 	[SerializeField] private SceneLoader sceneLoader;
@@ -20,14 +21,19 @@ public class Scene2Controller : MonoBehaviour
 	private DateTime timeStarted;
 	private RainScript2D rainScript;
 	private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[1];
+	private ref bool CompletedScene => ref PlayerData.CompletedScene[FASE_IDX];
+
+	public void mouseBtnClicked() // Called by all buttons
+	{
+		if (!CompletedScene) PlayerData.NumOfClicks[FASE_IDX]--;
+	}
 
 	public void quitScene() // Called by Button (btQuit)
 	{
 		if (!CompletedScene)
 		{
 			PlayerData.ResetScene2Data();
-			PlayerData.NumOfQuits[1]++;
+			PlayerData.NumOfQuits[FASE_IDX]++;
 		}
 		AplicationModel.isFirstTimeScene2 = true;
 		sceneLoader.loadMainMenu();
@@ -182,7 +188,10 @@ public class Scene2Controller : MonoBehaviour
 
 	void Update()
 	{
-		if (!CompletedScene && InputExtensions.KeyboardDown())
-			PlayerData.NumOfKboardInputs[1]++;
+		if (!CompletedScene)
+		{
+			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[FASE_IDX]++;
+			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[FASE_IDX]++;
+		}
 	}
 }
