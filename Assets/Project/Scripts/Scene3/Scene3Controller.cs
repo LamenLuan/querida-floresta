@@ -17,11 +17,11 @@ public class Scene3Controller : MonoBehaviour
 	word1Btn, word2Btn, repeatQuestionBtn;
 	private byte index;
 	private DateTime timeStarted;
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[SCECE_IDX];
+	private ref bool SceneCompleted => ref PlayerData.SceneCompleted[SCECE_IDX];
 
 	public void mouseBtnClicked() // Called by all buttons
 	{
-		if (!CompletedScene) PlayerData.NumOfClicks[SCECE_IDX]--;
+		if (!SceneCompleted) PlayerData.NumOfClicks[SCECE_IDX]--;
 	}
 
 	private void removeListenerFromButtons() // Invoked in Start()
@@ -34,7 +34,7 @@ public class Scene3Controller : MonoBehaviour
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.NumOfQuits[SCECE_IDX]++;
+		if (!SceneCompleted) PlayerData.NumOfQuits[SCECE_IDX]++;
 		sceneLoader.loadMainMenu();
 	}
 
@@ -86,7 +86,7 @@ public class Scene3Controller : MonoBehaviour
 
 			word1Btn.onClick.AddListener(() =>
 			{
-				CompletedScene = true;
+				SceneCompleted = true;
 				setRightAnswer(word1Btn);
 				canvasController.Invoke("levelIsOver", 2.5f);
 				narratorController.Invoke(
@@ -159,7 +159,7 @@ public class Scene3Controller : MonoBehaviour
 
 	void Update()
 	{
-		if (!CompletedScene)
+		if (!SceneCompleted)
 		{
 			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCECE_IDX]++;
 			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCECE_IDX]++;

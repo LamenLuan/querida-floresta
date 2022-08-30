@@ -6,6 +6,7 @@ using static Extensions;
 public class Scene1Controller : MonoBehaviour
 {
 	private const short SCENE_IDX = 0;
+	private const float INTRO_LENGTH = 10.71f;
 	[SerializeField] private float timeGap, speedIncrement;
 	[SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, steamEffectsObj;
 	[SerializeField] private SceneLoader sceneLoader;
@@ -16,18 +17,17 @@ public class Scene1Controller : MonoBehaviour
 	[SerializeField] private AudioController audioController;
 	private bool gameOn, lessClouds;
 	private int cloudCounter, cloudNumber, levelCounter;
-	private const float introAudioLength = 10.67f;
 	private float timeCounter, newHeight;
-	private DateTime timeStarted, timeEnded;
+	private DateTime timeStarted;
 	private Transform cloudTransform;
 	private SpriteRenderer cloudRenderer;
 	private GameObject rainObj, difficultyObj;
 	private MusicPlayer musicPlayer;
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[SCENE_IDX];
+	private ref bool SceneCompleted => ref PlayerData.SceneCompleted[SCENE_IDX];
 
 	public void mouseBtnClicked() // Called by all buttons
 	{
-		if (!CompletedScene) PlayerData.NumOfClicks[SCENE_IDX]--;
+		if (!SceneCompleted) PlayerData.NumOfClicks[SCENE_IDX]--;
 	}
 
 	// Called by Button (btStart) every level start
@@ -37,23 +37,22 @@ public class Scene1Controller : MonoBehaviour
 		cloudAudio.Play();
 		musicPlayer.setMusicVolume(0.01f);
 
-		if (levelCounter == 0 && AplicationModel.Scene1Misses[0] == 0)
+		if (levelCounter == 0 && !SceneCompleted)
 		{
-			timeEnded = DateTime.Now;
 			PlayerData.PlayerResponseTime[SCENE_IDX] =
-					(timeEnded - timeStarted).TotalSeconds - introAudioLength;
+				(DateTime.Now - timeStarted).TotalSeconds - INTRO_LENGTH;
 		}
 	}
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.NumOfQuits[SCENE_IDX]++;
+		if (!SceneCompleted) PlayerData.NumOfQuits[SCENE_IDX]++;
 		sceneLoader.loadMainMenu();
 	}
 
 	public void showHelp() // Called by Button (btHelp)
 	{
-		if (!CompletedScene) PlayerData.NumOfTipsS1++;
+		if (!SceneCompleted) PlayerData.NumOfTipsS1++;
 
 		playANarratorAudio("playHelpAudio", "resetInterface", 13f);
 		canvasController.changeToHelpInterface();
@@ -108,7 +107,9 @@ public class Scene1Controller : MonoBehaviour
 				// Here the narrator will congratulate the player
 				else
 				{
-					CompletedScene = true;
+					if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCENE_IDX] =
+						(DateTime.Now - timeStarted).TotalSeconds;
+					SceneCompleted = true;
 					audioController.sceneCompletedSound();
 					narratorController.Invoke("playCongratsAudio", 0.5f);
 					sceneLoader.Invoke(
@@ -229,7 +230,7 @@ public class Scene1Controller : MonoBehaviour
 	{
 		PlayerData.ResetScene1Data();
 
-		timeStarted = DateTime.Now;
+		if (!SceneCompleted) timeStarted = DateTime.Now;
 		AplicationModel.SceneAcesses[0]++;
 		instantiateDifficulty();
 		musicPlayer = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicPlayer>();
@@ -239,13 +240,13 @@ public class Scene1Controller : MonoBehaviour
 
 		moveToNextCloud();
 		playANarratorAudio(
-				"playIntroduction1Audio", "showButtons", introAudioLength
+				"playIntroduction1Audio", "showButtons", INTRO_LENGTH
 		);
 	}
 
 	void Update() // Update is called once per frame
 	{
-		if (!CompletedScene)
+		if (!SceneCompleted)
 		{
 			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
 			if (!gameOn && Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;

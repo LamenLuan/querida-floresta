@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
 using DigitalRuby.RainMaker;
 using System.Threading;
 using static Extensions;
@@ -16,21 +15,20 @@ public class Scene2Controller : MonoBehaviour
 	[SerializeField] private SpritesS2Controller spritesController;
 	[SerializeField] private CanvasS2Controller canvasController;
 	[SerializeField] private Scene2NarratorController narratorController;
-	private static float introAudioLength = 27.66f;
-	private float introAudioLengthTemp = 0;
-	private DateTime timeStarted;
+	private const float INTRO_LENGTH = 26.697f;
+	private static DateTime timeStarted;
 	private RainScript2D rainScript;
 	private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[SCENE_IDX];
+	private ref bool SceneCompleted => ref PlayerData.SceneCompleted[SCENE_IDX];
 
 	public void mouseBtnClicked() // Called by all buttons
 	{
-		if (!CompletedScene) PlayerData.NumOfClicks[SCENE_IDX]--;
+		if (!SceneCompleted) PlayerData.NumOfClicks[SCENE_IDX]--;
 	}
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene)
+		if (!SceneCompleted)
 		{
 			PlayerData.ResetScene2Data();
 			PlayerData.NumOfQuits[SCENE_IDX]++;
@@ -41,7 +39,7 @@ public class Scene2Controller : MonoBehaviour
 
 	public void showHelp()
 	{
-		if (!CompletedScene) PlayerData.NumOfTipsS2++;
+		if (!SceneCompleted) PlayerData.NumOfTipsS2++;
 		playANarratorAudio("playHelpAudio", "leaveHelpInterface", 9f);
 		canvasController.changeToHelpInterface();
 	}
@@ -80,9 +78,7 @@ public class Scene2Controller : MonoBehaviour
 	public void sceneMiss(string audioToInvoke, float audioLength)
 	{
 		AplicationModel.Scene2Misses++;
-		playANarratorAudio(
-				audioToInvoke, "changeToTryAgainInterface", audioLength
-		);
+		playANarratorAudio(audioToInvoke, "changeToTryAgainInterface", audioLength);
 	}
 
 	private void sendDataToReport()
@@ -96,19 +92,17 @@ public class Scene2Controller : MonoBehaviour
 
 	void Start() // Start is called before the first frame update
 	{
-		timeStarted = DateTime.Now;
 		AplicationModel.SceneAcesses[1]++;
 
 		if (AplicationModel.isFirstTimeScene2)
 		{
+			if (!SceneCompleted) timeStarted = DateTime.Now;
 			AplicationModel.isFirstTimeScene2 = false;
 			canvasController.showBackgroundCover();
 			playANarratorAudio(
-				"playIntroductionAudio", "hideBackgroundCover", introAudioLength
+				"playIntroductionAudio", "hideBackgroundCover", INTRO_LENGTH
 			);
-			introAudioLengthTemp = introAudioLength;
 		}
-		else introAudioLengthTemp = 0f;
 
 		Action treesClicked = () =>
 		{
@@ -151,13 +145,11 @@ public class Scene2Controller : MonoBehaviour
 		{
 			Button[] buttons = { cowButton, treesButton, garbageButton };
 
-			if (
-				!Player.Instance.ScenesCompleted[1] &&
-				PlayerData.PlayerResponseTime[SCENE_IDX] == 0.00000f
-			)
+			if (!SceneCompleted && !PlayerData.ResponseTimedS2)
 			{
+				PlayerData.ResponseTimedS2 = true;
 				PlayerData.PlayerResponseTime[SCENE_IDX] =
-					(DateTime.Now - timeStarted).Seconds - introAudioLengthTemp;
+					(DateTime.Now - timeStarted).Seconds - INTRO_LENGTH;
 			}
 
 			canvasController.showBackgroundCover();
@@ -180,15 +172,18 @@ public class Scene2Controller : MonoBehaviour
 
 		treesButton.onClick.AddListener(() =>
 		{
+			if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCENE_IDX] =
+				(DateTime.Now - timeStarted).TotalSeconds;
+
 			buttonClicked(treesObject, treesButton);
 			treesClicked();
-			CompletedScene = true;
+			SceneCompleted = true;
 		});
 	}
 
 	void Update()
 	{
-		if (!CompletedScene)
+		if (!SceneCompleted)
 		{
 			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
 			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;
