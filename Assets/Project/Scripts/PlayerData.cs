@@ -8,19 +8,11 @@ public class PlayerData
 	public static int[] NumOfClicks = new int[NumOfScenes];
 	public static double[] PlayerResponseTime { get; } = new double[NumOfScenes];
 
-	private static void ResetGameData()
-	{
-		for (int i = 0; i < NumOfScenes; i++)
-		{
-			CompletedScene[i] = false;
-			NumOfQuits[i] = 0;
-			NumOfClicks[i] = 0;
-		}
-	}
-
 	private static void ResetCommonSceneData(short scenceIdx)
 	{
 		NumOfKboardInputs[scenceIdx] = 0;
+		NumOfClicks[scenceIdx] = 0;
+		PlayerResponseTime[scenceIdx] = 0;
 	}
 
 	public static void ResetScene1Data()
@@ -38,5 +30,14 @@ public class PlayerData
 	public static void ResetScene3Data()
 	{
 		ResetCommonSceneData(2);
+	}
+
+	private static void ResetGameData()
+	{
+		for (int i = 0; i < NumOfScenes; i++)
+		{
+			CompletedScene[i] = false;
+			NumOfQuits[i] = 0;
+		}
 	}
 }
