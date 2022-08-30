@@ -5,7 +5,7 @@ using static Extensions;
 
 public class Scene1Controller : MonoBehaviour
 {
-	private const short FASE_IDX = 0;
+	private const short SCENE_IDX = 0;
 	[SerializeField] private float timeGap, speedIncrement;
 	[SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, steamEffectsObj;
 	[SerializeField] private SceneLoader sceneLoader;
@@ -23,11 +23,11 @@ public class Scene1Controller : MonoBehaviour
 	private SpriteRenderer cloudRenderer;
 	private GameObject rainObj, difficultyObj;
 	private MusicPlayer musicPlayer;
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[FASE_IDX];
+	private ref bool CompletedScene => ref PlayerData.CompletedScene[SCENE_IDX];
 
 	public void mouseBtnClicked() // Called by all buttons
 	{
-		if (!CompletedScene) PlayerData.NumOfClicks[FASE_IDX]--;
+		if (!CompletedScene) PlayerData.NumOfClicks[SCENE_IDX]--;
 	}
 
 	// Called by Button (btStart) every level start
@@ -40,14 +40,14 @@ public class Scene1Controller : MonoBehaviour
 		if (levelCounter == 0 && AplicationModel.Scene1Misses[0] == 0)
 		{
 			timeEnded = DateTime.Now;
-			AplicationModel.PlayerResponseTime[0] =
+			PlayerData.PlayerResponseTime[SCENE_IDX] =
 					(timeEnded - timeStarted).TotalSeconds - introAudioLength;
 		}
 	}
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.NumOfQuits[FASE_IDX]++;
+		if (!CompletedScene) PlayerData.NumOfQuits[SCENE_IDX]++;
 		sceneLoader.loadMainMenu();
 	}
 
@@ -90,7 +90,7 @@ public class Scene1Controller : MonoBehaviour
 		ReportCreator.resetReport();
 		ReportCreator.writeLine("Atividade 1");
 		ReportCreator.writeMissesPerPhase(AplicationModel.Scene1Misses);
-		ReportCreator.writeResponseTime(AplicationModel.PlayerResponseTime[0]);
+		ReportCreator.writeResponseTime(PlayerData.PlayerResponseTime[SCENE_IDX]);
 	}
 
 	public void checkClickOnCenario() // Called by Button (ImgBackground)
@@ -247,8 +247,8 @@ public class Scene1Controller : MonoBehaviour
 	{
 		if (!CompletedScene)
 		{
-			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[FASE_IDX]++;
-			if (!gameOn && Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[FASE_IDX]++;
+			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
+			if (!gameOn && Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;
 		}
 
 		if (gameOn)

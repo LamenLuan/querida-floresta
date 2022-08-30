@@ -21,7 +21,5 @@
 	public static byte[] Scene1Misses { get; } = new byte[3];
 	public static byte Scene2Misses { get; set; }
 	public static byte[] Scene3Misses { get; } = new byte[3];
-	public static double[] PlayerResponseTime { get; } = new double[3];
-
 	private AplicationModel() { }
 }

@@ -102,3 +102,4 @@ credentials.json
 usuarios
 Credentials.cs
 Credentials.cs.meta
+.vscode/launch.json

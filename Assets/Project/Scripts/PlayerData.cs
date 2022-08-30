@@ -6,6 +6,7 @@ public class PlayerData
 	public static int[] NumOfKboardInputs = new int[NumOfScenes];
 	public static int[] NumOfQuits = new int[NumOfScenes];
 	public static int[] NumOfClicks = new int[NumOfScenes];
+	public static double[] PlayerResponseTime { get; } = new double[NumOfScenes];
 
 	private static void ResetGameData()
 	{

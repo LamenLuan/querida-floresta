@@ -8,7 +8,7 @@ using static Extensions;
 
 public class Scene2Controller : MonoBehaviour
 {
-	private const short FASE_IDX = 1;
+	private const short SCENE_IDX = 1;
 	[SerializeField] private Button cowButton, garbageButton, treesButton;
 	[SerializeField] private GameObject rainPrefab, cowObject, garbageObject, treesObject;
 	[SerializeField] private SceneLoader sceneLoader;
@@ -21,11 +21,11 @@ public class Scene2Controller : MonoBehaviour
 	private DateTime timeStarted;
 	private RainScript2D rainScript;
 	private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[FASE_IDX];
+	private ref bool CompletedScene => ref PlayerData.CompletedScene[SCENE_IDX];
 
 	public void mouseBtnClicked() // Called by all buttons
 	{
-		if (!CompletedScene) PlayerData.NumOfClicks[FASE_IDX]--;
+		if (!CompletedScene) PlayerData.NumOfClicks[SCENE_IDX]--;
 	}
 
 	public void quitScene() // Called by Button (btQuit)
@@ -33,7 +33,7 @@ public class Scene2Controller : MonoBehaviour
 		if (!CompletedScene)
 		{
 			PlayerData.ResetScene2Data();
-			PlayerData.NumOfQuits[FASE_IDX]++;
+			PlayerData.NumOfQuits[SCENE_IDX]++;
 		}
 		AplicationModel.isFirstTimeScene2 = true;
 		sceneLoader.loadMainMenu();
@@ -91,7 +91,7 @@ public class Scene2Controller : MonoBehaviour
 		ReportCreator.writeLine(
 			$"Quantidade de erros da fase: {AplicationModel.Scene2Misses}"
 		);
-		ReportCreator.writeResponseTime(AplicationModel.PlayerResponseTime[1]);
+		ReportCreator.writeResponseTime(PlayerData.PlayerResponseTime[SCENE_IDX]);
 	}
 
 	void Start() // Start is called before the first frame update
@@ -152,12 +152,12 @@ public class Scene2Controller : MonoBehaviour
 			Button[] buttons = { cowButton, treesButton, garbageButton };
 
 			if (
-					!Player.Instance.ScenesCompleted[1] &&
-					AplicationModel.PlayerResponseTime[1] == 0.00000f
+				!Player.Instance.ScenesCompleted[1] &&
+				PlayerData.PlayerResponseTime[SCENE_IDX] == 0.00000f
 			)
 			{
-				AplicationModel.PlayerResponseTime[1] =
-						(DateTime.Now - timeStarted).Seconds - introAudioLengthTemp;
+				PlayerData.PlayerResponseTime[SCENE_IDX] =
+					(DateTime.Now - timeStarted).Seconds - introAudioLengthTemp;
 			}
 
 			canvasController.showBackgroundCover();
@@ -190,8 +190,8 @@ public class Scene2Controller : MonoBehaviour
 	{
 		if (!CompletedScene)
 		{
-			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[FASE_IDX]++;
-			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[FASE_IDX]++;
+			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
+			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;
 		}
 	}
 }

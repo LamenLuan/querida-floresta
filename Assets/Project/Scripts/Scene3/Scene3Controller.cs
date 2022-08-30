@@ -6,7 +6,7 @@ using static Extensions;
 
 public class Scene3Controller : MonoBehaviour
 {
-	private const short FASE_IDX = 2;
+	private const short SCECE_IDX = 2;
 	[SerializeField] private SceneLoader sceneLoader;
 	[SerializeField] private GoogleSheetsController sheetsController;
 	[SerializeField] private CanvasS3Controller canvasController;
@@ -17,11 +17,11 @@ public class Scene3Controller : MonoBehaviour
 	word1Btn, word2Btn, repeatQuestionBtn;
 	private byte index;
 	private DateTime timeStarted;
-	private ref bool CompletedScene => ref PlayerData.CompletedScene[FASE_IDX];
+	private ref bool CompletedScene => ref PlayerData.CompletedScene[SCECE_IDX];
 
 	public void mouseBtnClicked() // Called by all buttons
 	{
-		if (!CompletedScene) PlayerData.NumOfClicks[FASE_IDX]--;
+		if (!CompletedScene) PlayerData.NumOfClicks[SCECE_IDX]--;
 	}
 
 	private void removeListenerFromButtons() // Invoked in Start()
@@ -34,7 +34,7 @@ public class Scene3Controller : MonoBehaviour
 
 	public void quitScene() // Called by Button (btQuit)
 	{
-		if (!CompletedScene) PlayerData.NumOfQuits[FASE_IDX]++;
+		if (!CompletedScene) PlayerData.NumOfQuits[SCECE_IDX]++;
 		sceneLoader.loadMainMenu();
 	}
 
@@ -58,7 +58,7 @@ public class Scene3Controller : MonoBehaviour
 	{
 		ReportCreator.writeLine("\nAtividade 3");
 		ReportCreator.writeMissesPerPhase(AplicationModel.Scene3Misses);
-		ReportCreator.writeResponseTime(AplicationModel.PlayerResponseTime[2]);
+		ReportCreator.writeResponseTime(PlayerData.PlayerResponseTime[SCECE_IDX]);
 	}
 
 	void Start() // Start is called before the first frame update
@@ -73,7 +73,7 @@ public class Scene3Controller : MonoBehaviour
 				() => narratorController.playQuestion1Audio()
 		);
 
-		AplicationModel.PlayerResponseTime[2] =
+		PlayerData.PlayerResponseTime[SCECE_IDX] =
 				narratorController.playIntroductionAudio();
 
 		Action changeToQuestionThree = () =>
@@ -147,25 +147,22 @@ public class Scene3Controller : MonoBehaviour
 
 		void calculateTimePassed()
 		{
-			AplicationModel.PlayerResponseTime[2] =
-					(DateTime.Now - timeStarted).Seconds -
-					AplicationModel.PlayerResponseTime[2];
+			PlayerData.PlayerResponseTime[SCECE_IDX] =
+				(DateTime.Now - timeStarted).Seconds - PlayerData.PlayerResponseTime[SCECE_IDX];
 
-			foreach (var button in buttons)
-				button.onClick.RemoveListener(calculateTimePassed);
+			foreach (var button in buttons) button.onClick.RemoveListener(calculateTimePassed);
 		}
 
 		if (!Player.Instance.ScenesCompleted[2])
-			foreach (var button in buttons)
-				button.onClick.AddListener(calculateTimePassed);
+			foreach (var button in buttons) button.onClick.AddListener(calculateTimePassed);
 	}
 
 	void Update()
 	{
 		if (!CompletedScene)
 		{
-			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[FASE_IDX]++;
-			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[FASE_IDX]++;
+			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCECE_IDX]++;
+			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCECE_IDX]++;
 		}
 	}
 }
