@@ -103,3 +103,4 @@ usuarios
 Credentials.cs
 Credentials.cs.meta
 .vscode/launch.json
+.vscode/tasks.json

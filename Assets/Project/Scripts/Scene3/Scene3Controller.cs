@@ -86,6 +86,9 @@ public class Scene3Controller : MonoBehaviour
 
 			word1Btn.onClick.AddListener(() =>
 			{
+				if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCECE_IDX] =
+					(DateTime.Now - timeStarted).TotalSeconds;
+
 				SceneCompleted = true;
 				setRightAnswer(word1Btn);
 				canvasController.Invoke("levelIsOver", 2.5f);
@@ -153,7 +156,7 @@ public class Scene3Controller : MonoBehaviour
 			foreach (var button in buttons) button.onClick.RemoveListener(calculateTimePassed);
 		}
 
-		if (!Player.Instance.ScenesCompleted[2])
+		if (!SceneCompleted)
 			foreach (var button in buttons) button.onClick.AddListener(calculateTimePassed);
 	}
 

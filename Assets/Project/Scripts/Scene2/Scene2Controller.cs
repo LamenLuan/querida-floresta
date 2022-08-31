@@ -149,7 +149,7 @@ public class Scene2Controller : MonoBehaviour
 			{
 				PlayerData.ResponseTimedS2 = true;
 				PlayerData.PlayerResponseTime[SCENE_IDX] =
-					(DateTime.Now - timeStarted).Seconds - INTRO_LENGTH;
+					(DateTime.Now - timeStarted).TotalSeconds - INTRO_LENGTH;
 			}
 
 			canvasController.showBackgroundCover();
