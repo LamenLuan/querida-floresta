@@ -15,7 +15,7 @@ public class Scene1Controller : MonoBehaviour
 	[SerializeField] private Scene1NarratorController narratorController;
 	[SerializeField] private AudioSource cloudAudio;
 	[SerializeField] private AudioController audioController;
-	private bool gameOn, lessClouds;
+	private bool gameOn;
 	private int cloudCounter, cloudNumber, levelCounter;
 	private float timeCounter, newHeight;
 	private DateTime timeStarted;
@@ -52,7 +52,7 @@ public class Scene1Controller : MonoBehaviour
 
 	public void showHelp() // Called by Button (btHelp)
 	{
-		if (!SceneCompleted) PlayerData.NumOfTipsS1++;
+		if (!SceneCompleted) PlayerData.NumOfTipsS1[levelCounter]++;
 
 		playANarratorAudio("playHelpAudio", "resetInterface", 13f);
 		canvasController.changeToHelpInterface();
@@ -133,6 +133,12 @@ public class Scene1Controller : MonoBehaviour
 						++AplicationModel.Scene1Misses[levelCounter] > 4 &&
 						!AplicationModel.lessClouds
 				) setLessClouds();
+
+				if (!SceneCompleted && cloudCounter >= Mathf.Round(cloudNumber * 0.9f))
+					PlayerData.NumOfNearClickMissesS1[levelCounter]++;
+				else
+					PlayerData.NumOfClickMissesS1[levelCounter]++;
+
 				audioController.missSound();
 				cloudAudio.Stop();
 				canvasController.changeToTryAgainInterface();
@@ -248,7 +254,7 @@ public class Scene1Controller : MonoBehaviour
 	{
 		if (!SceneCompleted)
 		{
-			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
+			if (Extensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
 			if (!gameOn && Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;
 		}
 
@@ -287,6 +293,7 @@ public class Scene1Controller : MonoBehaviour
 				}
 				else if (cloudCounter > cloudNumber)
 				{
+					if (!SceneCompleted) PlayerData.NumOfNoClickMissesS1[levelCounter]++;
 					audioController.missSound();
 					AplicationModel.Scene1Misses[levelCounter]++;
 					canvasController.changeToTryAgainInterface();

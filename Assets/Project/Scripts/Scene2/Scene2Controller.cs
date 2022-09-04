@@ -185,7 +185,7 @@ public class Scene2Controller : MonoBehaviour
 	{
 		if (!SceneCompleted)
 		{
-			if (InputExtensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
+			if (Extensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
 			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;
 		}
 	}

@@ -1,14 +1,27 @@
 public class PlayerData
 {
+	private const short NUM_OF_LEVELS_S1 = 3;
 	private static short NumOfScenes = SceneLoader.NUM_OF_SCENES;
 	public static bool[] SceneCompleted = new bool[NumOfScenes];
-	public static short NumOfTipsS1, NumOfTipsS2;
+
+	// ALL SCENES
 	public static int[] NumOfKboardInputs = new int[NumOfScenes];
 	public static int[] NumOfQuits = new int[NumOfScenes];
 	public static int[] NumOfClicks = new int[NumOfScenes];
 	public static double[] PlayerResponseTime = new double[NumOfScenes];
-	public static bool ResponseTimedS2;
+
+	// MAKE THIS DATA POR LEVEL IN SCENE 1
 	public static double[] PlayDurationPerScene = new double[NumOfScenes];
+
+	// SCENE 1
+	public static short[] NumOfTipsS1;
+	public static int[] NumOfNoClickMissesS1;
+	public static int[] NumOfNearClickMissesS1;
+	public static int[] NumOfClickMissesS1;
+	// SCENE 2
+	public static short NumOfTipsS2;
+	// SCENE 3
+	public static bool ResponseTimedS2;
 
 	private static void ResetCommonSceneData(short scenceIdx)
 	{
@@ -20,7 +33,10 @@ public class PlayerData
 
 	public static void ResetScene1Data()
 	{
-		NumOfTipsS1 = 0;
+		NumOfTipsS1.Clear();
+		NumOfNoClickMissesS1.Clear();
+		NumOfNearClickMissesS1.Clear();
+		NumOfClickMissesS1.Clear();
 		ResetCommonSceneData(0);
 	}
 
