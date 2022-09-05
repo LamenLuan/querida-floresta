@@ -26,6 +26,11 @@ public static class Extensions
 		for (int i = 0; i < array.Length; i++) array[i] = 0;
 	}
 
+	public static void Clear(this double[] array)
+	{
+		for (int i = 0; i < array.Length; i++) array[i] = 0;
+	}
+
 	public static double SecondsPassed(this DateTime dateTime)
 		=> (DateTime.Now - dateTime).TotalSeconds;
 }

@@ -7,6 +7,7 @@ public class Scene1Controller : MonoBehaviour
 {
 	private const short SCENE_IDX = 0;
 	private const float INTRO_LENGTH = 10.71f;
+	private const double TRY_AGAIN_REACT_TIME = 1;
 	[SerializeField] private float timeGap, speedIncrement;
 	[SerializeField] private GameObject difficultiesObj, rainObjPrefabObj, steamEffectsObj;
 	[SerializeField] private SceneLoader sceneLoader;
@@ -15,10 +16,10 @@ public class Scene1Controller : MonoBehaviour
 	[SerializeField] private Scene1NarratorController narratorController;
 	[SerializeField] private AudioSource cloudAudio;
 	[SerializeField] private AudioController audioController;
-	private bool gameOn;
+	private bool gameOn, tryAgainClickChance;
 	private int cloudCounter, cloudNumber, levelCounter;
 	private float timeCounter, newHeight;
-	private DateTime timeStarted;
+	private DateTime timeStarted, tryAgainChanceTime;
 	private Transform cloudTransform;
 	private SpriteRenderer cloudRenderer;
 	private GameObject rainObj, difficultyObj;
@@ -56,6 +57,18 @@ public class Scene1Controller : MonoBehaviour
 
 		playANarratorAudio("playHelpAudio", "resetInterface", 13f);
 		canvasController.changeToHelpInterface();
+	}
+
+	public void BackgroudCoverClicked()
+	{
+		if (SceneCompleted || !tryAgainClickChance) return;
+
+		double timeElapsed = tryAgainChanceTime.SecondsPassed();
+		if (timeElapsed < TRY_AGAIN_REACT_TIME)
+		{
+			PlayerData.NumOfNearClickMissesS1[levelCounter]++;
+			tryAgainClickChance = false;
+		}
 	}
 
 	private void moveToNextCloud()
@@ -111,6 +124,7 @@ public class Scene1Controller : MonoBehaviour
 					if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCENE_IDX] =
 						timeStarted.SecondsPassed();
 					SceneCompleted = true;
+					CorrectLevelsDuration();
 					audioController.sceneCompletedSound();
 					narratorController.Invoke("playCongratsAudio", 0.5f);
 					sceneLoader.Invoke(
@@ -148,6 +162,12 @@ public class Scene1Controller : MonoBehaviour
 			musicPlayer.setMusicVolume(0.1f);
 			gameOn = false;
 		}
+	}
+
+	private void CorrectLevelsDuration()
+	{
+		double[] array = PlayerData.PlayDurationPerLevelS1;
+		for (int i = array.Length - 1; i > 0; i--) array[i] -= array[i - 1];
 	}
 
 	private void resetLevelData()
@@ -215,17 +235,12 @@ public class Scene1Controller : MonoBehaviour
 		for (int i = 1; i < 3; ++i)
 		{
 			// Selecting the group object
-			GameObject currentLevel =
-					difficultiesObj.transform.GetChild(i).gameObject;
+			GameObject currentLevel = difficultiesObj.transform.GetChild(i).gameObject;
 			// Calculating the last index of cloud array
 			int childQuant = currentLevel.transform.childCount - 1;
 			// Removing 2 cloud from group 2, 3 clouds from group 3
 			for (int j = 0; j < i + 1; ++j)
-			{
-				Destroy(
-						currentLevel.transform.GetChild(childQuant - j).gameObject
-				);
-			}
+				Destroy(currentLevel.transform.GetChild(childQuant - j).gameObject);
 		}
 
 		cloudNumber = difficultyObj.transform.childCount;
@@ -288,20 +303,17 @@ public class Scene1Controller : MonoBehaviour
 			{
 				canvasController.changeQuantityTxt(++cloudCounter);
 
-				if (cloudCounter < cloudNumber)
-				{
-					moveToNextCloud();
-				}
+				if (cloudCounter < cloudNumber) moveToNextCloud();
 				else if (cloudCounter > cloudNumber)
 				{
+					tryAgainChanceTime = DateTime.Now;
+					tryAgainClickChance = true;
 					if (!SceneCompleted) PlayerData.NumOfNoClickMissesS1[levelCounter]++;
 					audioController.missSound();
 					AplicationModel.Scene1Misses[levelCounter]++;
 					canvasController.changeToTryAgainInterface();
 					gameOn = false;
-					playANarratorAudio(
-							"playNotClickedAudio", "enableTryAgainButton", 7f
-					);
+					playANarratorAudio("playNotClickedAudio", "enableTryAgainButton", 7f);
 				}
 
 				timeCounter = 0f;

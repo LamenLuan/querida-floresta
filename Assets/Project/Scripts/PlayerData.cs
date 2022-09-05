@@ -16,7 +16,7 @@ public class PlayerData
 	public static int[] NumOfNoClickMissesS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfNearClickMissesS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfClickMissesS1 = new int[NUM_OF_LEVELS_S1];
-	public static double[] PlayDurationPerLevelS1 = new double[NumOfScenes];
+	public static double[] PlayDurationPerLevelS1 = new double[NUM_OF_LEVELS_S1];
 
 	// SCENE 2
 	public static short NumOfTipsS2;
@@ -38,6 +38,7 @@ public class PlayerData
 		NumOfNoClickMissesS1.Clear();
 		NumOfNearClickMissesS1.Clear();
 		NumOfClickMissesS1.Clear();
+		PlayDurationPerLevelS1.Clear();
 		ResetCommonSceneData(0);
 	}
 
