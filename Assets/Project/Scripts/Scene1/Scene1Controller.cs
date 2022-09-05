@@ -40,7 +40,7 @@ public class Scene1Controller : MonoBehaviour
 		if (levelCounter == 0 && !SceneCompleted)
 		{
 			PlayerData.PlayerResponseTime[SCENE_IDX] =
-				(DateTime.Now - timeStarted).TotalSeconds - INTRO_LENGTH;
+				timeStarted.SecondsPassed() - INTRO_LENGTH;
 		}
 	}
 
@@ -99,6 +99,7 @@ public class Scene1Controller : MonoBehaviour
 			// Player clicked on the right moment
 			if (cloudCounter == cloudNumber)
 			{
+				PlayerData.PlayDurationPerLevelS1[levelCounter] = timeStarted.SecondsPassed();
 				audioController.hitSound();
 				rainObj = Instantiate(rainObjPrefabObj);
 				steamEffectsObj.SetActive(false);
@@ -108,7 +109,7 @@ public class Scene1Controller : MonoBehaviour
 				else
 				{
 					if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCENE_IDX] =
-						(DateTime.Now - timeStarted).TotalSeconds;
+						timeStarted.SecondsPassed();
 					SceneCompleted = true;
 					audioController.sceneCompletedSound();
 					narratorController.Invoke("playCongratsAudio", 0.5f);

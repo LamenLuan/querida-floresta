@@ -87,7 +87,7 @@ public class Scene3Controller : MonoBehaviour
 			word1Btn.onClick.AddListener(() =>
 			{
 				if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCECE_IDX] =
-					(DateTime.Now - timeStarted).TotalSeconds;
+					timeStarted.SecondsPassed();
 
 				SceneCompleted = true;
 				setRightAnswer(word1Btn);
@@ -151,7 +151,7 @@ public class Scene3Controller : MonoBehaviour
 		void calculateTimePassed()
 		{
 			PlayerData.PlayerResponseTime[SCECE_IDX] =
-				(DateTime.Now - timeStarted).Seconds - PlayerData.PlayerResponseTime[SCECE_IDX];
+				timeStarted.SecondsPassed() - PlayerData.PlayerResponseTime[SCECE_IDX];
 
 			foreach (var button in buttons) button.onClick.RemoveListener(calculateTimePassed);
 		}

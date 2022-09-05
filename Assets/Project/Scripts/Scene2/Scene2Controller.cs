@@ -149,7 +149,7 @@ public class Scene2Controller : MonoBehaviour
 			{
 				PlayerData.ResponseTimedS2 = true;
 				PlayerData.PlayerResponseTime[SCENE_IDX] =
-					(DateTime.Now - timeStarted).TotalSeconds - INTRO_LENGTH;
+					timeStarted.SecondsPassed() - INTRO_LENGTH;
 			}
 
 			canvasController.showBackgroundCover();
@@ -173,7 +173,7 @@ public class Scene2Controller : MonoBehaviour
 		treesButton.onClick.AddListener(() =>
 		{
 			if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCENE_IDX] =
-				(DateTime.Now - timeStarted).TotalSeconds;
+				timeStarted.SecondsPassed();
 
 			buttonClicked(treesObject, treesButton);
 			treesClicked();

@@ -9,17 +9,18 @@ public class PlayerData
 	public static int[] NumOfQuits = new int[NumOfScenes];
 	public static int[] NumOfClicks = new int[NumOfScenes];
 	public static double[] PlayerResponseTime = new double[NumOfScenes];
-
-	// MAKE THIS DATA POR LEVEL IN SCENE 1
 	public static double[] PlayDurationPerScene = new double[NumOfScenes];
 
 	// SCENE 1
-	public static short[] NumOfTipsS1;
-	public static int[] NumOfNoClickMissesS1;
-	public static int[] NumOfNearClickMissesS1;
-	public static int[] NumOfClickMissesS1;
+	public static short[] NumOfTipsS1 = new short[NUM_OF_LEVELS_S1];
+	public static int[] NumOfNoClickMissesS1 = new int[NUM_OF_LEVELS_S1];
+	public static int[] NumOfNearClickMissesS1 = new int[NUM_OF_LEVELS_S1];
+	public static int[] NumOfClickMissesS1 = new int[NUM_OF_LEVELS_S1];
+	public static double[] PlayDurationPerLevelS1 = new double[NumOfScenes];
+
 	// SCENE 2
 	public static short NumOfTipsS2;
+
 	// SCENE 3
 	public static bool ResponseTimedS2;
 

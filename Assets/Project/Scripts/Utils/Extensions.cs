@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class Extensions
@@ -24,4 +25,7 @@ public static class Extensions
 	{
 		for (int i = 0; i < array.Length; i++) array[i] = 0;
 	}
+
+	public static double SecondsPassed(this DateTime dateTime)
+		=> (DateTime.Now - dateTime).TotalSeconds;
 }
