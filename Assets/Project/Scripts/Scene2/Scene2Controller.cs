@@ -16,6 +16,7 @@ public class Scene2Controller : MonoBehaviour
 	[SerializeField] private CanvasS2Controller canvasController;
 	[SerializeField] private Scene2NarratorController narratorController;
 	private const float INTRO_LENGTH = 26.697f;
+	private bool _educationalAudioPlaying;
 	private static DateTime timeStarted;
 	private RainScript2D rainScript;
 	private enum Tcontroller { CANVAS, SPRITE, SELF, SCENE_LOADER }
@@ -78,6 +79,7 @@ public class Scene2Controller : MonoBehaviour
 	public void sceneMiss(string audioToInvoke, float audioLength)
 	{
 		AplicationModel.Scene2Misses++;
+		PlayerData.NumOfMissesS2++;
 		playANarratorAudio(audioToInvoke, "changeToTryAgainInterface", audioLength);
 	}
 
@@ -89,6 +91,8 @@ public class Scene2Controller : MonoBehaviour
 		);
 		ReportCreator.writeResponseTime(PlayerData.PlayerResponseTime[SCENE_IDX]);
 	}
+
+	private void CompleteScene() => SceneCompleted = true;
 
 	void Start() // Start is called before the first frame update
 	{
@@ -106,6 +110,7 @@ public class Scene2Controller : MonoBehaviour
 
 		Action treesClicked = () =>
 		{
+			_educationalAudioPlaying = true;
 			AplicationModel.isFirstTimeScene2 = true;
 
 			playANarratorAudio(
@@ -132,6 +137,8 @@ public class Scene2Controller : MonoBehaviour
 					9f,
 					Tcontroller.SCENE_LOADER, 44.15f
 			);
+
+			Invoke("CompleteScene", 44.15f + 9f);
 
 			if (!Player.Instance.ScenesCompleted[1])
 			{
@@ -185,8 +192,18 @@ public class Scene2Controller : MonoBehaviour
 	{
 		if (!SceneCompleted)
 		{
-			if (Extensions.KeyboardDown()) PlayerData.NumOfKboardInputs[SCENE_IDX]++;
-			if (Input.GetMouseButtonDown(0)) PlayerData.NumOfClicks[SCENE_IDX]++;
+			if (Extensions.KeyboardDown())
+			{
+				PlayerData.NumOfKboardInputs[SCENE_IDX]++;
+				if (_educationalAudioPlaying)
+					PlayerData.NotFocusedActionsS2++;
+			}
+			if (Input.GetMouseButtonDown(0))
+			{
+				PlayerData.NumOfClicks[SCENE_IDX]++;
+				if (_educationalAudioPlaying)
+					PlayerData.NotFocusedActionsS2++;
+			}
 		}
 	}
 }

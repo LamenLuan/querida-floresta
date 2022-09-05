@@ -21,6 +21,7 @@ public class PlayerData
 	// SCENE 2
 	public static short NumOfTipsS2;
 	public static short NumOfMissesS2;
+	public static short NotFocusedActionsS2;
 	public static bool ResponseTimedS2;
 
 	// SCENE 3
