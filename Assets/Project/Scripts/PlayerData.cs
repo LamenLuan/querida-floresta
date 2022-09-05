@@ -20,9 +20,10 @@ public class PlayerData
 
 	// SCENE 2
 	public static short NumOfTipsS2;
+	public static short NumOfMissesS2;
+	public static bool ResponseTimedS2;
 
 	// SCENE 3
-	public static bool ResponseTimedS2;
 
 	private static void ResetCommonSceneData(short scenceIdx)
 	{
@@ -45,6 +46,7 @@ public class PlayerData
 	public static void ResetScene2Data()
 	{
 		NumOfTipsS2 = 0;
+		NumOfMissesS2 = 0;
 		ResponseTimedS2 = false;
 		ResetCommonSceneData(1);
 	}

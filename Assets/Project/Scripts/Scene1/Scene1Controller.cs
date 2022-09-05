@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using System.Threading;
-using static Extensions;
 
 public class Scene1Controller : MonoBehaviour
 {
@@ -112,7 +111,8 @@ public class Scene1Controller : MonoBehaviour
 			// Player clicked on the right moment
 			if (cloudCounter == cloudNumber)
 			{
-				PlayerData.PlayDurationPerLevelS1[levelCounter] = timeStarted.SecondsPassed();
+				if (!SceneCompleted)
+					PlayerData.PlayDurationPerLevelS1[levelCounter] = timeStarted.SecondsPassed();
 				audioController.hitSound();
 				rainObj = Instantiate(rainObjPrefabObj);
 				steamEffectsObj.SetActive(false);
@@ -121,16 +121,15 @@ public class Scene1Controller : MonoBehaviour
 				// Here the narrator will congratulate the player
 				else
 				{
-					if (!SceneCompleted) PlayerData.PlayDurationPerScene[SCENE_IDX] =
-						timeStarted.SecondsPassed();
+					if (!SceneCompleted)
+						PlayerData.PlayDurationPerScene[SCENE_IDX] = timeStarted.SecondsPassed();
 					SceneCompleted = true;
 					CorrectLevelsDuration();
 					audioController.sceneCompletedSound();
 					narratorController.Invoke("playCongratsAudio", 0.5f);
 					sceneLoader.Invoke(
-							(Player.Instance.ScenesCompleted[0])
-								? "loadSceneSelection"
-								: "loadPlayersForest",
+							Player.Instance.ScenesCompleted[0]
+								? "loadSceneSelection" : "loadPlayersForest",
 							9f
 					);
 					if (!Player.Instance.ScenesCompleted[0])
@@ -145,14 +144,16 @@ public class Scene1Controller : MonoBehaviour
 			else
 			{
 				if (
-						++AplicationModel.Scene1Misses[levelCounter] > 4 &&
-						!AplicationModel.lessClouds
+					++AplicationModel.Scene1Misses[levelCounter] > 4 && !AplicationModel.lessClouds
 				) setLessClouds();
 
-				if (!SceneCompleted && cloudCounter >= Mathf.Round(cloudNumber * 0.9f))
-					PlayerData.NumOfNearClickMissesS1[levelCounter]++;
-				else
-					PlayerData.NumOfClickMissesS1[levelCounter]++;
+				if (!SceneCompleted)
+				{
+					if (cloudCounter >= Mathf.Round(cloudNumber * 0.9f))
+						PlayerData.NumOfNearClickMissesS1[levelCounter]++;
+					else
+						PlayerData.NumOfClickMissesS1[levelCounter]++;
+				}
 
 				audioController.missSound();
 				cloudAudio.Stop();
@@ -182,6 +183,7 @@ public class Scene1Controller : MonoBehaviour
 	{
 		GameObject difficultyObj =
 				difficultiesObj.transform.GetChild(levelCounter).gameObject;
+
 		difficultyObj.SetActive(true);
 		this.difficultyObj = GameObject.Instantiate(difficultyObj);
 		difficultyObj.SetActive(false);
@@ -210,8 +212,7 @@ public class Scene1Controller : MonoBehaviour
 
 	public void goNextLevel() // Called by button (btNextLevel)
 	{
-		GameObject currentLevel =
-				difficultiesObj.transform.GetChild(levelCounter).gameObject;
+		GameObject currentLevel = difficultiesObj.transform.GetChild(levelCounter).gameObject;
 
 		// First destroying the clouds of current level
 		for (int i = currentLevel.transform.childCount - 1; i >= 0; --i)
@@ -261,9 +262,7 @@ public class Scene1Controller : MonoBehaviour
 		levelCounter = 0;
 
 		moveToNextCloud();
-		playANarratorAudio(
-				"playIntroduction1Audio", "showButtons", INTRO_LENGTH
-		);
+		playANarratorAudio("playIntroduction1Audio", "showButtons", INTRO_LENGTH);
 	}
 
 	void Update() // Update is called once per frame
