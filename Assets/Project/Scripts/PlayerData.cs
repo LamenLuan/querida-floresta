@@ -1,6 +1,7 @@
 public class PlayerData
 {
 	private const short NUM_OF_LEVELS_S1 = 3;
+	private const short NUM_OF_QUESTIONS_S3 = 3;
 	private static short NumOfScenes = SceneLoader.NUM_OF_SCENES;
 	public static bool[] SceneCompleted = new bool[NumOfScenes];
 
@@ -25,6 +26,8 @@ public class PlayerData
 	public static bool ResponseTimedS2;
 
 	// SCENE 3
+	public static short[] NumOfRepsS3 = new short[NUM_OF_QUESTIONS_S3];
+	public static short[] NumOfMissesS3 = new short[NUM_OF_QUESTIONS_S3];
 
 	private static void ResetCommonSceneData(short scenceIdx)
 	{
@@ -54,6 +57,8 @@ public class PlayerData
 
 	public static void ResetScene3Data()
 	{
+		NumOfRepsS3.Clear();
+		NumOfMissesS3.Clear();
 		ResetCommonSceneData(2);
 	}
 

@@ -15,7 +15,7 @@ public class Scene3Controller : MonoBehaviour
 	[SerializeField]
 	private Button option1Btn, option2Btn, option3Btn,
 	word1Btn, word2Btn, repeatQuestionBtn;
-	private byte index;
+	private byte levelIndex;
 	private DateTime timeStarted;
 	private ref bool SceneCompleted => ref PlayerData.SceneCompleted[SCECE_IDX];
 
@@ -24,11 +24,14 @@ public class Scene3Controller : MonoBehaviour
 		if (!SceneCompleted) PlayerData.NumOfClicks[SCECE_IDX]--;
 	}
 
+	public void RepeatBtnClicked()
+	{
+		if (!SceneCompleted) PlayerData.NumOfRepsS3[levelIndex]++;
+	}
+
 	private void removeListenerFromButtons() // Invoked in Start()
 	{
-		Button[] buttons =
-				{option1Btn, option2Btn, option3Btn, repeatQuestionBtn};
-
+		Button[] buttons = { option1Btn, option2Btn, option3Btn, repeatQuestionBtn };
 		foreach (Button btn in buttons) btn.onClick.RemoveAllListeners();
 	}
 
@@ -43,7 +46,7 @@ public class Scene3Controller : MonoBehaviour
 		canvasController.setAnswerEffect(button, true);
 		audioController.hitSound();
 		narratorController.playRightAnswerAudio();
-		if (index < 3) index++;
+		if (levelIndex < 3) levelIndex++;
 	}
 
 	private void setWrongAnswer(Button button)
@@ -51,7 +54,8 @@ public class Scene3Controller : MonoBehaviour
 		canvasController.setAnswerEffect(button, false);
 		audioController.missSound();
 		narratorController.playWrongAnswerAudio();
-		AplicationModel.Scene3Misses[index]++;
+		AplicationModel.Scene3Misses[levelIndex]++;
+		PlayerData.NumOfMissesS3[levelIndex]++;
 	}
 
 	private void sendDataToReport()
@@ -67,7 +71,7 @@ public class Scene3Controller : MonoBehaviour
 
 		timeStarted = DateTime.Now;
 		AplicationModel.SceneAcesses[2]++;
-		index = 0;
+		levelIndex = 0;
 
 		repeatQuestionBtn.onClick.AddListener(
 				() => narratorController.playQuestion1Audio()
