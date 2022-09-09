@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 public class PlayerData
 {
@@ -65,8 +64,12 @@ public class PlayerData
 		ResetCommonSceneData(2);
 	}
 
-	private static void ResetGameData()
+	public static void ResetGameData()
 	{
+		ResetScene1Data();
+		ResetScene2Data();
+		ResetScene3Data();
+
 		for (int i = 0; i < NumOfScenes; i++)
 		{
 			SceneCompleted[i] = false;
@@ -76,8 +79,6 @@ public class PlayerData
 
 	public static bool AllScenesCompleted()
 	{
-		return true;
-
 		foreach (var scene in SceneCompleted)
 			if (!scene) return false;
 

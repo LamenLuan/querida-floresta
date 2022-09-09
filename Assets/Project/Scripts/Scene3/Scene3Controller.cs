@@ -2,7 +2,6 @@
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using static Extensions;
 
 public class Scene3Controller : MonoBehaviour
 {
@@ -100,6 +99,7 @@ public class Scene3Controller : MonoBehaviour
 						"playSceneCompletedAudio",
 						narratorController.RightAnswerAudio.clip.length + 1f
 				);
+
 				sceneLoader.Invoke(
 						(Player.Instance.ScenesCompleted[2])
 								? "loadSceneSelection"
@@ -107,6 +107,10 @@ public class Scene3Controller : MonoBehaviour
 						narratorController.SceneCompletedAudio.clip.length +
 						narratorController.RightAnswerAudio.clip.length + 3f
 				);
+
+				if (PlayerData.AllScenesCompleted())
+					new Thread(sheetsController.SendPlayData).Start();
+
 				if (!Player.Instance.ScenesCompleted[2])
 				{
 					sendDataToReport();

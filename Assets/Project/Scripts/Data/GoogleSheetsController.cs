@@ -102,7 +102,7 @@ public class GoogleSheetsController : MonoBehaviour
 
 	public void SendPlayData()
 	{
-		var range = $"play-data!A:{FINAL_COL}";
+		var range = $"play-data!A:";
 		var valueRange = new ValueRange();
 
 		var playerData = PlayerData.ToObjectList();
@@ -116,6 +116,7 @@ public class GoogleSheetsController : MonoBehaviour
 			AppendRequest.ValueInputOptionEnum.USERENTERED;
 
 		append.Execute();
+		PlayerData.ResetGameData();
 	}
 
 	public void UpdateEntry(string id, IList<object> data)

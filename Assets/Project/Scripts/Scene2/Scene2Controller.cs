@@ -146,6 +146,9 @@ public class Scene2Controller : MonoBehaviour
 				new Thread(sheetsController.SavePlayerProgress).Start();
 				Player.Instance.ScenesCompleted[1] = true;
 			}
+
+			if (PlayerData.AllScenesCompleted())
+				new Thread(sheetsController.SendPlayData).Start();
 		};
 
 		Action<GameObject, Button> buttonClicked = (gameObject, button) =>
