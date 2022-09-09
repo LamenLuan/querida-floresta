@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 public class PlayerData
 {
 	private const short NUM_OF_LEVELS_S1 = 3;
@@ -7,17 +10,17 @@ public class PlayerData
 
 	// ALL SCENES
 	public static int[] NumOfKboardInputs = new int[NumOfScenes];
-	public static int[] NumOfQuits = new int[NumOfScenes];
 	public static int[] NumOfClicks = new int[NumOfScenes];
+	public static int[] NumOfQuits = new int[NumOfScenes];
 	public static double[] PlayerResponseTime = new double[NumOfScenes];
 	public static double[] PlayDurationPerScene = new double[NumOfScenes];
 
 	// SCENE 1
+	public static double[] PlayDurationPerLevelS1 = new double[NUM_OF_LEVELS_S1];
 	public static short[] NumOfTipsS1 = new short[NUM_OF_LEVELS_S1];
 	public static int[] NumOfNoClickMissesS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfNearClickMissesS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfClickMissesS1 = new int[NUM_OF_LEVELS_S1];
-	public static double[] PlayDurationPerLevelS1 = new double[NUM_OF_LEVELS_S1];
 
 	// SCENE 2
 	public static short NumOfTipsS2;
@@ -69,5 +72,45 @@ public class PlayerData
 			SceneCompleted[i] = false;
 			NumOfQuits[i] = 0;
 		}
+	}
+
+	public static bool AllScenesCompleted()
+	{
+		return true;
+
+		foreach (var scene in SceneCompleted)
+			if (!scene) return false;
+
+		return true;
+	}
+
+	public static IList<object> ToObjectList()
+	{
+		List<object> list = new List<object>();
+
+		AddCommumData(list, 0, false);
+		foreach (var item in PlayDurationPerLevelS1) list.Add(item);
+		foreach (var item in NumOfTipsS1) list.Add(item);
+		foreach (var item in NumOfNoClickMissesS1) list.Add(item);
+		foreach (var item in NumOfNearClickMissesS1) list.Add(item);
+		foreach (var item in NumOfClickMissesS1) list.Add(item);
+		AddCommumData(list, 1);
+		list.Add(NumOfTipsS2);
+		list.Add(NumOfMissesS2);
+		list.Add(NotFocusedActionsS2);
+		AddCommumData(list, 2);
+		foreach (var item in NumOfRepsS3) list.Add(item);
+		foreach (var item in NumOfMissesS3) list.Add(item);
+
+		return list;
+	}
+
+	private static void AddCommumData(List<object> list, int idx, bool totalDuration = true)
+	{
+		list.Add(NumOfKboardInputs[idx]);
+		list.Add(NumOfClicks[idx]);
+		list.Add(NumOfQuits[idx]);
+		list.Add(PlayerResponseTime[idx]);
+		if (totalDuration) list.Add(PlayDurationPerScene[idx]);
 	}
 }

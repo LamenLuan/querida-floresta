@@ -123,6 +123,10 @@ public class Scene1Controller : MonoBehaviour
 				{
 					if (!SceneCompleted)
 						PlayerData.PlayDurationPerScene[SCENE_IDX] = timeStarted.SecondsPassed();
+
+					if (PlayerData.AllScenesCompleted())
+						new Thread(sheetsController.SendPlayData).Start();
+
 					SceneCompleted = true;
 					CorrectLevelsDuration();
 					audioController.sceneCompletedSound();
