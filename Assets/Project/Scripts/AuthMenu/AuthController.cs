@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AuthController : MonoBehaviour
@@ -14,8 +13,10 @@ public class AuthController : MonoBehaviour
 
 	void Start()
 	{
-		editorTg.SetIsOnWithoutNotify(AplicationModel.EditorMode);
-		if (EditorApplication.isPlaying) editorTg.gameObject.SetActive(true);
+
+#if UNITY_EDITOR
+		editorTg.gameObject.SetActive(true);
+#endif
 
 		try
 		{
@@ -33,7 +34,7 @@ public class AuthController : MonoBehaviour
 
 	public void ReadQrMode()
 	{
-		if (editorTg.gameObject.activeSelf && AplicationModel.EditorMode)
+		if (editorTg.gameObject.activeSelf && editorTg.isOn)
 		{
 			LoadEditorPlayer();
 			return;
@@ -42,6 +43,7 @@ public class AuthController : MonoBehaviour
 		readQr = true;
 		buttonsObj.SetActive(false);
 		webCamObj.SetActive(true);
+		editorTg.gameObject.SetActive(false);
 		quitButtonTxt.text = "VOLTAR";
 		webCamController.StartWebCam();
 	}
