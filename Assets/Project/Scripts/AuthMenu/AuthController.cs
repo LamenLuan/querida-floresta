@@ -18,6 +18,8 @@ public class AuthController : MonoBehaviour
 		editorTg.gameObject.SetActive(true);
 #endif
 
+		PlayerData.ResetGameData();
+
 		try
 		{
 			sheetsController.StartSheets();

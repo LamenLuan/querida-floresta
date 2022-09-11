@@ -102,7 +102,7 @@ public class GoogleSheetsController : MonoBehaviour
 
 	public void SendPlayData()
 	{
-		var range = $"play-data!A:";
+		var range = $"play-data!A:A";
 		var valueRange = new ValueRange();
 
 		var playerData = PlayerData.ToObjectList();
