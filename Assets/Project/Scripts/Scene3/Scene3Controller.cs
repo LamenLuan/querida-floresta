@@ -101,22 +101,13 @@ public class Scene3Controller : MonoBehaviour
 				);
 
 				sceneLoader.Invoke(
-						(Player.Instance.ScenesCompleted[2])
-								? "loadSceneSelection"
-								: "loadPlayersForest",
+						"loadPlayersForest",
 						narratorController.SceneCompletedAudio.clip.length +
 						narratorController.RightAnswerAudio.clip.length + 3f
 				);
 
 				if (PlayerData.AllScenesCompleted())
 					new Thread(sheetsController.SendPlayData).Start();
-
-				if (!Player.Instance.ScenesCompleted[2])
-				{
-					sendDataToReport();
-					Player.Instance.ScenesCompleted[2] = true;
-					new Thread(sheetsController.SavePlayerProgress).Start();
-				}
 			});
 			word2Btn.onClick.AddListener(() => setWrongAnswer(word2Btn));
 		};

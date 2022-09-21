@@ -44,7 +44,7 @@ public class StatisticsController : MonoBehaviour
 
 		for (int i = 0; i < reportTxt.Length; i++)
 		{
-			bool sceneCompleted = Player.Instance.ScenesCompleted[i];
+			bool sceneCompleted = PlayerData.SceneCompleted[i];
 			if (sceneCompleted) reportTxt[i].text = scenes[i];
 			reportTxt[i].text = sceneCompleted ? scenes[i] : notCompleted;
 		}

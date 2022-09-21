@@ -61,45 +61,6 @@ public class GoogleSheetsController : MonoBehaviour
 		return data;
 	}
 
-	public int FindUser(string user)
-	{
-		var range = $"data!B:B";
-		var request = service.Spreadsheets.Values.Get(Credentials.ID, range);
-
-		var response = request.Execute();
-		var rows = response.Values;
-		if (rows == null) return -1;
-
-		for (int i = 0; i < rows.Count; i++)
-		{
-			if (rows[i][0].Equals(user)) return i;
-		}
-
-		return -1;
-	}
-
-	public bool CreateEntry(IList<object> playerData)
-	{
-		var range = $"data!A:{FINAL_COL}";
-		var valueRange = new ValueRange();
-
-		var data = new List<object>() { "=LIN()" };
-		data.AddRange(playerData);
-		valueRange.Values = new List<IList<object>> { data };
-
-		var append = service.Spreadsheets.Values.Append(
-				valueRange, Credentials.ID, range
-		);
-
-		append.ValueInputOption = SpreadsheetsResource.ValuesResource.
-				AppendRequest.ValueInputOptionEnum.USERENTERED;
-
-		try { append.Execute(); }
-		catch (System.Exception) { return false; }
-
-		return true;
-	}
-
 	public void SendPlayData()
 	{
 		var range = $"play-data!A:A";
@@ -117,30 +78,5 @@ public class GoogleSheetsController : MonoBehaviour
 
 		append.Execute();
 		PlayerData.ResetGameData();
-	}
-
-	public void UpdateEntry(string id, IList<object> data)
-	{
-		if (!ValitadeId(id)) return;
-
-		var valueRange = new ValueRange();
-		var range = $"data!B{id}:{FINAL_COL}{id}";
-
-		valueRange.Values = new List<IList<object>> { data };
-
-		var update = service.Spreadsheets.Values.Update(
-				valueRange, Credentials.ID, range
-		);
-
-		update.ValueInputOption = SpreadsheetsResource.ValuesResource.
-				UpdateRequest.ValueInputOptionEnum.USERENTERED;
-
-		update.Execute();
-	}
-
-	public void SavePlayerProgress()
-	{
-		int id = FindUser(Player.Instance.Name) + 1;
-		if (id != 0) UpdateEntry(id.ToString(), Player.Instance.ToObjectList());
 	}
 }

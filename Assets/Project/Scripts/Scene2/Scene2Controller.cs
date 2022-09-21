@@ -131,21 +131,12 @@ public class Scene2Controller : MonoBehaviour
 			);
 			playANarratorAudio(
 					"playSceneCompletedAudio",
-					(Player.Instance.ScenesCompleted[1])
-							? "loadSceneSelection"
-							: "loadPlayersForest",
+					"loadPlayersForest",
 					9f,
 					Tcontroller.SCENE_LOADER, 44.15f
 			);
 
 			Invoke("CompleteScene", 44.15f + 9f);
-
-			if (!Player.Instance.ScenesCompleted[1])
-			{
-				sendDataToReport();
-				new Thread(sheetsController.SavePlayerProgress).Start();
-				Player.Instance.ScenesCompleted[1] = true;
-			}
 
 			if (PlayerData.AllScenesCompleted())
 				new Thread(sheetsController.SendPlayData).Start();

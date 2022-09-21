@@ -3,51 +3,52 @@ using UnityEngine.UI;
 
 public class PlayersForestController : MonoBehaviour
 {
-    [SerializeField] private SceneLoader sceneLoader;
-    [SerializeField] private CanvasPFController canvasController;
-    [SerializeField] private AudioController audioController;
-    [SerializeField] private NarratorPFController narratorController;
-    private string functionToInvoke;
+	[SerializeField] private SceneLoader sceneLoader;
+	[SerializeField] private CanvasPFController canvasController;
+	[SerializeField] private AudioController audioController;
+	[SerializeField] private NarratorPFController narratorController;
+	private string functionToInvoke;
 
-    private void showReward()
-    {
-        canvasController.removeLockedEffect();
-        audioController.sceneCompletedSound();
-        if(functionToInvoke != null) sceneLoader.Invoke(functionToInvoke, 8f);
-    }
+	private void showReward()
+	{
+		canvasController.removeLockedEffect();
+		audioController.sceneCompletedSound();
+		if (functionToInvoke != null) sceneLoader.Invoke(functionToInvoke, 8f);
+	}
 
-    private void addButtonInCanvas() // Invoked in Start()
-    {
-        Button canvasButton = canvasController.addButton();
-        
-        canvasButton.onClick.AddListener( () => {
-            showReward();
-            canvasButton.onClick.RemoveAllListeners();
-        });
-    }
+	private void addButtonInCanvas() // Invoked in Start()
+	{
+		Button canvasButton = canvasController.addButton();
 
-    void Start() // Start is called before the first frame update
-    {
-        if(
-            AplicationModel.isForestInTemporaryMode &&
-            Player.Instance.ScenesCompleted[0]
-        ) {
-            narratorController.Invoke("playUnlockAudio", 1f);
-            functionToInvoke = null;
+		canvasButton.onClick.AddListener(() =>
+		{
+			showReward();
+			canvasButton.onClick.RemoveAllListeners();
+		});
+	}
 
-            if(Player.Instance.ScenesCompleted[2])
-                functionToInvoke = "loadSceneSelection";
-            else if(Player.Instance.ScenesCompleted[1])
-                functionToInvoke = "loadScene3";
-            else if(Player.Instance.ScenesCompleted[0])
-                functionToInvoke = "loadScene2";
+	void Start() // Start is called before the first frame update
+	{
+		if (
+				AplicationModel.isForestInTemporaryMode &&
+				PlayerData.SceneCompleted[0]
+		)
+		{
+			narratorController.Invoke("playUnlockAudio", 1f);
+			functionToInvoke = null;
 
-            canvasController.setLockedEffect();
-            Invoke(
-                "addButtonInCanvas",
-                narratorController.UnlockAudio.clip.length + 1f
-            );
-        }
-        canvasController.setRewardsActive();
-    }
+			if (PlayerData.SceneCompleted[1])
+				functionToInvoke = "loadScene3";
+			else if (PlayerData.SceneCompleted[0])
+				functionToInvoke = "loadScene2";
+			else functionToInvoke = "loadMainMenu";
+
+			canvasController.setLockedEffect();
+			Invoke(
+					"addButtonInCanvas",
+					narratorController.UnlockAudio.clip.length + 1f
+			);
+		}
+		canvasController.setRewardsActive();
+	}
 }

@@ -131,17 +131,7 @@ public class Scene1Controller : MonoBehaviour
 					CorrectLevelsDuration();
 					audioController.sceneCompletedSound();
 					narratorController.Invoke("playCongratsAudio", 0.5f);
-					sceneLoader.Invoke(
-							Player.Instance.ScenesCompleted[0]
-								? "loadSceneSelection" : "loadPlayersForest",
-							9f
-					);
-					if (!Player.Instance.ScenesCompleted[0])
-					{
-						sendDataToReport();
-						Player.Instance.ScenesCompleted[0] = true;
-						new Thread(sheetsController.SavePlayerProgress).Start();
-					}
+					sceneLoader.Invoke("loadPlayersForest", 9f);
 				}
 			}
 			// Miss click
