@@ -29,10 +29,9 @@ public class PlayersForestController : MonoBehaviour
 
 	void Start() // Start is called before the first frame update
 	{
-		if (
-				AplicationModel.isForestInTemporaryMode &&
-				PlayerData.SceneCompleted[0]
-		)
+		bool gameFinished = false;
+
+		if (AplicationModel.isForestInTemporaryMode)
 		{
 			narratorController.Invoke("playUnlockAudio", 1f);
 			functionToInvoke = null;
@@ -41,7 +40,11 @@ public class PlayersForestController : MonoBehaviour
 				functionToInvoke = "loadScene3";
 			else if (PlayerData.SceneCompleted[0])
 				functionToInvoke = "loadScene2";
-			else functionToInvoke = "loadMainMenu";
+			else
+			{
+				functionToInvoke = "loadMainMenu";
+				gameFinished = true;
+			}
 
 			canvasController.setLockedEffect();
 			Invoke(
@@ -49,6 +52,6 @@ public class PlayersForestController : MonoBehaviour
 					narratorController.UnlockAudio.clip.length + 1f
 			);
 		}
-		canvasController.setRewardsActive();
+		canvasController.setRewardsActive(gameFinished);
 	}
 }

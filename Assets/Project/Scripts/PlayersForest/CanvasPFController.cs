@@ -8,12 +8,19 @@ public class CanvasPFController : MonoBehaviour
 	imgLevelSignObj;
 	GameObject newReward;
 
-	public void setRewardsActive()
+	public void setRewardsActive(bool gameFinished)
 	{
 		GameObject[] rewards = { reward1Obj, reward2Obj, reward3Obj };
-
-		for (int i = rewards.Length - 1; i >= 0; --i)
-			if (PlayerData.SceneCompleted[i]) rewards[i].SetActive(true);
+		if (gameFinished)
+		{
+			for (int i = rewards.Length - 1; i >= 0; --i)
+				rewards[i].SetActive(true);
+		}
+		else
+		{
+			for (int i = rewards.Length - 1; i >= 0; --i)
+				if (PlayerData.SceneCompleted[i]) rewards[i].SetActive(true);
+		}
 	}
 
 	public void setLockedEffect()
