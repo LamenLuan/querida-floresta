@@ -16,7 +16,7 @@ public class PlayerData
 
 	// SCENE 1
 	public static double[] PlayDurationPerLevelS1 = new double[NUM_OF_LEVELS_S1];
-	public static short[] NumOfTipsS1 = new short[NUM_OF_LEVELS_S1];
+	public static int[] NumOfTipsS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfNoClickMissesS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfNearClickMissesS1 = new int[NUM_OF_LEVELS_S1];
 	public static int[] NumOfClickMissesS1 = new int[NUM_OF_LEVELS_S1];
@@ -28,8 +28,8 @@ public class PlayerData
 	public static bool ResponseTimedS2;
 
 	// SCENE 3
-	public static short[] NumOfRepsS3 = new short[NUM_OF_QUESTIONS_S3];
-	public static short[] NumOfMissesS3 = new short[NUM_OF_QUESTIONS_S3];
+	public static int[] NumOfRepsS3 = new int[NUM_OF_QUESTIONS_S3];
+	public static int[] NumOfMissesS3 = new int[NUM_OF_QUESTIONS_S3];
 
 	private static void ResetCommonSceneData(short scenceIdx)
 	{
@@ -85,9 +85,30 @@ public class PlayerData
 		return true;
 	}
 
+	public static void ValidadeData()
+	{
+		int[][] intArrays = {
+			NumOfKboardInputs, NumOfClicks, NumOfQuits, NumOfTipsS1, NumOfNoClickMissesS1,
+			NumOfNearClickMissesS1, NumOfClickMissesS1, NumOfRepsS3, NumOfMissesS3
+		};
+
+		double[][] dblArrays = {
+			PlayerResponseTime, PlayDurationPerScene, PlayDurationPerLevelS1
+		};
+
+		foreach (var array in intArrays) array.Validate();
+		foreach (var array in dblArrays) array.Validate();
+
+		if (NumOfTipsS2 < 0) NumOfTipsS2 = 0;
+		if (NumOfMissesS2 < 0) NumOfMissesS2 = 0;
+		if (NotFocusedActionsS2 < 0) NotFocusedActionsS2 = 0;
+	}
+
 	public static IList<object> ToObjectList()
 	{
 		List<object> list = new List<object>();
+
+		ValidadeData();
 
 		AddCommumData(list, 0, false);
 		foreach (var item in PlayDurationPerLevelS1) list.Add(item);

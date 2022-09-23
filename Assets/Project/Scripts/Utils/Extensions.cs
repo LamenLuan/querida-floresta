@@ -21,14 +21,19 @@ public static class Extensions
 		for (int i = 0; i < array.Length; i++) array[i] = 0;
 	}
 
-	public static void Clear(this short[] array)
+	public static void Clear(this double[] array)
 	{
 		for (int i = 0; i < array.Length; i++) array[i] = 0;
 	}
 
-	public static void Clear(this double[] array)
+	public static void Validate(this int[] array)
 	{
-		for (int i = 0; i < array.Length; i++) array[i] = 0;
+		for (int i = 0; i < array.Length; i++) if (array[i] < 0) array[i] = 0;
+	}
+
+	public static void Validate(this double[] array)
+	{
+		for (int i = 0; i < array.Length; i++) if (array[i] < 0) array[i] = 0;
 	}
 
 	public static double SecondsPassed(this DateTime dateTime)
