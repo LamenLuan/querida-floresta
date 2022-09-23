@@ -32,9 +32,9 @@ public class MainMenuController : MonoBehaviour
 		Invoke("ShowButtons", speechClip.length + 1);
 	}
 
-	public void QuitButtonAction()
+	public void QuitButtonAction() // Called by button (BtQuit)
 	{
 		Player.Instance.ClearData();
-		sceneLoader.loadAuthMenu();
+		sceneLoader.quitGame();
 	}
 }
