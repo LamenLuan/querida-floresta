@@ -35,7 +35,7 @@ public class GoogleSheetsController : MonoBehaviour
 	{
 		var range = $"data!A1:A1";
 		var request = service.Spreadsheets.Values.Get(Credentials.ID, range);
-		request.Execute();
+		var response = request.Execute();
 	}
 
 	public static bool ValitadeId(string id)
