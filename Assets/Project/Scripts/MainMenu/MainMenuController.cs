@@ -34,7 +34,6 @@ public class MainMenuController : MonoBehaviour
 
 	public void QuitButtonAction() // Called by button (BtQuit)
 	{
-		Player.Instance.ClearData();
 		sceneLoader.quitGame();
 	}
 }

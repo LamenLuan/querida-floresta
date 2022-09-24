@@ -6,7 +6,6 @@ public class AuthController : MonoBehaviour
 	[SerializeField] private SceneLoader sceneLoader;
 	[SerializeField] private GoogleSheetsController sheetsController;
 	[SerializeField] private GameObject buttonsObj, noConnectionObj;
-	private bool readQr;
 
 	void Start()
 	{
@@ -37,10 +36,6 @@ public class AuthController : MonoBehaviour
 
 	public void QuitButtonAction() // Called by button
 	{
-		if (readQr)
-		{
-			sceneLoader.loadAuthMenu();
-		}
-		else sceneLoader.quitGame();
+		sceneLoader.quitGame();
 	}
 }
